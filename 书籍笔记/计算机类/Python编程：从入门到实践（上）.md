@@ -1,7 +1,5 @@
-# Python笔记
-
-<font face="楷体" color="orange" size=4>以下内容是基于优质书籍《 Python编程：从入门到实践（第3版）》进行补充编撰。</font>
-
+# Python编程：从入门到实践（上）
+支部编号：2026-2-1
 ## 目录
 - [一、什么是Python](#什么是Python)
    - 1. 如何安装Python（Windows版）
@@ -3088,4 +3086,5 @@ def test_store_three_responses(language_survey):
    for response in responses: 
          assert response in language_survey.responses
 ```
+
 **注意这个时候test__()开始有参数了，因为我们的夹具有返回值，相当于提前做好的创建对象的任务**
