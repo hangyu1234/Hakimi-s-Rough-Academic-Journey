@@ -1,5 +1,6 @@
 # UCB CS70：Discrete Mathematics and Probability Theory
 本部编号 2026-4-B
+> 由于GitHub上markdown的渲染与编译器内的差异，导致部分数学符号未能正确显示，请将代码拉取到IDE中查看
 ___
 ## 目录 <a id = "目录"></a>
 [Note 0: Introduction](#note0)<br>
@@ -3669,6 +3670,7 @@ P = \begin{bmatrix}
 ___
 [返回目录](#目录)
 ___
+
 
 
 
