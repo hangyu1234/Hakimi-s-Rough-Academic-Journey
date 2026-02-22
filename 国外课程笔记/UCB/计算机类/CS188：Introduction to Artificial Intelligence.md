@@ -1,4 +1,4 @@
-<img width="968" height="1185" alt="image" src="https://github.com/user-attachments/assets/e114996b-fce6-4a8b-91e5-53c0db82c41e" /># UCB CS188：Introduction to Artificial Intelligence
+# UCB CS188：Introduction to Artificial Intelligence
 本部编码 2026-6-B
 > 由于GitHub上markdown的渲染与IDE内的差异，导致部分数学符号未能正确显示，请将代码拉取到IDE中查看
 ___
@@ -29,7 +29,7 @@ ___
 [Note 24: RL II](#note24)<br>
 ___
 ## 资源
-[Empire IV的关于该课程sp-24版本的项目实现](https://github.com/hangyu1234/CS-188)
+[Empire IV的关于该课程sp-24版本的项目实现](https://github.com/hangyu1234/UCB-CS188)
 ___
 ## Note 1: Rational Agents<a id = "note1"></a>
 ### 1. Agents
@@ -2542,6 +2542,7 @@ f(s, a) = Q(s, a) + \frac{k}{N(s, a)}
 ___
 [返回目录](#目录)
 ___
+
 
 
 
