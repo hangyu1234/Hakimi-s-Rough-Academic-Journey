@@ -1,4 +1,4 @@
-# Python初级教程
+# Python 初级教程
 支部编号 2026-2-1
 ## 目录
 - [一、什么是Python](#什么是Python)
@@ -3088,5 +3088,6 @@ def test_store_three_responses(language_survey):
 ```
 
 **注意这个时候test__()开始有参数了，因为我们的夹具有返回值，相当于提前做好的创建对象的任务**
+
 
 
