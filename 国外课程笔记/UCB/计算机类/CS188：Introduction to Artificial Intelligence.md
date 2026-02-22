@@ -2,30 +2,30 @@
 本部编码 2026-6-B
 ___
 ## 目录 <a id = "目录"></a>
-[Note 1: Rational Agents](#note1)
-[Note 2: Search I](#note2)
-[Note 3: Search II](#note3)
-[Note 4: Search III](#note4)
-[Note 5: Games I](#note5)
-[Note 6: Games II](#note6)
-[Note 7: Logic I](#note7)
-[Note 8: Logic II](#note8)
-[Note 9: Logic III](#note9)
-[Note 10: Introduction to Probability](#note10)
-[Note 11: Bayes Nets I](#note11)
-[Note 12: Bayes Nets II](#note12)
-[Note 13: Bayes Nets III](#note13)
-[Note 14: HMMs I](#note14)
-[Note 15: HMMs II](#note15)
-[Note 16: Utility Theory, Rationality, Decision Networks and VPI](#note16)
-[Note 17: MDPs I](#note17)
-[Note 18: MDPs II](#note18)
-[Note 19: ML I](#note19)
-[Note 20: ML II](#note20)
-[Note 21: ML III](#note21)
-[Note 22: ML VI](#note22)
-[Note 23: RL I](#note23)
-[Note 24: RL II](#note24)
+[Note 1: Rational Agents](#note1)<br>
+[Note 2: Search I](#note2)<br>
+[Note 3: Search II](#note3)<br>
+[Note 4: Search III](#note4)<br>
+[Note 5: Games I](#note5)<br>
+[Note 6: Games II](#note6)<br>
+[Note 7: Logic I](#note7)<br>
+[Note 8: Logic II](#note8)<br>
+[Note 9: Logic III](#note9)<br>
+[Note 10: Introduction to Probability](#note10)<br>
+[Note 11: Bayes Nets I](#note11)<br>
+[Note 12: Bayes Nets II](#note12)<br>
+[Note 13: Bayes Nets III](#note13)<br>
+[Note 14: HMMs I](#note14)<br>
+[Note 15: HMMs II](#note15)<br>
+[Note 16: Utility Theory, Rationality, Decision Networks and VPI](#note16)<br>
+[Note 17: MDPs I](#note17)<br>
+[Note 18: MDPs II](#note18)<br>
+[Note 19: ML I](#note19)<br>
+[Note 20: ML II](#note20)<br>
+[Note 21: ML III](#note21)<br>
+[Note 22: ML VI](#note22)<br>
+[Note 23: RL I](#note23)<br>
+[Note 24: RL II](#note24)<br>
 ___
 ## Note 1: Rational Agents<a id = "note1"></a>
 ### 1. Agents
@@ -2537,4 +2537,5 @@ f(s, a) = Q(s, a) + \frac{k}{N(s, a)}
 - 为了量化不同强化学习算法的性能，我们使用遗憾的概念。遗憾捕捉了从开始就在环境中采取最优行动所能累积的总奖励与我们运行学习算法所累积的总奖励之间的差异。
 ___
 [返回目录](#目录)
+
 ___
