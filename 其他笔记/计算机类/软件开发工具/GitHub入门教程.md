@@ -290,5 +290,7 @@ git push origin feature/login
 2. 新建功能分支开发。
 3. 本地commit + push。
 4. 提PR，邀请review。
-
 5. 通过后merge，自动关闭Issue（若设置了 Closes #id）。
+
+下面会添加一些包括回退在内的额外用法。
+1.git diff
