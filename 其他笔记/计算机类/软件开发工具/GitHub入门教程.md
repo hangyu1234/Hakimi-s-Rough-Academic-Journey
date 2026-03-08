@@ -1,4 +1,6 @@
-# GitHub入门与协作
+# GitHub入门教程
+支部编码 2026-2-2
+___
 > 截至2026.3
 
 ## 1.1 新建GitHub仓库
@@ -288,4 +290,5 @@ git push origin feature/login
 2. 新建功能分支开发。
 3. 本地commit + push。
 4. 提PR，邀请review。
+
 5. 通过后merge，自动关闭Issue（若设置了 Closes #id）。
