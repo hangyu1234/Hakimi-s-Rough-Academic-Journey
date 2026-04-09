@@ -30,7 +30,7 @@ SSH：一种安全的远程登录和管理服务器的协议。
 ### 第一步： 生成SSH密钥
 
 ```bash
-ssh-keygen -t -C "your_email"@example.com
+ssh-keygen -t -C "your_email@example.com" #邮箱需要带引号
 ```
 默认生成：
 - 私钥：` ~/.ssh/id_ed25519 `(严禁泄露)
