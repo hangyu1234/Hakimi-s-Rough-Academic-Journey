@@ -1518,6 +1518,41 @@ ptr2 = &ptr1;
 ```
 上述的代码**慎用**，仅当只有一层间接关系（指针指向基本数据类型）时候，才可以将非 const 地址或指针赋值给 const 指针。
 
+### 3.8.13 空指针
+C++ 有两个版本的空指针：`NULL` 和 `nullptr`。
+- `NULL`: 这里的“空指针”其实并不是真正的空指针。`NULL` 其实是一个字符，ASCII码为 0.
+  - 本质是一个**宏定义**
+  - 在 C++ 中，通常被定义为 0
+  - 类型为 int 或 long。不是真的指针
+- `nullptr`: nullptr 是 C++11 新增的关键字。专门用来表示**空指针**。
+  - 本质是一个**关键字**
+  - 类型是 `std::nullptr_t`
+  - 是一个**指针字面量**，可以隐式转换，但是**不能直接转换成非零的整数**。
+
+| 特性 | NULL | nullptr |
+| :--- | :--- | :--- |
+| **定义方式** | 宏定义 (`#define NULL 0`) | C++ 关键字 |
+| **底层类型** | 整数类型 (`int`) | 指针类型 (`std::nullptr_t`) |
+| **隐式转换** | 可转换为整数或指针 | 只能转换为指针 |
+| **引入标准** | C 语言 / 早期 C++ | C++11 及更高版本 |
+| **类型安全** | 低（容易与整数混淆） | 高（类型严格受限） |
+
+使用 nullptr 可以避免[函数重载](#函数重载)的二义性：
+```cpp
+void func(int n) {
+    std::cout << "调用了 int 版本" << std::endl;
+}
+
+void func(char* p) {
+    std::cout << "调用了 指针 版本" << std::endl;
+}
+
+int main() {
+    func(NULL);    // 报错或意想不到的结果：匹配 func(int)
+    func(nullptr); // 正确：匹配 func(char*)
+}
+```
+这个时候由于有两个对符合要求的指针，可能会出现**重载决议失败**
 
 
 ### 3.9 存储方式
@@ -3681,13 +3716,35 @@ namespace {
 }
 ```
 
+## 九、类 <a id="类"></a>
+这里的内容都是关于类的基本知识，从这里开始，后续都是类的问题。
+### 9.1 C++中的类 <a id="C++中的类"></a>
+一般来说，类的规范有两个部分组成：
+- 类声明：以数据成员的方式表述数据，以成员函数的方式描述共有接口。
+- 类方法定义：成员函数的实现。
 
+通常，C++中的类声明放在头文件中，并将实现放在源代码文件中，最后进行文件的联编。
+下面是类的一个例子：
+```cpp
+class Stock {
+private:
+    std::string company;
+    long shares;
+    double share_val;
+    double total_val;
+    void seT() {total_val = share * share_val;}
+public:
+    void acquiare(const std::steing & co; int n; double pr);
+    void buy(int num, double price);
+    void sell(long num, double price);
+    void update(double price);
+    void show();
+}
+```
+**类中的 class 和模板中的 class 不一样，这里的 class 是对类的声明，不饿能使用 typename 来进行替换**。声明了类以后就可以声明对应的对象了。
 
-
-
-
-
-
+### 9.2 private 和 public 关键字 <a id="private 和 public"></a>
+使用类对象的程序都可以直接访问共有部分，但是只能通过共有成员函数
 
 
 
