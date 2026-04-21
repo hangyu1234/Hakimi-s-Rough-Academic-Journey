@@ -42,7 +42,7 @@
 2：Singlemie from SJTU<br>
 3：Pandaaaaaa from JLU<br>
 4：hefeng from CUPL<br>
-5. DoveCz from NPU
+5：DoveCz from NPU
 ## 七、写给编者
 欢迎各位参与到该笔记的编写当中，请注意以下事项
 1. 请编者不要在这里浪费任何额外的时间和精力，以自己的学业为重，任何编者都有权对本笔记不做出任何贡献
