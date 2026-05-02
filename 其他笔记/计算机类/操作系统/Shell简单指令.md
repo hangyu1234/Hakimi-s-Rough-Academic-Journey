@@ -159,6 +159,24 @@ curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh -o
 bash install.sh   #安装homebrew
 source ~/.zprofile #刷新
 brew install neovim
+
+#linux或者是WSL2
+#法一：直接使用系统自带的安装包（版本较老
+sudo apt update
+sudo apt install neovim
+#法二：使用 snap 工具
+sudo snap install nvim --classic
+
+#注意，如果你使用的是WSL2，可能会出现不支持 snap 的问题，可以直接执行下面的指令
+sudo nano /ect/wsl.conf     # 这样你就进入了一个编辑界面,然后CV下面的代码
+[boot]
+systemd=true
+# CV 完成后再用 Ctrl + O 保存，再 Ctrl + X 退出
+#完成上述步骤以后就可以回到PowerShell中，输入下面的命令
+wsl --shutdown    # 更新一下
+#完成后回到 Ubuntu 中，运行：
+systemctl is-system-running
+#> running 或 degraded 就成功了，再运行上面的 snap 即可
 ```
 ---
 ## 九、`sort` 和 `uniq`
@@ -419,7 +437,7 @@ for i in 列表;do
 done
 ```
 一般来说更推荐把 shell 的if ,for ,while 等内容写在`.sh`文件中,可读性好，可复用，具体写法后续会继续介绍
-
+---
 
 
 
