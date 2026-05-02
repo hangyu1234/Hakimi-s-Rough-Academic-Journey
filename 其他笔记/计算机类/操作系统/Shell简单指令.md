@@ -5,7 +5,14 @@
 
 ---
 ## 零、`man`
-本文件已经尽可能详细讲解 shell 的各种常用命令，但是计算机的知识博大精深，我们还是 
+本文件已经尽可能详细讲解 shell 的各种常用命令，但是计算机的知识博大精深，我们还是
+无法完全覆盖，因此读者在学习时如果想更深入了解，请用`man`命令
+例：
+```bash
+man date
+```
+即会出现所有有关`date`的用法，看完后按 `q + 回车`退出即可。
+
 ---
 
 ## 一、`cd`
@@ -48,7 +55,7 @@
    ```Bash
    USERNAME:/$ cd ~/bin/./../bin/date/./../../.    #这样你就又回到了家目录 ~
    ```
-
+---
 ## 二、`echo`
 `echo` 主要用于**标准输出中现实文本行或者是字符串**
 1. 核心功能：
@@ -83,10 +90,11 @@
    ·········
    ·········   # 一系列路径
    ```
-
+---
 ## 三、环境变量 $PATH:
 环境变量PATH的重要功能就是**检索路径**，`echo $PATH` 后出现的一大片的路径就是PATH的遍历顺序，当我们使用程序的时候，计算机会从PATH的根目录出发，从左到右遍历寻找目标文件，找到了就执行，没找到返回错误
 
+---
 ## 四、`date`
 `date` 是一个**用来查询时间的一个程序**，当我们在终端输入该指令的时候，就会返回现在的时间
 ```Bash
@@ -95,7 +103,7 @@ USERNAME:/$ date
 > YYYY-MM-DDTHH:mm:ssZ  # 完整格式
 > YYYY-MM-DD            # 基本格式
 ```
-
+---
 ## 五、`which`
 `which` 是一个**程序**，他会遍历 PATH 列表并打印出它首次找到的程序位置
 ```Bash
@@ -110,7 +118,7 @@ which -a sh
 /usr/bin/sh
 /bin/sh
 ```
-
+---
 ## 六、`ls`
 `ls` 是 lizhist 的缩写，**也是一个程序**，其功能就是**列出指定文件夹的所有内容（包括文件夹和文件）**：
 ```Bash
@@ -118,7 +126,7 @@ cd /bin     # 转到 / 下的 bin 文件夹
 ls          # 列出当前目录中的所有文件
 ls /usr/bin # 直接列出后面目录下的所有文件
 ```
-
+---
 ## 七、`cat`
 `cat` 是一个**程序**，用来打印文件
 1. 功能：
@@ -137,7 +145,7 @@ ls /usr/bin # 直接列出后面目录下的所有文件
       using namespace std;
       int main() { cout << "Hello, world" << endl; } -->
    ```
-
+---
 ## 八、`nvim`
 `nvim` 全称**Neovim**，是一个基于**Vim**的文本编辑器，这里只讲解如何安装（因为大多数 shell自带vim，而非nvim），详情会有专门的笔记
 ```bash
@@ -152,7 +160,7 @@ bash install.sh   #安装homebrew
 source ~/.zprofile #刷新
 brew install neovim
 ```
-
+---
 ## 九、`sort` 和 `uniq`
 `sort`是**用来排序的程序**，`uniq`用来**去除连续重复的数据**(意味着如果重复但不连续就会都打印出来，可仔细观察下方示例)，我们可以将两个结合：
 ```Bash
@@ -210,7 +218,7 @@ apple
 doro
 knight
 ```
-
+---
 ## 十、`head`和`tail`
 `head`和`tail`都是**在文件中取数据的程序**，**默认会取10行**
 
@@ -233,7 +241,7 @@ apple
 ```
 
 `head`和`tail`取出来的数据都是**正序**，即**跟原来文件的顺序是一样的**
-
+---
 ## 十一、`grep`
 `grep` 是一个**在文件中找到所有你给出的指定特征的程序**，注意范围是**文件内**，grep的强大不仅在于可以进行我们给出的内容，还可以找到带有这个特征的内容
 ```Bash
@@ -257,6 +265,7 @@ USERNAME:/$ grep bin /     # 这里不建议这样做，运行时间长，并且
 ···
 ···
 ```
+---
 ## 十二、`sed`
 `sed` 是一个**流编辑器**，`grep` 是进行查找，而`sed`就是对文本内容进行操作了：
 ```Bash
@@ -284,9 +293,132 @@ sed -i '' 's/doro/knight/g' */*.md
 `s/pattern/replacement/`，其中，`pattern`部分就是**正则表达式[^1]**，我们用来**定位我们要操作的对象**，
 `*/*.md`，这部分是**通配符**[^2]
 
+---
+## 十三、 `find`
+`find`命令表示在目录树里递归查找文件，并对他们进行操作
 
-
-
+基本结构：
+```bash
+find [路径] [条件] [操作]
+```
+常见操作：
+```bash
+find .   # 在当前目录找文件
+find . -name "*.py" #按名字找所有 python 文件
+find . -type f  #只文件(file)
+find . -type d  #只目录(dictionary)
+find . -mtime -1 #最近一天
+find . -mtime 1 #一到两天
+find . -mtime +1 #超过一天
+find . -size +100m #大于100MB
+find . -size -10k #小于10KB
+```
+以上均是单个条件的命令，接下来介绍一些组合和复杂操作
+```bash
+find . -name "*.py" -type -f #找同时满足是.py且是文件,find默认是 and
+# 条件部分的命令顺序执行，一般在没有or的情况下顺序可以随意更换
+# or条件：
+find .\( -name "*.py" -o -name "*.txt" \)  #注意空格，\( 和 \)是转义括号，不能分开
+#执行操作
+find . -name "*.txt" -delete #删除文件
+find . -name "*.py" -exec ls -l {} \; #{} = 当前找到的文件路径 \防止shell提前解释， ; 是结束-exec命令
+find . -name "*.py" -exec ls -l {} + #\;表示每个文件执行一次，+表示一次性批量执行
+```
+---
+## 十四、 `awk`
+`awk` = 按行读取 + 按列处理 + 条件判断 + 执行动作
+基本结构：
+```bash
+awk '条件 { 动作 }' 文件
+NR  #第几行(行号)
+$1 # 第一列
+$2 # 第二列
+$0 # 整行
+```
+基础用法：
+```bash
+awk '{ print }'files.txt  #打印整行,等价于cat
+awk '{ print $1,$2}' files.txt #打印某列(这里awk默认以空格分隔列)
+awk '$1 > 10 { print }' files.txt #打印第一列大于10的行
+awk '{ print "value:",$1}' files.txt #自定义输出
+awk  '{count++} END {print count}' files.txt #统计行数，count默认初始值就是0
+awk -F ',' '{print $1}' files.txt #改为用逗号分割
+awk  '{print NR,$0}' files.txt #给输出加行号
+```
+---
+## 十五、shell中的 if,for,while
+`shell`中同样有执行条件语句，循环语句，下面做简单介绍
+1. `if`
+```bash
+#传统写法 [] (>表示重定向，无法使用)
+if [条件1];then
+   ...
+else if [条件2];then
+   ...
+else 
+   ...
+fi
+#现代写法 [[]] (>等符号本质表示字符串，无法比较数值)
+if [[条件1]];then
+   ...
+else if [[条件2]];then
+   ...
+else 
+   ...
+fi
+#数值计算专用写法(>可进行数值比较)
+if ((条件1));then
+   ...
+else if ((条件2));then
+   ...
+else 
+   ...
+fi
+```
+**注：条件写法(if,while通用)**
+   1. 数值比较
+   ```bash
+   -eq # ==
+   -ne # !=
+   -gt # >
+   -ls # <
+   -ge # >=
+   -le # <=
+   #例：
+   if [ "$a" -gt 10];then
+      echo "big"
+   fi
+   ```
+   2. 字符串比较
+   ```bash
+   =  #等于
+   != #不等于
+   #即字符串判断与其他编程预言一致
+   ```
+   3. 文件判断
+   ```bash
+   -f file #是否是文件
+   -d dir  #是否是目录
+   -e path #是否存在
+   ```
+**注：重要坑**
+```bash
+[ "$a" = "b"] #✅
+[ "$a"="b" ]  #❌必须有空格
+```
+2. `while`
+```bash
+while 条件; do
+   命令
+done
+```
+3. `for`
+```bash
+for i in 列表;do
+   命令
+done
+```
+一般来说更推荐把 shell 的if ,for ,while 等内容写在`.sh`文件中,可读性好，可复用，具体写法后续会继续介绍
 
 
 
