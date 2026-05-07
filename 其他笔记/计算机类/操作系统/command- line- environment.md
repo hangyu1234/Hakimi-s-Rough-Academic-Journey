@@ -226,3 +226,190 @@ bash -c 'echo DEBUG'
 ```
 
 要删除一个变量，可以使用内建命令`unset`,例如`unset DEBUG`。
+```bash
+foo=bar
+echo "$foo"
+unset foo
+echo "$foo"
+```
+输出：
+```bash
+bar
+
+```
+---
+## 五、 返回码(Exit Code)
+在默认情况下，Shell脚本返回退出码为0。
+一般来说0表示正常，非0表示执行中遇到了问题。
+主动返回非0退出码的方法：使用内联命令 `exit NUM`
+获取上一条命令返回码的方法：`$?`
+示例：
+```bash
+> ls
+...
+> echo "$?"
+0
+> cat nonexistent.txt
+cat:nonexistent.txt : No such file or directory
+> echo "$?"
+1
+```
+Shell 中有布尔运算符，分别是 `&&`(AND)和`||`(OR)。
+注：与普通编程预言不同，Shell 中的这两个运算符根据**程序的返回码**来工作。
+Shell 中的布尔运算符都是**短路**运算符，根据前一个条件是否成功(返回码是否为0)来判断是否执行后面的命令。且同样的原则也适用 Shell 中的 `if`和`while`语句。
+```bash
+> if grep -q "pattern" files.txt || ls files.txt;then
+    echo "True"
+  fi
+files.txt
+True
+```
+```bash
+while read line;do
+    echo "$line"
+done < files.txt
+```
+## 六、信号(Signal)
+在 shell 中，信号(Singal)是进程之间一种“紧急通讯方式“。
+当某个事件发生时，系统会向进程发送一个简短都信号，强制它停下手中的任务去处理这个突发情况。
+1. 信号的本质
+信号不是用来传递大量数据的，更像是一个编号(ID),当进程收到信号时，一般会有三种选择：
+   - 执行默认动作：大多数信号的默认动作是终止进程
+   - 忽略：假装没看见(但是想`SIGKILL`这种信号是绝对不能被忽略的)
+   - 捕获并处理(Catch):执行一段你自定义的代码(Signal Handler)。
+2. 常见信号及含义
+
+|信号名称|编号|英文名|触发动作|
+|---------|----|--------|----------------|
+|SIGHUP|1|Hangup|关闭终端窗口|
+|SIGINT|2| Interrupt|`Ctrl + C`|
+|SIGKILL|9|Kill|`kill -9`|
+|SIGTERM|15|Terminate|`kill`|
+|SIGTSTP|20|Stop|`Ctrl + Z`|
+3. 在 shell 中发送信号
+最常用的就是`kill`命令。
+- 默认发送SIGTERM(15)
+`kill 1234`(1234为进程PID)
+- 强制杀死(SIGKILL)
+`kill -9 1234`
+- 列出所有信号
+`kill -l`
+4. `trap`命令
+`trap`为 shell 脚本内建命令，可以让脚本在收到信号时执行指定命令。
+```bash
+# 当脚本收到 SIGINT(2) 或 SIGTERM(15) 时，执行清理函数
+trap "echo '收到中断信号，正在清理环境...';rm -f /tmp/temp_data;exit" SIGINT SIGTERM
+
+echo "程序正在运行..."
+while true; do sleep 1; done
+```
+```bash
+#!/usr/bin/env bash
+cleanup(){
+    echo "Cleaning up temporary files..."
+    rm -f /tmp/mytemp.*
+}
+trap cleanup EXIT
+trap cleanup SIGINT SINGTERM
+```
+**注：** `trap`在默认条件下就是一个“拦截器”，信号发生时会使程序暂停手中的工作而去执行`trap`里的命令，执行完后，会尝试回到刚才被中断的地方继续运行。
+如果希望在收到信号后真正结束，需要在`trap`的命令字符串里显式加上`exit`。这也就解释了为什么有些程序狂按`Ctrl + C`也结束不掉。此时就需要使用`kill -9`，因为 SIGKILL 是唯一不能被`trap`拦截的信号。
+5. 信号与返回码
+信号与返回码的关系，本质上是“程序死因的记录仪式”
+在 Linux/macOS 中，当一个进程结束时，会留下一个8位的数字(0-255)来告诉父进程它的结局。
+- 公式：128 + n
+当一个进程被信号n终止时，shell 会通过公式`exit code = 128 + signal number`计算出退出状态
+- 为什么是128 ？
+在早期 Unix 系统中，这八位数字的最高位(第七位，即 2^7=128)被用来标记“该进程是否因信号而终止”，如果是1则是信号导致，剩下的7位用来存放具体的信号编号。
+- 为什么有 255 这个上限？
+退出状态在系统底层用一个**8位无符号整数**存储。
+示例：
+创建一个脚本：
+```bash
+cat << 'EOF' > my_test_program.sh
+#!/bin/bash
+
+echo "🚀 程序已启动 (PID: $$)"
+echo "你可以尝试以下操作来观察返回码："
+echo "1. 按 Ctrl+C (SIGINT)"
+echo "2. 按 Ctrl+\ (SIGQUIT)"
+echo "3. 另开窗口输入: kill -9 $$ (SIGKILL)"
+echo "------------------------------------"
+
+# 模拟一个循环任务
+count=1
+while true; do
+    echo "正在处理第 $count 块数据... (按 Ctrl+C 停止)"
+    sleep 2
+    ((count++))
+done
+EOF
+
+# 给脚本添加执行权限
+chmod +x my_test_program.sh
+```
+```bash
+> ./my_test_program
+>ctrl + c
+>echo $?
+130
+```
+## 七、ssh / 远程机器
+有关生成公钥/私钥以及配置远程服务器的内容可以查看 /Hakimi-s-Rough-Academic-Journey/其他笔记/计算机类/软件工程/Git及GitHub入门教程.md 
+唯一区别是要把公钥复制进 `.ssh/authorized_keys`,可执行以下命令
+```bash
+cat .ssh/id_ed25519.pub | ssh alice@remote 'cat >> ~/.ssh/authorized_keys'
+```
+再次强调，千万**不要把私钥复制传入**进去！！！
+## 八、 终端复用器
+这里以`tmux`为例
+
+`tmux`的作用：解决了**如何在一个终端窗口中高效地处理多个任务，并且在断网或关闭终端后依然保持任务运行**的痛点。
+
+一般来说 Linux 中会预装 tmux
+在 macOS 中，首先执行
+```bash
+brew install tmux
+tmux
+```
+如果看到终端下方出现绿条，就说明已经安装成功并启用了。
+形象理解`tmux`的对象层级(Session/Window/Pane)：
+1. `Session`
+一个 Session 相当于一个 “永不**掉线**的虚拟终端工作站”
+2. `Window`
+输入`tmux`后，即进入该 Session 的第一个Window，默认编号为0
+3. `Pane`
+把一个Window切出来的东西就是Pane。
+`tmux`在使用中，几乎所有的操作都需要按照`Ctrl + b`(prefix key)后再按具体的命令，如果觉得不舒服可以自己映射按键。
+
+下面列举一些常用快捷键：
+
+| 类别 | 快捷键 (Prefix 后) | 功能说明 |
+| :--- | :--- | :--- |
+| **会话管理** | `d` | **Detach**：分离当前会话，让它在后台运行 |
+| | (命令行) `tmux attach` | 重新连接到上一个会话 |
+| **窗口管理** | `c` | **Create**：创建一个新窗口 |
+| | `n` / `p` | 切换到 **Next** (后一个) 或 **Previous** (前一个) 窗口 |
+| | `0...9` | 根据数字直接跳转到指定窗口 |
+| | `,` | 重命名当前窗口 |
+| **面板管理** | `"` | 水平分割面板（上下） |
+| | `%` | 垂直分割面板（左右） |
+| | `方向键` | 在不同面板间移动光标 |
+| | `z` | **Zoom**：最大化当前面板（再按一次还原） |
+| | `x` | 关闭当前面板 |
+
+为养成良好习惯，建议在创建 Session 时给Session 命名。
+```bash
+tmux new -s NAME
+```
+```bash
+tmux ls #列出当前所有 session
+exit #销毁当前的pane/window，最后一个 window 销毁时session会自己销毁
+
+# 在 session 外部强制关闭
+tmux kill-session #关闭当前/最后一个会话
+tmux kill-session -t work # 关闭指定名字的会话（假设你给会话起名叫 work）
+tmux kill-server # 一键清除所有会话（大扫除）
+```
+## 九、 定制 shell 
+每个人对于 shell 的审美和使用需求不同，所以这部分不做过多展开介绍，感兴趣的同学可以通过询问 AI ，个性化定制自己的 shell。
