@@ -27,6 +27,9 @@
       - [单链表类](#单链表类)
       - [双链表类](#双链表类)
       - [循环链表类](#循环链表类)
+  - [三、栈](#三栈)
+    - [3.1 顺序栈](#31-顺序栈)
+    - [3.2 链接栈](#32-链接栈)
 
 ## 一、基础知识
 ### 1.1 算法与数据结构
@@ -82,9 +85,9 @@
 一般算法分析分析的是其**时空性能**，也就是常说的**时间复杂度**和**空间复杂度**。
 #### (1) 时间复杂度
 时间复杂度通常使用**Big O**、**Big Θ**分析（又称渐进分析）
-1. **Big O Notation**：用于描述函数的**渐近上界**，也就是说，最糟糕的情况是 O(x).
-2. **Big Θ Notation**：用于描述函数的**渐近紧确界**，是精确描述算法实现代价的方式
-3. **Little o Notation**：用于描述**非紧确的渐近上界**，也就是说是下界，一般用来表示最好的情况。
+1. **Big O Notation**：用于描述函数的**渐近上界**，也就是说，最糟糕的情况是 $O(x)$.
+2. **Big Θ Notation**：用于描述函数的**渐近紧确界**，是精确描述算法实现代价的方式，比如 $\Theta(N)$
+3. **Little o Notation**：用于描述**非紧确的渐近上界**，也就是说是下界，一般用来表示最好的情况。比如 $o(N)$
 
 | 函数       | 名称       | 函数  | 名称 |
 | :--------- | :--------- | :---- | :--- |
@@ -1546,3 +1549,364 @@ public class CLinkList<E> implements List<E> {
 </details>
 
 ---
+
+## 三、栈
+**栈**是一种特殊的线性表，允许进行插入和删除的一端称为**栈顶**，另一端称为**栈底**，位于栈顶位置得元素称为**栈顶元素**，若栈中没有元素，称为**空栈**，在栈中插入或删除操作分别称为**进栈**和**出栈**。栈是**后进先出**的线性表。
+
+下面是栈的抽象类：
+<details>
+<summary><strong>栈的抽象类</strong></summary>
+
+```cpp
+template <class elemType>
+class stack {
+public :
+    virtual bool isEmpty() const = 0;               // Judge if the stack is empty
+    virtual void push(const elemType &x) = 0;       // Push an element onto the stack
+    virtual elemType pop() = 0;                     // Pop the top element from the stack
+    virtual elemType top() const = 0;               // Get the top element of the stack
+    virtual ~stack() {}                             // Virtual destructor
+}
+```
+</details>
+
+栈的实现可以是链接式，也可以是顺序式，顺序实现的称为**顺序栈**，链接实现的称为**链接栈**
+
+### 3.1 顺序栈
+下面是顺序栈的定义
+<details>
+<summary><strong>顺序栈的定义</strong></summary>
+
+```cpp
+template <class elemType>
+class seqStack : public stack<elemType> {
+private :
+    elemType *elem;
+    int top_p;              // Pointer of stack top
+    int maxSize;            // The scale of stack
+    void doubleSpace();     // Expand the space
+
+public :
+    seqStack(int initSize = 10);        // Default constructor
+    ~seqStack();                        // Destructor.
+    bool isEmpty() const;
+    void push(const elemType &x);
+    elemType pop();
+    elemType top() const;
+};
+```
+</details>
+
+下面是顺序栈的实现
+<details>
+<summary><strong> 顺序栈的实现(cpp) </strong></summary>
+
+```cpp
+template <class elemType>
+seqStack<elemType>::seqStack(int initSize=10) {
+    elem = new elemType[initSize];
+    maxSize = initSize;
+    top_p = -1;
+}
+
+template <class elemType>
+seqStack<elemType>::~seqStack() {
+    delete [] elem;
+}
+
+template <class elemType>
+bool seqStack<elemType>::isEmpty() const {
+    return top_p == -1;
+}
+
+template <class elemType>
+void seqStack<elemType>::push(const elemType &x) {
+    if (top_p == maxSize - 1)   doubleSpace();      // Expand the capacity when the space is insufficient
+    elem[++top_p] = x;
+}
+
+template <class elemType>
+elemType seqStack<elemType>::pop() {
+    return elem[top_p--];
+}
+
+template <class elemType>
+elemType seqStack<elemType>::top() const {
+    return elem[top_p];
+}
+
+template <class elemType>
+void seqStack<elemType>::doubleSpace() {
+    elemType *temp = elem;
+
+    elem = new elemType[maxSize * 2];
+
+    for (int i = 0; i < maxSize; i += 1) {
+        elem[i] = temp[i];
+    }
+
+    maxSize *= 2;
+    delete [] temp;
+}
+```
+</details>
+
+下面是栈的 Java 接口
+<details>
+<summary><strong> 栈的接口 </strong></summary>
+
+```java
+public interface Stack<E> {
+    boolean isEmpty()               // Check whether the stack is empty.
+
+    void push(E x);                 // Push an element onto the stack.
+
+    E pop();                        // Pop and return the top element.
+
+    E top();                        // Return the top element without removing it.
+
+    int size();                     // Return the size of stack.
+}
+```
+</details>
+
+下面是顺序栈的 java 实现
+<details>
+<summary><strong> 顺序栈的实现(Java) </strong></summary>
+
+```java
+public class SeqStack<E> implements Stack<E> {
+    private E[] elem;               // Array used to store stack elements.
+    private int top;                // Index of the top element.
+    private int maxSize;            // Current capacity of the stack.
+    private int size;
+
+    @SuppressWarnings("unchecked")
+    public SeqStack() {
+        this(10);
+    }
+
+    @SuppressWarnings("unchecked")
+    public SeqStack(int initSize) {
+        if (initSize <= 0) {
+            throw new IllegalArgumentException("Initial size must be positive")'
+        }
+
+        elem = (E[]) new Object[initSize];
+        maxSize = initSize;
+        top = -1;
+        size = 0;
+    }
+
+    @Override 
+    public boolean isEmpty() {
+        return top == -1;
+    }
+
+    @Override
+    public void push(E x) {
+        if (top == maxSize - 1) {
+            doubleSpace();      // Expand the capacity when the stack is full.
+        }
+        
+        elem[++top] = x;
+        size += 1;
+    }
+
+    @Override
+    public E pop() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Cannot pop from an empty stack.");
+        }
+
+        E result = elem[top];
+        elem[top] = null;    // Remove the reference to help garbage collection.
+        top--;
+        size -= 1;
+
+        return result;
+    }
+
+    @Override
+    public E top() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Cannot get the top element from an empty stack.");
+        }
+
+        return elem[top];
+    }
+
+    @SuppressWarnings("unchecked")
+    private void doubleSpace() {
+        E[] oldElem = elem;  // Save the old array.
+
+        elem = (E[]) new Object[maxSize * 2];
+
+        for (int i = 0; i < maxSize; i++) {
+            elem[i] = oldElem[i];
+        }
+
+        maxSize *= 2;
+    }
+
+    @Override 
+    public int size() {
+        return size;
+    }
+}
+```
+</details>
+
+顺序栈除了进栈操作，所有的运算实现时间都是 $O(1)$，进栈是因为可能会出现空间不够，数组扩容的情况，这时操作时间复杂度为 $O(N)$。
+
+### 3.2 链接栈
+下面是链接栈的定义
+<detials>
+<summary><strong>链接栈的定义 </strong></summary>
+
+```cpp
+template <class elemType>
+class linkStack : public stack<elemType> {
+private :
+    struct Node {
+        elemType data;
+        Node *next;
+
+        Node(const elemType &x, Node *n = nullptr) {
+            data = x;
+            next = n;
+        }
+        Node() : next(nullptr) {};
+        ~Node() {}
+    }
+
+    Node *top_p;            // Point the Head Node
+public :
+    linkStack();
+    ~linkStack();
+    bool isEmpty() const;
+    void push(const elemType &x);
+    elemType pop();
+    elemType top() const;
+};
+```
+</details>
+
+下面是链接栈的实现
+<details>
+<summary><strong> 链接栈的实现(cpp) </strong></summary>
+
+```cpp
+template <class elemType>
+linkStack<elemType>::linkStack() {
+    top_p = nullptr;
+}
+
+template <class elemType>
+linkStack<elemType>::~linkStack() {
+    Node *temp;
+    while (top_p != nullptr) {
+        temp = top_p;
+        top_p = top_p->next;
+        delete temp;
+    }
+}
+
+template <class elemType>
+bool linkStack<elemType>::isEmpty() const {
+    return top_p == nullptr;
+}
+
+template <class elemType>
+void linkStack<elemType>::push(const elemType &x) {
+    top_p = new Node(x, top_p);             // Head Insertion.
+                                            // Allocate a new node storing x and insert it before the first node
+}
+
+template <class elemType>
+elemType linkStack<elemType>::pop() {
+    Node *temp = top_p;
+    elemType x = temp->data;        // Save the value of the top element for later return
+    top_p = top_p->next;            // Reomve the top node from the linked list.
+    delete temp;                    // Release the memory of the removed node.
+
+    return x;
+}
+
+template <class elemType>
+elemType linkStack<elemType>::top() const {
+    return top_p->data;
+}
+```
+</details>
+
+下面是链接表的 Java 实现，接口参照上面的 "栈的 Java 接口"
+<details>
+<summary><strong> 链接栈的实现(Java) </strong></summary>
+
+```java
+public class LinkStack<E> implements Stack<E> {
+    private static class Node<E> {
+        private E data;                 // Data stored in the node.
+        private Node<E> next;           // Reference to the next node.
+
+        public Node(E data, Node<E> next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        public Node() {
+            this(null, null);
+        }
+    }
+
+    private Node<E> top;            // Reference to the top node of the stack.
+    private int size;               // Store the number of elements in the stack
+
+    public LinkStack() {
+        top = null;
+        size = 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return top == null && size == 0;
+    }
+
+    @Override
+    public void push(E x) {
+        top = new Node(x, top);      // Insert a new node at the top of the stack
+        size += 1;
+    }
+
+    @Override
+    public E pop() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Cannot pop from an empty stack.");
+        }
+
+        E result = top.data;        // Save the value of the top element for later return.
+        top = top.next;             // Remove the top node from the linked list.
+        size -= 1;
+
+        return result;
+    }
+
+    @Override
+    public E top() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Cannot get the top element from an empty stack.");
+        }
+
+        return top.data;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+}
+```
+</details>
+
+--- 
