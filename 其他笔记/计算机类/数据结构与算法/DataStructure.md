@@ -30,6 +30,8 @@
   - [三、栈](#三栈)
     - [3.1 顺序栈](#31-顺序栈)
     - [3.2 链接栈](#32-链接栈)
+  - [四、队列](#四队列)
+    - [4.1 队列的顺序实现](#41-队列的顺序实现)
 
 ## 一、基础知识
 ### 1.1 算法与数据结构
@@ -249,6 +251,7 @@ public :
 <details>
 <summary><strong>顺序表的实现(cpp)</strong></summary>
 
+**注意**：这里的构造函数中没有写默认值，这是因为在声明写默认值后，就不能在定义中重复写默认值了，否则会**编译错误**，因为**同一个作用域中不能重复给同一个参数默认值**
 ```cpp
 template <class elemType>
 seqList<elemType>::seqList(int initSize) {
@@ -1603,7 +1606,7 @@ public :
 
 ```cpp
 template <class elemType>
-seqStack<elemType>::seqStack(int initSize=10) {
+seqStack<elemType>::seqStack(int initSize) {
     elem = new elemType[initSize];
     maxSize = initSize;
     top_p = -1;
@@ -1910,3 +1913,251 @@ public class LinkStack<E> implements Stack<E> {
 </details>
 
 --- 
+## 四、队列
+队列同栈一样，也是一种特殊的线性表，但是队列的插入限定于**队列头**，删除限定于**队列尾**，位于队头的元素称为**队头元素**，位于队尾的称为是**队尾元素**。若没有元素称为是**空队列**，插入操作称为是**入队**，删除操作称为是**出队**。队列的最显著特点就是**先进先出**。
+
+队列的基本操作有以下5个。
+1) 创建一个队列 create():创建一个空的队列。
+2) 入队 enQueue(x):将 $x$ 插入队尾,使之成为队尾元素。
+3) 出队 deQueue():删除队头元素并返回队头元素值。
+4) 读队头元素 getHead():返回队头元素的值。
+5) 判队列空 isEmpty():若队列为空,返回 true,否则返回 false。
+
+<details>
+<summary><strong>队列的抽象类</strong></summary>
+
+```cpp
+template <class elemType>
+class queue {
+public :
+    virtual bool isEmpty() const = 0;                   // Check if the queue is empty
+    virtual void enQueue(const elemType &x) = 0;        // Insert an element into the queue
+    elemType deQueue() = 0;                             // Remove ans return the front element of the queue.
+    elemType getHead() const = 0;                       // Return the front element of the queue without removing
+    virtual ~queue() {};                                // Virtual destructor.
+};
+```
+</details>
+
+<details>
+<summary><strong>队列的抽象接口</strong></summary>
+
+**注意**：这里的接口名字和 Java 标准库中的名字重复，了解对应结构即可
+```java
+public interface Queue<E> {
+    /**
+     * Check if the queue is empty.
+     */
+    boolean isEmpty();
+
+    /**
+     * Insert an element into queue.
+     */
+    void enQueue(E x);
+
+    /**
+     * Remove and return the element of the queue
+     */
+    E deQueue();
+
+    /**
+     * Return the front element of the queue without removing it.
+     */
+    E getHead();
+}
+```
+</details>
+
+### 4.1 队列的顺序实现
+队列的顺序实现称为**顺序队列**，和顺序栈类似，顺序队列也可以使用一个一维数组来实现，有三种方式可以实现：
+1. **队头固定，队尾移动：**
+   这种情况下采用一个指针进行操作：尾指针（tail），入队，读取队头元素还有判断是否为空的时间性能都是 $O(1)$，但是对于出队操作和扩容操作就会出现 $O(N)$ 的时间复杂度
+
+2. **头尾均不固定：**
+   这种情况下采用两个指针进行操作：头指针（head）和尾指针（tail），这个时候出队操作时间性能就变成了 $O(1)$ ，但是又有新的问题：尾指针的位置总是容易触底，但是队头前面的空间并没有很好的利用
+
+3. **循环列表的实现**
+   为解决空间利用率的问题，可以使用循环列表，这样逻辑上的队列可以在物理上得到很好的实现。
+
+<details>
+<summary><strong> 顺序队列的定义(cpp) </strong></summary>
+
+```cpp
+template <class elemType>
+class seqQueue : public queue<elemType> {
+private :
+    elemType *elem;
+    int maxSize;
+    int front, rear;            // Head pointer and tail pointer.
+    void doubleSpace();         // Expand the space when the array is full.
+
+public :
+    seqQueue(int size = 10);    // Default constructor
+    ~seqQueue();
+    bool isEmpty() const;
+    void enQueue(const elemType &x);
+    elemType deQueue();
+    elemType getHead() const;
+};
+```
+</details>
+
+<details>
+<summary><strong> 顺序队列的实现(cpp) </strong></summary>
+
+```cpp
+template <class elemType>
+seqQueue<elemType>::seqQueue(int size) {
+    if (size <= 1) {
+        throw std::invalid_argument("Queue size must be greater than 1.");
+    }
+
+    elem = new elemType[size];
+    maxSize = size;
+    front = rear = 0;
+}
+
+template <class elemType>
+seqQueue<elemType>::~seqQueue() {
+    delete [] elem;
+}
+
+template <class elemType>
+bool seqQueue<elemType>::isEmpty() const {
+    return front == rear;
+}
+
+template <class elemType>
+void seqQueue<elemType>::enQueue(const elemType &x) {
+    if ((rear + 1) % maxSize == front) {
+        doubleSpace();
+    }
+
+    rear = (rear + 1) % maxSize;
+    elem[rear] = x;
+}
+
+template <class elemType>
+elemType seqQueue<elemType>::deQueue() {
+    if (isEmpty()) {
+        throw std::underflow_error("Cannot dequeue from an empty queue");
+    }
+
+    front = (front + 1) % maxSize;
+    return elem[front];
+}
+
+template <class elemType>
+elemType seqQueue<elemType>::getHead() const {
+    if (isEmpty()) {
+        throw std::underflow_error("Cannot get head from an empty queue.");
+    }
+
+    return elem[(front + 1) % maxSize];
+}
+
+template <class elemType>
+void seqQueue<elemType>::doubleSpace() {
+    elemType *temp = elem;      // Save the old array pointer.
+
+    elem = new elemType[maxSize * 2];       // Allocate a new larger array
+
+    for (int i = 1; i < maxSize; i += 1) {
+        elem[i] = temp[(front + i) % maxSize];
+    }
+
+    front = 0;
+    rear = maxSize - 1;
+    maxSize *= 2;
+
+    delete [] temp;              // Release the old array
+}
+```
+</details>
+
+<details>
+<summary><strong> 顺序队列的实现(java) </strong></summary>
+
+```java
+public class ArrayQueue<E> inplements Queue<E> {
+    private E[] items;      // Store queue elements
+
+    private int front;      // Index of the front element
+
+    private int rear;       // Index of the next insertion position
+
+    private int size;       // Number of elements in the queue
+
+    private static final int DEFAULT_CAPACITY = 8;
+
+    @SuppressWarnings("unchecked")
+    public ArrayQueue() {
+        items = (E) new Object[DEFAULT_CAPACITY];      // Create a default-sized array using explicit type casting
+        front = rear = 0;
+        size = 0;
+    }
+
+    @Override 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override 
+    public int size() {
+        return size;
+    }
+
+    @Override 
+    public void enQueue(E x) {
+        if (size == items.length) {
+            resize(items.length * 2);
+        }
+
+        items[rear] = x;
+        rear = (rear + 1) % items.length;
+        size += 1;
+    }
+
+    @Override 
+    public E deQueue() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Cannot dequeue from an empty queue.");
+        }
+
+        E result = items[front];
+        items[front] = null;        // Avoid loitering
+
+        front = (front + 1) % items.length;
+        size -= 1;
+
+        if (items.length > DEFAULT_CAPACITY && size > 0 && size <= items.length / 4) {
+            resize(items.length / 2);
+        }
+
+        return result;
+    }
+
+    @Override 
+    public W getHead() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Cannot get head from an empty queue");
+        }
+
+        return items[front];
+    }
+
+    @SuppressWarnings("unchecked")
+    private void resize(int capacity) {
+        E[] newItems = (E) new Object[capacity];
+
+        for (int i = 0; i < size; i += 1) {
+            newItems[i] = items[(front + i) % items.length];
+        }
+
+        items = newItems;
+        front = 0;
+        rear = size;
+    }
+}
+```
+</details>
