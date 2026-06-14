@@ -7,6 +7,7 @@
 
 笔记内容为对校内教材《数据结构思想与实现》和 CS61B 知识点的整理与概括，细节可能略有误差，若发现问题，欢迎指正，邮箱：[2312786648@qq.com](https://mail.qq.com/)
 <div align="right">编者：DoroKnight</div>
+<div align="right">注：本笔记的cpp实现是教材的改进，java实现参照 CS61B 的标准</div>
 
 ---
 ## 目录
@@ -32,6 +33,7 @@
     - [3.2 链接栈](#32-链接栈)
   - [四、队列](#四队列)
     - [4.1 队列的顺序实现](#41-队列的顺序实现)
+    - [4.2 队列的链接实现](#42-队列的链接实现)
 
 ## 一、基础知识
 ### 1.1 算法与数据结构
@@ -1764,8 +1766,8 @@ public class SeqStack<E> implements Stack<E> {
 
 ### 3.2 链接栈
 下面是链接栈的定义
-<detials>
-<summary><strong>链接栈的定义 </strong></summary>
+<details>
+<summary><strong> 链接栈的定义 </strong></summary>
 
 ```cpp
 template <class elemType>
@@ -2161,3 +2163,273 @@ public class ArrayQueue<E> inplements Queue<E> {
 }
 ```
 </details>
+
+### 4.2 队列的链接实现
+由于队列经常进行插入与删除操作，所以我们很自然的想法是用链表实现，但是由于操作的位置是在表头和表尾，所以我们可以使用**双指针法**，用两个指针指向头尾节点，并采用双向的链表便于移动。
+
+<details>
+<summary><strong> 链接队列的定义 </strong></summary>
+
+```cpp
+template <class elemType>
+class linkQueue : public queue<elemType> {
+private :
+    struct Node {
+        elemType data;
+        Node *prev;
+        Node *next;
+
+        Node(const elemType &x, Node *p = nullptr, Node *n = nullptr)
+            : data(x), prev(p), next(n) {}
+    };
+
+    Node *front;        // Pointer to the front node.
+    Node *rear;         // Pointer to the rear node.
+    int currentLength;  
+
+public :
+    linkQueue();
+    ~linkQueue();
+
+    linkQueue(const linkQueue &other) = delete;
+    linkQueue &operator=(const linkQueue &other) = delete;
+
+    bool isEmpty() const override;
+    void enQueue(const elemType &x) override;
+    elemType deQueue() override;
+    elemType getHead() const override;
+
+    int size() const;
+};
+```
+
+</details>
+
+<details>
+<summary><strong> 链接队列的实现(cpp) </summary></strong>
+
+```cpp
+template <class elemType>
+linkQueue<elemType>::linkQueue() {
+    front = rear = nullptr;
+    currentLength = 0;
+}
+
+template <class elemType>
+linkQueue<elemType>::~linkQueue() {
+    while (!isEmpty()) {
+        deQueue();
+    }
+}
+
+template <class elemType>
+bool linkQueue<elemType>::isEmpty() const {
+    return front == nullptr;
+}
+
+template <class elemType>
+int linkQueue<elemType>::size() const {
+    return currentLength;
+}
+
+template <class elemType>
+void linkQueue<elemType>::enQueue(const elemType &x) {
+    Node *newNode = new Node(x);
+
+    if (isEmpty()) {
+        // The first node ponits to itself in both directions.
+        front = raer = newNode;
+        newNode->prev = newNode;
+        newNode->rear = newNode;
+    } else {
+        // Insert the new node after rear and before front;
+        newNode->prev = rear;
+        newNode->next = front;
+
+        rear->next = newNode;
+        front->prev = newNode;
+
+        rear = newNode;
+    }
+
+    currentLength += 1;
+}
+
+template <class elemType>
+elemType linkQueue<elemType>::deQueue() {
+    if (isEmpty()) {
+        throw std::out_of_range("deQueue from an empty queue");
+    }
+
+    Node *oldFront = front;
+    elemType value = oldFront->data;
+
+    if (front == rear) {
+        // There is only node in the queue
+        front = rear = nullptr;
+    } else {
+        // Move front to the next node.
+        front = front->next;
+
+        // Reconnect rear and the new front to keep the list circular
+        rear->next = front;
+        front->prev = rear;
+    }
+
+    delete oldFront;
+    currentLength -= 1;
+
+    return value;
+}
+
+template <class elemType>
+elemType linkQueue<elemType>::getHead() const {
+    if (isEmpty()) {
+        throw std::out_of_range("getHead from an empty queue");
+    }
+
+    return front->data;
+}
+```
+</details>
+
+<details>
+<summary><strong> 链接队列的接口 </summary></strong>
+
+```java
+public interface Queue<E> {
+    /**
+     * Check whether the queue is empty.
+     */
+    boolean isEmpty();
+
+    /**
+     * Insert an element at the rear of the queue.
+     */
+    void enQueue(E x);
+
+    /**
+     * Remove and return the front element of the queue.
+     */
+    E deQueue();
+
+    /**
+     * Return the front element without removing it.
+     */
+    E getHead();
+
+    /**
+     * Return the number of elements in the queue.
+     */
+    int size();
+}
+```
+</details>
+
+<details>
+<summary><strong> 链接队列的实现(Java) </summary></strong>
+
+```java
+import java.util.NoSuchElementException;        // Import a kind of error
+
+public class CitcularDoublyLinkedQueue<E> implements Queue<E> {
+    private static class Node<E> {
+        E data;
+        Node<E> prev;
+        Node<E> next;
+
+        Node(E data) {
+            this.data = data;
+            this.prev = null;
+            this.next = null;
+        }
+    }
+
+    private Node<E> front;          // Point to the front node.
+    private Node<E> rear;           // Point to the rear node.
+    private int size;               // Store the number of elements.
+
+    public CircularDoublyLinkedQueue() {
+        front = null;
+        rear = null;
+        size = 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public void enQueue(E x) {
+        Node<E> newNode = new Node<>(x);
+
+        if (isEmpty()) {
+            // The first node points to itself in both directions.
+            front = newNode;
+            rear = newNode;
+
+            newNode.prev = newNode;
+            newNode.next = newNode;
+        } else {
+            // Insert the new node after rear and before front.
+            newNode.prev = rear;
+            newNode.next = front;
+
+            rear.next = newNode;
+            front.prev = newNode;
+
+            rear = newNode;
+        }
+
+        size += 1;
+    }
+
+    @Override
+    public E deQueue() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Cannot deQueue from an empty queue");
+        }
+
+        Node<E> oldFront = front;
+        E value = oldFront.data;
+
+        if (size == 1) {
+            // Remove the only node.
+            front = rear = null;
+        } else {
+            // Move front to the next node.
+            front = front.next;
+
+            // Reconnect rear and the new front to keep the list circular.
+            rear.next = front;
+            front.prev = rear;
+        }
+
+        size -= 1;
+
+        // Help garbage collecting by breaking old links.
+        oldFront.prev = null;
+        oldFront.next = null;
+
+        return value;
+    }
+
+    @Override
+    public E getHead() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("Cannot getHead from an empty queue");
+        }
+
+        return front.data;
+    }
+}
+```
+</details>
+
+---
