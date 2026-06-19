@@ -37,6 +37,11 @@
   - [五、字符串](#五字符串)
     - [5.1 字符串的顺序实现](#51-字符串的顺序实现)
     - [5.2 字符串的链接实现](#52-字符串的链接实现)
+  - [六、树](#六树)
+    - [6.1 二叉树](#61-二叉树)
+      - [6.1.1 二叉树的性质](#611-二叉树的性质)
+      - [6.1.2 二叉树的运算实现](#612-二叉树的运算实现)
+      - [6.1.3 二叉树的链接实现](#613-二叉树的链接实现)
 
 ## 一、基础知识
 ### 1.1 算法与数据结构
@@ -3507,13 +3512,721 @@ public class LinkString implements LinkStringInterface {
    ```java
    System.arraycopy(src, srcPos, dest, destPos, length);
    ```
-   | 参数 | 含义 |
-   | :---: | :---: |
-   | `src` | 原数组 |
-   | `srcPos` | 源数组的复制起始位置 |
-   | `dest` | 目标数组 |
+   |   参数    |          含义          |
+   | :-------: | :--------------------: |
+   |   `src`   |         原数组         |
+   | `srcPos`  |  源数组的复制起始位置  |
+   |  `dest`   |        目标数组        |
    | `destPos` | 目标数组的复制起始位置 |
-   | `length` | 复制元素个数 |
-</detalis>
+   | `length`  |      复制元素个数      |
+</details>
 
 ---
+## 六、树
+也是虽迟但到啊，树大人也是登场了。
+树状结构是表示**层级关系的数据结构**，下面是它的一个递归定义：
+> 树的递归定义：树是 $ n $ 个结点的有限集合,它或者是空集,或者满足以下条件。
+> (1) 有一个被称为根的结点。
+> (2) 其余的结点可分为 $ m $ ($ m \ge 0 $) 个互不相交的集合 $ T_1, T_2, \cdots, T_m $,这些集合本身也是一棵树,并称它们为根结点的子树 (subtree)。
+
+树的常用术语有以下几个：
+1. 根节点、叶节点和内部节点
+   - 树中唯一的一个没有直接前驱的结点称为**根结点**
+   - 树中没有后继的结点称为**叶结点**
+   - 除根以外的非叶结点也称为**内部结点**
+
+2. 结点的度和树的度
+   - 一个结点的直接后继的数目称为**结点的度**
+   - 树种所有节点的度的最大值称为这个**树的度**
+
+3. 子结点、父结点祖先结点和子孙结点
+   - 结点的直接后继称为结点的**子结点**
+   - 结点的直接前驱称为它的**父结点**
+   - 在树中，每个结点都存在着唯一的一条到根结点的路径，路径上的所有结点都是该结点的**祖先结点**
+   - **子孙结点**是指该结点的所有子树中的全部结点 
+
+4. 兄弟节点
+   同一个结点的子结点互为**兄弟结点** 
+
+5. 结点的层次高度和树的高度
+   结点的层次也称为**深度**，根的层次是第 1 层，根的子女是第 2 层，一个 $L$ 层结点的子结点的层次是 $L+1$，一棵树中结点的最大层次称为树的**高度**
+   > 在 CS61B 这门课中，Josh 老师教授的高度是从 0 开始的，也就是说，根节点是高度为 0 的节点，然后从上往下高度增加
+
+6. 有序树和无序树
+   若将树中每个结点的子树看成自左向右有序的，则称该树为**有序树**，否则称为**无序树**。
+
+7. 森林
+   $M$颗互不相交的树的集合被称为**森林**
+
+树的基本逻辑关系是父子关系，树的基本运算是围绕着这个关系展开的，基本运算有以下几种：
+
+1) 建树 create()：创建一棵空树。
+
+2) 清空 clear()：删除树中的所有结点。
+
+3) 判空 isEmpty()：判别是否为空树。
+
+4) 找根结点 root()：找出树的根结点值；如果树是空树，则返回一个特殊值。
+
+5) 找父结点 parent(x)：找出结点 x 的父结点值；如果 x 不存在或 x 是根结点，则返回一个特殊值。
+
+6) 找子结点 child(x,i)：找出结点 x 的第 i 个子结点值；如果 x 不存在或 x 的第 i 个儿子不存在，则返回一个特殊值。
+
+7) 剪枝 remove(x,i)：删除结点 x 的第 i 棵子树。
+
+8) 遍历 traverse()：访问树上的每一个结点。
+
+<details>
+<summary><strong> 树的抽象类 </strong></summary>
+
+```cpp
+template <class T>
+class tree {
+public :
+    virtual void clear() = 0;                       // Clear the whole tree
+    virtual bool isEmpty() const = 0;               // Return whether the tree is empty
+    virtual T root(T flag) const = 0;               // Return flag if the tree is empty.
+    virtual T parent(T x, T flag) const = 0;        // Return flag if parent does not exist
+    virtual T child(T x, int i, T flag) const = 0;  // Return flag if child does not exist.
+    virtual void remove(T x, int i) = 0;            // Remove the i-th child
+    virtual void traverse() const = 0;              // Traverse the whole tree.
+};
+```
+
+</details>
+
+<details>
+<summary><strong> 树的抽象接口 </strong></summary>
+
+```java
+public interface Tree<T> {
+    /**
+     * Remove all nodes from tree
+     */
+    void clear();
+
+    /**
+     * Return true if the tree is empty.
+     */
+    boolean isEmpty();
+
+    /**
+     * Return the root element
+     * If the tree is empty, return flag.
+     */
+    T root (T flag);
+
+    /**
+     * Return the parent of x.
+     * If x has no parent or x does not exist, return flag.
+     */
+    T parent(T x, T flag);
+
+    /**
+     * Return the i-th child of x.
+     * If the child does not exist, return flag
+     */
+    T child(T x, int i, T flag);
+
+    /**
+     * Remove the i-th subtree of x.
+     */
+    void remove(T x, int i);
+
+    /**
+     * Traverse the tree
+     */
+    void traverse();
+}
+```
+</details>
+
+### 6.1 二叉树
+二叉树 (binary tree) 是结点的有限集合，它或者为空，或者由一个根结点及两棵互不相交的左右子树构成，而其左、右子树又都是二叉树。
+注意：二叉树是有序树，必须严格区分左右子树，即使只有一棵子树，也要说明它是左子树还是右子树。
+
+二叉树一般有5种形态：
+
+![二叉树的五种形态](./images/birnary-tree-5-forms.png)
+
+如果一棵二叉树中的任意一层的结点个数都达到了最大值，那么这棵二叉树称为**满二叉树**或**丰满树**。
+**完全二叉树**是在满二叉树的最底层**自右至左依次**（注意 ：不能跳过任何一个结点）去掉若干个结点
+**满二叉树是完全二叉树，但完全二叉树不一定是满二叉树**
+
+![满二叉树和完全二叉树](./images/full-binary-tree-and-complete-binary-tree.png)
+
+#### 6.1.1 二叉树的性质
+1. 一颗非空二叉树的第 i 层上最多有 $2^{i-1}$ 个节点
+2. 一棵高度为 k 的二叉树，最多有 $2^k - 1$ 个节点
+3. 对于一棵非空二叉树，如果叶子节点数位 $n_0$，度为 2 的节点数为 $n_2$，则有 $n_0 = n_2 + 1$
+4. 具有 $n$ 个节点的完全二叉树的高度为 $k = [log_2n] + 1$
+5. 如果对一棵有 $n$ 个结点的完全二叉树中的结点按层自上而下（从第 1 层到第 $\lfloor\log_2n\rfloor + 1$ 层），每一层按自左至右依次编号，若设根结点的编号为 1，则对任一编号为 $i$ 的结点（$1 \leqslant i \leqslant n$），有：
+   - 如果 $i=1$，则该结点是二叉树的根结点；如果 $i>1$，则其父亲结点的编号为 $\lfloor i/2 \rfloor$。
+   - 如果 $2i>n$，则编号为 $i$ 的结点为叶子结点，没有儿子；否则，其左儿子的编号为 $2i$。
+   - 如果 $2i+1>n$，则编号为 $i$ 的结点无右儿子；否则，其右儿子的编号为 $2i+1$。
+
+#### 6.1.2 二叉树的运算实现
+1) 建树 `create()`: 创建一棵空的二叉树。
+2) 清空 `clear()`: 删除二叉树中的所有结点。
+3) 判空 `isEmpty()`: 判别二叉树是否为空树。
+4) 找根结点 `root()`: 找出二叉树的根结点值；如果树是空树，则返回一个特殊值。
+5) 找父结点 `parent(x)`: 找出结点 x 的父结点值；如果 x 不存在或 x 是根，则返回一个特殊值。
+6) 找左孩子 `lchild(x)`: 找结点 x 的左孩子结点值；如果 x 不存在或 x 的左儿子不存在，则返回一个特殊值。
+7) 找右孩子 `rchild(x)`: 找结点 x 的右孩子结点值；如果 x 不存在或 x 的右儿子不存在，则返回一个特殊值。
+8) 删除左子树 `delLeft(x)`: 删除结点 x 的左子树。
+9) 删除右子树 `delRight(x)`: 删除结点 x 的右子树；
+10) 遍历 `traverse()`: 访问二叉树上的每一个结点。
+
+这里的遍历可以分为 3 种（根据 root 的输出顺序）：
+1. 前序遍历
+   又称**先根遍历**，顺序为：
+   1) 访问根结点
+   2) 前序遍历左子树
+   3) 前序遍历右子树
+
+2. 中序遍历
+   又称**中根遍历**，顺序为：
+   1) 中序遍历左子树
+   2) 访问根结点
+   3) 中序遍历右子树
+
+3. 后序遍历
+   1) 后序遍历左子树
+   2) 后序遍历右子树
+   3) 访问根结点
+
+4. 层次遍历
+   先访问根结点，然后按从左到右的次序访问第二层的结点 在访问了第 $k$的所有结点后，再按从左到右的次序访问第 $k+1$ 以此类推，直到最后一层 
+
+下面是二叉树的抽象类：
+<details>
+<summary><strong> 二叉树的抽象类 </strong></summary>
+
+```cpp
+template <class T>
+class bTree {
+public:
+    virtual void clear() = 0;
+    virtual bool isEmpty() = 0;
+    virtual T parent(T x, T flag) const = 0;
+    virtual T lchild(T x, T flag) const = 0;
+    virtual T rchild(T x, T flag) const = 0;
+    virtual void delLeft(T x) = 0;
+    virtual void delRight(T x) = 0;
+    virtual preOrder() const = 0;
+    virtual midOrder() const = 0;
+    virtual void postOrder() const = 0;
+    virtual void leverOrder() const = 0;
+};
+```
+</details>
+
+<details>
+<summary><strong> 二叉树的接口 </strong></summary>
+
+```java
+public interface BTree<T> {
+    /**
+     * Remove all nodes from the binary tree
+     */
+    void clear();
+
+    /**
+     * Return true if the binary tree is empty.
+     */
+    boolean isEmpty();
+
+    /**
+     * Return the root element.
+     * If the binary tree is empty, return flag
+     */
+    T root(T flag);
+
+    /**
+     * Return the parent of x.
+     * If x has no parent or x does not exist, return flag.
+     */
+    T parent(T x, T flag);
+
+    /**
+     * Return the left child of x.
+     * If x has no left child or x does not exist, return flag.
+     */
+    T lchild(T x, T flag);
+
+    /**
+     * Return the right child of x.
+     * If x has no right child or x does not exist, return flag.
+     */
+    T rchild(T x, T flag);
+
+    /**
+     * Delete the left subtree of x.
+     */
+    void delLeft(T x);
+
+    /**
+     * Delete the right subtree of x.
+     */
+    void delRight(T x);
+
+    /**
+     * Traverse the binary tree in preorder.
+     */
+    void preOrder();
+
+    /**
+     * Traverse the binary tree in inorder.
+     */
+    void midOrder();
+
+    /**
+     * Traverse the binary tree in postorder.
+     */
+    void postOrder();
+
+    /**
+     * Traverse the binary tree in level order.
+     */
+    void levelOrder();
+}
+```
+</details>
+
+二叉树是非线性关系，如果使用顺序存储的话，会很困难（不是不可能就是了），顺序存储适用的情况是**完全二叉树**，我们可是使用其中的数学关系来约束空间关系。但是二叉树并不全是完全二叉树，因此顺序存储不适合，使用**链接关系**实现。
+
+#### 6.1.3 二叉树的链接实现
+二叉树的链接实现有两种方式：
+- 标准存储：**二叉链表**，类似于单链表，只能从上向下遍历，无法通过子节点找到父节点。
+- 广义标准存储：**三叉链表**，类似于双链表，可以反向遍历，可以通过子节点找到父节点
+
+由于找父节点的操作在大部分时候都不需要，因此**二叉链表**是最常用的存储形式。
+
+<details>
+<summary><strong> 二叉链表类的定义 </strong></summary>
+
+```cpp
+template <class T>
+class binaryTree: public bTree<T> {
+    friend void printTree (const binaryTree &t, T flag);
+private:
+    struct Node {       // The Node class of binary tree.
+        Node *left, *right;     // The address of left and right node.
+        T data;         // The node data.
+
+        Node(): left(nullptr), right(nullptr) {};
+        Node (T item, Node *l = nullptr, Node *r = nullptr):
+            data(item), left(l), right(r) {};
+        ~Node() {};
+    };
+
+    Node *root;
+    struct stNode {
+        Node *node;
+        int timesPop;
+
+        stNode (Node *N = nullptr):node(N), timesPop(0) {};
+    }
+public:     // 同名函数为包裹函数
+    binaryTree(): root(nullptr) {};    // 内联函数
+    binaryTree(T x) { root = new Node(x); }     // 内联函数
+    ~binaryTree();
+    void clear();
+    bool isEmpty() const;
+    T root(T flag) const;
+    T lchild(T x, T flag) const;
+    T rchild(T x, T flag) const;
+    void delLeft(T x);
+    void delRight(T x);
+    void preOrder() const;
+    void midOrder() const;
+    void postOrder() const;
+    void levelOrder() const;
+    void createTree(T flag);
+    T parent(T x, T flag) const { return flag; }    // 内联函数
+    int size() const;
+    int height() const;
+private:    // 下面的函数是真正的实现函数
+    Node *find(T x, Node *t) const;
+    void clear(Node *&t);
+    void preOrder(Node *t) const;
+    void PreOrder() const;
+    void midOrder(Node *t) const;
+    void MidOrder() const;
+    void postOrder(Node *t) const;
+    void PostOrder() const;
+    int size(Node *) const;
+    int height(Node *) const;
+};
+```
+</details>
+
+<details>
+<summary><strong> 二叉树的实现（cpp）</strong></summary>
+
+```cpp
+template <class T>
+bool binaryTree<T>::isEmpty() const {
+    return root == nullptr;
+}
+
+template <class T>
+T binaryTree<T>::root(T flag) const {
+    if (root == nullptr) return flag;
+    else return root->data;
+}
+
+template <class T>
+void binaryTree<T>::clear(binaryTree<T>::Node *&t) {
+    if (t == nullptr) return;
+
+    clear(t->left);
+    clear(t->right);
+    delete t;
+    t = nullptr;
+}
+
+template<class T>
+void binaryTree<T>::clear() {
+    clear(root);
+}
+
+template <class T>
+binaryTree<T>::~binaryTree() {
+    clear(root);
+}
+
+template<class T>
+void binaryTree<T>::preOrder(binaryTree<T>::Node *t) const {
+    if (t == nullptr) return;
+    std::cout << t->data << ' ';
+    preOrder(t->left);
+    preOrder(t->right);
+}
+
+template<class T>
+void binaryTree<T>::preOrder() const {
+    std::cout << "\n前序遍历:";
+    preOrder(root);
+}
+
+template <class T>
+void binaryTree<T>::postOrder(binaryTree<T>::Node *t) const {
+    if (t == nullptr) return;
+    postOrder(t->left);
+    postOrder(t->right);
+    std::cout << t->data << ' ';
+}
+
+template <class T>
+void binaryTree<T>::postOrder() const {
+    std::cout << "\n后序遍历:";
+    postOrder(root); 
+}
+
+template <class T>
+void binaryTree<T>::midOrder(binaryTree<T>::Node *t) const {
+    if (t == nullptr) return;
+    midOrder(t->left);
+    std::cout << t->data << ' ';
+    midOrder(t->right);
+}
+
+template <class T>
+void binaryTree<T>::midOrder() const {
+    std::cout << "\n中序遍历:";
+    midOrder(root);
+}
+
+template <class T>
+void binaryTree<T>::levelOrder() const {
+    if (root == nullptr) return;
+
+    std::queue<Node*> q;
+    Node *tmp;
+
+    std::cout << "\n层级遍历:";
+    q.push(root);
+
+    while(!q.empty()) {
+        tmp = q.front();
+        q.pop();
+
+        std::cout << tmp->data << ' ';
+
+        if (tmp->left != nullptr) q.push(tmp->left);
+        if (tmp->right != nullptr) q.push(tmp->right);
+    }
+}
+
+template <class T>
+binaryTree<T>::Node *binaryTree<T>::find(T x, binaryTree<T>::Node *t) const {
+    Node *tmp;
+    if (t == nullptr) return nullptr;
+    if (t->data == x) return t;
+
+    tmp = find(x, t->left)
+    if (tmp != nullptr) return tmp;    // 根节点不是，先找左面的节点
+    else return find(x, t->right);      // 左子树没有，找右子树
+}
+
+// delLeft: 删除规定节点的左子树
+template <class T>
+void binaryTree<T>::delLeft(T x) {
+    Node *tmp = find(x, root);
+    if (tmp == nullptr) return;
+    clear(tmp->left);
+}
+// delRight: 删除规定节点的右子树
+template <class T>
+void binaryTree<T>::delRight(T x)  {
+    Node *tmp = find(x, root);
+    if (tmp == nullptr) return;
+    clear(tmp->right);
+}
+
+template <class T>
+T binaryTree<T>::lchild(T x, T flag) const {
+    Node *tmp = find(x, root);
+    if (tmp == nullptr || tmp->left == nullptr) return flag;
+
+    return tmp->left->data;
+}
+
+template <class T>
+T binaryTree<T>::rchild(T x, T flag) const {
+    Node *tmp = find(x, root);
+    if (tmp == nullptr || tmp->right == nullptr) return flag;
+
+    return tmp->right->data;
+}
+
+template <class T>
+void binaryTree<T>::createTree(T flag) {
+    std::queue<Node *> q;
+    Node *tmp;
+    T x, ldata, rdata;
+    
+    // 创建一个树，输入 flag 表示空
+    std::cout << "\n输入根节点:";
+    std::cin >> x;
+    root = new Node(x);
+    q.push(root);
+
+    while(!q.empty()) {
+        tmp = q.front();
+        q.pop();
+        std::cout << "\n输入 " << tmp->data << "的两个儿子(" << flag << " 表示空节点)";
+        std::cin >> ldata >> rdata;
+        if (ldata != flag) q.push(tmp->left = new Node(ldata));
+        if (rdata != flag) q.push(tmp->right = new Node(rdata));
+    }
+
+    std::cout << "create completed!\n";
+}
+
+template <class T>
+void printTree(const binaryTree<T> &t, T flag) {
+    if (t.root == nullptr) return;
+
+    std::queue<typename binaryTree<T>::Node *> q;
+    q.push(t.root);
+
+    while (!q.empty()) {
+        typename binaryTree<T>::Node *p = q.front();
+        q.pop();
+
+        T l = flag;
+        T r = flag;
+
+        if (p->left != nullptr) {
+            l = p->left->data;
+            q.push(p->left);
+        }
+
+        if (p->roght != nullptr) {
+            r = p->right->data;
+            q.push(p->right);
+        }
+
+        std::cout << p->data << " " << l << " " << r << std::endl;
+    }
+}
+
+template<class T>
+int binaryTree<T>::size(binaryTree<T>::Node *t) const {
+    if (t == nullptr) return 0;
+
+    return 1 + size(t->left) + size(t->right);
+}
+
+template<class T>
+int binaryTree<T>::size() const {
+    return size(root);
+}
+
+template<class T>
+int binaryTree<T>::height() const {
+    return height(root);
+}
+
+template<class T>
+int binaryTree<T>::height(binaryTree<T>::Node *t) const {
+    if (t == nullptr) return 0;
+    else {
+        int lt = height(t->left), rt = height(t->right);
+        return 1 + ((lt > rt) ? lt : rt);
+    }
+}
+
+template <class T>
+void binaryTree<T>::PreOrder() const {
+    if (root == nullptr) return;
+
+    stack<Node *> s;
+    Node *curr;
+
+    std::cout << "前序遍历";
+    s.push(root);
+    while(!s.empty()) {
+        curr = s.top();
+        s.pop();
+        std::cout << curr->data;
+        if (curr->right != nullptr) s.push(curr->right);
+        if (curr->left != nullptr) s.push(curr->left);
+    }
+}
+
+template<class T>
+void binaryTree<T>::MidOrder() const {
+    if (root == nullptr) return;
+    
+    stack<stNode> s;
+    stNode curr(root);
+
+    std::cout << "中序遍历";
+    s.push(curr);
+    while(!s.empty()) {
+        curr = s.top();
+        s.pop();
+        if (++curr.timesPop == 2) {
+            std::cout << curr.node->data;
+            if (curr.node->right != nullptr) 
+                s.push(stNode(curr.node->right));
+        } else {
+            s.push(curr);
+            if (curr.node->left != nullptr)
+                s.push(stNode(curr.node->left));
+        }
+    }
+}
+
+template<class T>
+void binaryTree<T>::PostOrder() const {
+    if (root == nullptr) return;
+
+    stack<stNode> s;
+    stNode curr(root);
+
+    std::cout << "后序遍历";
+    s.push(curr);
+
+    while(!s.empty()) {
+        curr = s.top();
+        s.pop();
+
+        curr.timesPos += 1;
+
+        if (curr.timePop == 3) {      // 遍历的输出一定是根节点
+            std::cout << curr.node->date;
+            continue;
+        }
+
+        s.push(curr);
+
+        if (curr.timePop == 1) {        // 第一次出栈，将自己的左子树入栈
+            if (curr.node->left != nullptr) {
+                s.push(stNode(curr.node->left));
+            }
+        } else {            // 第二次出栈，将自己的右子树入栈
+            if (curr->node->right != nullptr){
+                s.push(stNode(curr.node->right));
+            }
+        }
+    }
+}
+```
+</details>
+
+下面是对应的java接口和实现
+<details>
+<summary><strong> 二叉链表类的接口 </strong></summary>
+
+```java
+public interface BTree<T> {
+    /**
+     * Remove all nodes from the binary tree
+     */
+    void clear();
+
+    /**
+     * Return true if the binary tree is empty.
+     */
+    boolean isEmpty();
+
+    /**
+     * Return the root element.
+     * If the binary tree is empty, return flag
+     */
+    T root(T flag);
+
+    /**
+     * Return the parent of x.
+     * If x has no parent or x does not exist, return flag.
+     */
+    T parent(T x, T flag);
+
+    /**
+     * Return the left child of x.
+     * If x has no left child or x does not exist, return flag.
+     */
+    T lchild(T x, T flag);
+
+    /**
+     * Return the right child of x.
+     * If x has no right child or x does not exist, return flag.
+     */
+    T rchild(T x, T flag);
+
+    /**
+     * Delete the left subtree of x.
+     */
+    void delLeft(T x);
+
+    /**
+     * Delete the right subtree of x.
+     */
+    void delRight(T x);
+
+    /**
+     * Traverse the binary tree in preorder.
+     */
+    void preOrder();
+
+    /**
+     * Traverse the binary tree in inorder.
+     */
+    void midOrder();
+
+    /**
+     * Traverse the binary tree in postorder.
+     */
+    void postOrder();
+
+    /**
+     * Traverse the binary tree in level order.
+     */
+    void levelOrder();
+}
+```
+</details>
