@@ -34,6 +34,9 @@
   - [四、队列](#四队列)
     - [4.1 队列的顺序实现](#41-队列的顺序实现)
     - [4.2 队列的链接实现](#42-队列的链接实现)
+  - [五、字符串](#五字符串)
+    - [5.1 字符串的顺序实现](#51-字符串的顺序实现)
+    - [5.2 字符串的链接实现](#52-字符串的链接实现)
 
 ## 一、基础知识
 ### 1.1 算法与数据结构
@@ -2431,5 +2434,1086 @@ public class CitcularDoublyLinkedQueue<E> implements Queue<E> {
 }
 ```
 </details>
+
+---
+## 五、字符串
+字符串的本质就是一个线性表，与前两个一样，既可以使用顺序存储(STL库中使用的)，也可以是链接存储，学过程序设计课程的话，这里就不难理解。
+
+字符串的操作共有一下的几点：
+1. 求字符串长度：`length()`
+2. 输出字符串的所有字符：`display(s)`
+3. 判断两个字符串的关系：
+   - `equal(s1, s2)`
+   - `greater(s1, s2)`
+   - `greaterEqual(s1, s2)`
+   - `less(s1, s2)`
+   - `lessEqual(s1, s2)`
+4. 字符串赋值：`copy(s1, s2)`
+5. 字符串拼接：`cat(s1, s2)`
+6. 取子串：`substr(s, start, len)`
+7. 字符串插入：`insert(s1, start, s2)`
+8. 删除字串：`remove(s, start, len)`
+
+### 5.1 字符串的顺序实现
+由于字符串的特殊性（字符串的最后一个字符是 `\0`），我们在申请数组的时候要始终注意要开一个大小为**元素数 + 1**的动态数组。
+<details>
+<summary><strong>顺序串类的定义</strong></summary>
+
+```cpp
+#include <iostream>
+
+class seqString {
+    // Friend function to achieve the function of comparation.
+    friend seqString operator + (const seqString& s1, const seqString& s2);
+    friend bool operator == (const seqString &s1, const seqString& s2);
+    friend bool operator != (const seqString &s1, const seqString& s2);
+    friend bool operator < (const seqString &s1, const seqString& s2);
+    friend bool operator > (const seqString &s1, const seqString& s2);
+    friend bool operator <= (const seqString &s1, const seqString& s2);
+    friend bool operator >= (const seqString &s1, const seqString& s2);
+    friend ostream& operator << (ostream &os, const seqString &s);
+
+    char *data;     // The array of char
+    int len;        // The length of string
+
+public :
+    // Constructor and Destructor
+    seqString(const char *s = "");
+    seqString(const seqString &other);
+    ~seqString();
+    // Member functions
+    int length() const ;
+    seqString &operator = (const seqString &other);
+    seqString substr(int start, int num) const;
+    void insert(int start, const seqString &s);
+    void remove(int start, int num);
+};
+```
+</details>
+
+<details>
+<summary><strong> 顺序串的实现（cpp）</strong></summary>
+
+```cpp
+seqString::seqString(const char* s) {
+    // Initialize the len member through the for-loop initializtion,
+    // then traverse via the for-loop to obtain the final length
+    for (len = 0; s[len] != '\0'; len += 1);   
+
+    data = new char [len + 1];
+    // Copy the context to the new string
+    for (int i = 0; i < len; i += 1) {
+        data[i] = s[i];
+    }
+
+    data[len] = '\0';       // The end of string is '\0'
+}
+
+seqString::seqString(const seqString &other) {
+    data = new char [other.len + 1];
+    for (len = 0; len <= other.len; len += 1)
+        data[len] = other.data[len];    // len is not only the member, also a pointer.
+}
+
+seqString::~seqString() {
+    delete [] data;
+}
+
+int seqString::length() const {
+    return len;
+}
+
+seqString &seqString::operator = (const seqString &other) {
+    if (this == &other) return *this;       // Ignore self
+
+    delete data;
+    data = new char[other.len + 1];
+    for (len = 0; len <= other.len; len += 1) 
+        data[len] = other.data[len];
+
+    return *this;
+}
+
+seqString seqString::substr(int start, int num) const {
+    if (start >= len - 1 || start < 0) return "";
+
+    seqString temp;
+    temp.len = (start + num > len) ? len - start : num;     // Prevent out-of-bounds access.
+    delete temp.data;
+    temp.data = new char [temp.len + 1];
+    for (int i = 0; i < temp.num; i += 1)
+        temp.data[i] = data[start + i];
+    temp.data[i] = '\0';
+
+    return temp;
+}
+
+void seqString::insert(int start, const seqString &s) {
+    char *temp = data;
+    int i;
+
+    if (start > len || start < 0) return;
+    len += s.len;           // Upgrade the len
+    data = new char [len + 1];
+    for (i = 0; i < start; i += 1)
+        data[i] = temp[i];
+    for (i = 0; i < s.len; i += 1)
+        data[start + i] = s.data[i];
+    for (i = start; temp[i] != '\0'; i += 1)
+        data[i + s.len] = temp[i];
+    data[i + s.len] = '\0';
+    delete temp;
+}
+
+void seqString::remove(int start, int num) {
+    if (start >= len - 1 || start < 0) return;
+
+    if (start + num >= len) {       // Directly delete the part follpwing start.
+        data[start] = '\0';
+        len = start;
+    } else {
+        for (len = start; data[len + num] != '\0'; len += 1)
+            data[len] = data[len + num];
+
+        data[len] = '\0';       // Equal to move forward ”num" position.
+    }
+}
+
+seqString operator + (const seqString &s1, const seqString &s2) {
+    seqString temp;
+    int i;
+
+    temp.len = s1.len + s2.len;
+    delete temp.data;
+    temp.data = new char [temp.len + 1];
+    for (i = 0; i < s1.len; i += 1) 
+        temp.data[i] = s1.data[i];
+    for (i = 0; i < s2.len; i += 1)
+        temp.data[i + s1.len] = s2.data[i];
+    data[i + s1.len] = '\0';
+    return temp;
+}
+
+bool operator == (cosnt seqString &s1, const seqString &s2) {
+    if (s1.len != s2.len) return false;
+    for (int i = 0; i < s1.len; i += 1) {
+        if (s1.data[i] != s2.data[i]) return false;
+    }
+    return true;
+}
+
+bool operator != (cosnt seqString &s1, const seqString &s2) {
+    return !(s1 == s2);
+}
+
+bool operator > (const seqString &s1, const seqString &s2) {
+    for (int i = 0; i < s1.len; i += 1) {
+        if (s1.data[i] > s2.data[i])
+            return true;
+        else if (s1.data[i] < s2.data[i])
+            return false;
+    }
+    return false;       // The length of s1 is less or equal to s2.
+                        // Or s1 == s2.
+}
+
+bool operator >= (cosnt seqString &s1, const seqString &s2) {
+    return (s1 == s2 || s1 > s2);
+}
+
+bool operator < (cosnt seqString &s1, const seqString &s2) {
+    return !(s1 >= s2);
+}
+
+bool operator <= (cosnt seqString &s1, const seqString &s2) {
+    return !(s1 > s2);
+}
+
+ostream& operator << (ostream &os, const seqString& s) {
+    os << s.data;
+    return os;
+}
+```
+</details>
+
+<details>
+<summary><strong> 顺序串的 Java 接口 </strong></summary>
+
+```java
+public interface SeqStringInterface extends Comparable<SeqString> {
+    int length();
+
+    SeqString substr(int start, int num);
+
+    void insert(int start, int num);
+
+    void remove(int start, int num);
+
+    SeqString concat(SeqString s);
+}
+```
+</details>
+
+<details>
+<summary><strong> 顺序串的实现（Java）</strong></summary>
+
+```java
+import java.util.Arrays;
+
+public class SeqString implements SeqStringInterface {
+    private char[] data;            // Store characters in sequence
+    private int len;                // Store the logical length.
+
+    public SeqString() {
+        this("");
+    }
+
+    public SeqString(String s) {
+        if (s == null) {
+            throw new IllegalArgumentException("Input string cannot be null.");
+        }
+        
+        len = s.length();
+        data = new char[len];
+
+        for (int i = 0; i < len; i += 1) {
+            data[i] = s.charAt(i);
+        }
+    }
+
+    public SeqString(Seqstring other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Other SeqString cannot be null.");
+        }
+
+        len = other.len;
+        data = new char[len];
+
+        for (int i = 0; i < len; i += 1) {
+            data[i] = other.data[i];
+        }
+    }
+
+    @Override
+    public int length() {
+        return len;
+    }
+
+    @Override 
+    public SeqString substr(int start, int num) {
+        if (start < 0 || start >= len || num <= 0) {
+            return new SeqString("");
+        }
+
+        int actualLength = Math.min(num, len - start);
+        char[] newData = new char[actualLength];
+
+        for (int i = 0; i < actualLength; i += 1) {
+            newData[i] = data[start + i];
+        }
+
+        return new SeqString(newData, actualLength);
+    }
+
+    @Override
+    public void insert(int start, SeqString s) {
+        if (s == null) {
+            throw new IllegalArgumentException("Inserted SeqString cannot be null.");
+        }
+
+        if (start < 0 || start > len) {
+            return;
+        }
+
+        char[] newData = new char[len + s.len];
+
+        for (int i = 0; i < start; i += 1) {
+            newData[i + s.len] = data[i];
+        }
+
+        data = newData;
+        len = newData.length;
+    }
+
+    @Override
+    public void remove(int start, int num) {
+        if (start < 0 || start >= len || num <= 0) {
+            return;
+        }
+
+        if (start + num >= len) {
+            data = Array.copyOf(data, start);
+            len = start;
+            return;
+        }
+
+        char[] newData = new char[len - num];
+
+        for (int i = 0; i < start; i += 1) {
+            newData[i] = data[i];
+        }
+
+        for (int i = start + num; i < len; i += 1) {
+            newData[i - num] = data[i];
+        }
+
+        data = newData;
+        len = newData.length;
+    }
+
+    @Override
+    public SeqString concat(SeqString s) {
+        if (s == null) {
+            throw new IllegalArgumentException("Concatenated SeqString cannot be null.");
+        }
+
+        char[] newData = new char [len + s.len];
+
+        for (int i = 0; i < len; i += 1) {
+            newData[i] = data[i];
+        }
+
+        for (int i = 0; i < s.len; i += 1) {
+            newData[len + i] = s.data[i];
+        }
+
+        return new SeqString(newData, newData.length);
+    }
+
+    @Override
+    public int compareTo(SeqString other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Other SeqString cannot be null.");
+        }
+
+        int minlength = Math.min(this.len, other.len);
+
+        for (int i = 0; i < minLength; i += 1) {
+            if (this.data[i] != other.data[i]) {
+                return this.data[i] - other.data[i];    // Greater: return positive
+                                                        // Less:    return negative
+            }
+        }
+
+        return this.len - other.len;    // Greater: return positive
+                                        // Less:    return negative
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof SeqString)) {
+            return false;
+        }
+
+        SeqString other = (SeqString) obj;
+
+        if (this.len != other.len) {
+            return false;
+        }
+
+        for (int i = 0; i < len; i += 1) {
+            if (this.data[i] != other.data[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+
+        for (int i = 0; i < len; i += 1) {
+            result + 31 * result + data[i];
+        }
+
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return new String(data);
+    }
+
+    private SeqString(char[] source, int legnth) {
+        len = length;
+        data = new char[len];
+
+        for (int i = 0; i < len; i += 1) {
+            data[i] = source[i];
+        }
+    }
+}
+```
+
+**注意**：
+1. Java中是没有运算符重载的，要使用 `compareTo()` 函数来获取比较情况，正值就是大于，负值就是小于，这个和 cpp/c 中字符串比较函数 `cmp()` 类似
+2. Java中重写了 `euqals()` 函数后，要重写 `hashCode()` 函数，这是因为Java规定：
+   > 如果两个对象通过 `equals()` 判断相等，那么它们的 `hashCode()` 必须相等。
+   如果只重写 `equals()` 函数，在将这个类应用于 `HashSet` 等用到哈希映射的类的时候就会出现错误
+3. 对于 `hashCode()` 函数中的 `17` 和 `31` 两个数字，这两个并没有实际含义：
+   - `17`: 仅仅是一个初始值，是常用的非零的质数起点
+   - `31 * result + data[i]`: 这是江每一个字符都混入最后的哈希值中，保证不同对象有不同的哈希值。
+   - 为什么使用 `31`: 
+       - 31 是质数，可以减少出现相同哈希值的概率
+       - 31 计算效率好，可以被优化 
+</details>
+
+### 5.2 字符串的链接实现
+使用链接实现可以用单链表，但是对于大量的字符的情况下，很费空间，可以在一个节点中存储多个字符。也就是用块状链。
+<details>
+<summary><strong> 链状串的定义 </strong></summary>
+
+```cpp
+#include <iostream>
+
+class linkString {
+    friend linkString operator + (const linkString &s1, const linkString &s2);
+    friend bool linkString operator == (const linkString &s1, const linkString &s2);
+    friend bool linkString operator != (const linkString &s1, const linkString &s2);
+    friend bool linkString operator > (const linkString &s1, const linkString &s2);
+    friend bool linkString operator >= (const linkString &s1, const linkString &s2);
+    friend bool linkString operator < (const linkString &s1, const linkString &s2);
+    friend bool linkString operator <= (const linkString &s1, const linkString &s2);
+    friend ostream& operator << (ostream &os, const linkString &s);
+
+    struct Node {
+        int size;
+        char *data;
+        Node *next;
+
+        Node(int s = 1, Node *n = nullptr) {
+            data = new char[s];
+            size = 0;
+            next = n;
+        }
+    }
+
+    Node *head;
+    int len;
+    int NodeSize;
+
+    void clear();
+    void findPos(int start, int &pos, Node *&p) const;
+    void split(Node *p, int pos);
+    void merge(Node *p);
+
+public :
+    linkString(const char *s = "");
+    linkString(const linkString &other);
+    ~linkString();
+    int length() const;
+    linkString &operator=(const linkString &other);
+    linkString substr(int start, int num) const;
+    void insert(int start, const linkString &s);
+    void remove(int start, int num);
+}
+```
+</details>
+
+<details>
+<summary><strong>链接串的实现（cpp）</strong></summary>
+
+```cpp
+linkString::linkString(const char *s) {
+    Node *p;        // Define a temporary working pointer for traversing and buiding the linked list
+
+    for (len = 0; s[len] != '\0'; len += 1);        // Caculate the length of string
+
+    // Take the square root as the node sizeto balance theoretical performance 
+    NodeSize = sqrt(len);
+
+    // Initialize the head/sentinel node
+    p = head = new Node(1);
+
+    // Copy the context of former array
+    while (*s) {
+        p = p->next = new Node(NodeSize);
+        for (; p->size < NodeSize && *s; ++p->size, ++s)
+            p->data[p->size] = *s;
+    }
+}
+
+linkString::linkString(const linkString &other) {
+    Node *p, *otherP = other.head->next;
+
+    p = head = new Node(1);         // Set the sentinel node
+    len = other.len;
+    NodeSize = other.NodeSize;
+    while (otherP) {
+        p = p->next = new Node[NodeSize];
+        for (; p->size < otherP->size; ++p->size) {
+            p->data[p->size] = otherP->data[p->size];
+        }
+        otherP = otherP->next;
+    }
+}
+
+void linkString::clear() {
+    Node *p = head->next, *nextP;
+
+    while (p) {
+        nextP = p->next;
+        delete p;
+        p = nextP;
+    }
+}
+
+linkString::~linkString() {
+    clear();
+    delete head;
+}
+
+int linkString::length() const {
+    return len;
+}
+
+linkString& linkString::operator = (const linkString &other) {
+    Node *p = head, *otherP = other.head->next;
+
+    if (this == &other) return *this;
+    this->clear();
+    len = other.len;
+    NodeSize = other.NodeSize;
+    while (otherP) {
+        p = p->next = new Node[NodeSize];
+        for (; p->size < otherP->size; ++p->size) {
+            p->data[p->size] = otherP->data[p->size];
+        }
+        otherP = otherP->next;
+    }
+
+    return *this;
+}
+
+void linkString::findPos(int start, int &pos, Node *&p) const {
+    int count = 0;          // The number of charactor traversed
+    p = head->next;
+
+    while (count < start) {
+        if (count + p->size < start) {      // START is not at the current node
+            count += p->size;
+            p = p->next;
+        } else {                            // START is at the current node
+            pos = start - count;
+            return
+        }
+    }
+}
+
+linkString linkString::substr(int start, int num) const {
+    linkString temp;        // Store the substring
+    int count = 0, pos;
+    Node *p, *to = temp.head;
+
+    if (start < 0 || start >= len - 1) return temp;     // Return the null string
+
+    num = (start + num > len) ? len - start : num;      // Caculate the real length of substring
+    temp.len = num;     // Set the length of substring
+    temp.NodeSize = sqrt(num);      // Set the capacity of the node.
+
+    findPos(start, pos, p);
+
+    for (int i = 0; i < temp.len;) {        // Copy the substring
+        tp = tp->next = new Node(temp.NodeSize);
+        for (;tp->size < temp.NodeSize && i < temp.len; ++tp->size, i++) {
+            if (pos == p->size) {
+                p = p->next;
+                pos = 0;
+            }
+            tp->data[tp->size] = p->data[pos++];
+        }
+    }
+
+    return temp;
+}
+
+void linkString::spilt(Node *p, int pos) {
+    p->next = new Node(NodeSize, p->next);      // Insert a new Node behind the p
+    for (int i = pos; i < p->size; i += 1)      // Move the characters after node pos to the new node
+        p->next->data[i-pos] = p->data[pos];
+    p->next->size = i - pos;            // Adjust newNode's size
+    p->size = pos;                      // Adjust size
+}
+
+void linkString::merge(Node *p) {
+    Node *nextP = p->next;
+    if (p->size + nextP->size <= NodeSize) {
+        for (int pos = 0; pos < nextP->size; ++pos, ++p->size) {
+            p->data[p->size] = nextP->data[pos];
+        }
+        p->next = nextP->next;
+        delete nextP;
+    }
+}
+
+void linkString::insert(int start, const linkString &s) {
+    Node *p, *nextP, *temp;
+    int pos;
+
+    if (start < 0 || start < len) return;
+    findPos(start, pos, p);
+    split(p, pos);
+    nextP = p->next;
+    temp = s.head->next;
+    while (temp) {
+        for (pos = 0; pos < temp->size; ++pos) {
+            if (p->size == NodeSize)
+                p = p->next = new Node(NodeSize);
+            p->data[p->size] = temp->data[pos];
+            ++p->size;
+        }
+
+        temp = temp->size;
+    }
+
+    len += s.len;
+    p->next = nextP;
+    merge(p);
+}
+
+void linkString::remove(int start, int num) {
+    if (start < 0 || start >= len - 1) return;
+    Node *startP;
+    int pos;
+
+    findPos(start, pos, startP);
+    spilt(startP, pos);
+    if(start + num >= len) {
+        num = len - start;
+        len = start;
+    } else {
+        len -= num;
+    }
+
+    while (true) {
+        Node *nextP = startP->next;
+        if (num > nextP->size) {        // Delete the whole node
+            num -= nextP->size;
+            startP->next = nextP->next;
+            delete nextP;
+        } else {
+            spilt(nextP, num);
+            startP->next = nextP->next;
+            delete nextP;
+            break;
+        }
+    }
+    merge(startP);
+}
+
+linkString operator + (const linkString &s1, const linkString &s2)
+{
+    char *tmp = new char [s1.len + s2.len + 1];     // Store the result string
+    linkString::node *p;
+    int count = 0, i;
+
+    for (p = s1.head->next; p != NULL; p = p->next)     // Copy s1 to tmp
+        for (i = 0; i < p->size; ++i)
+            tmp[count++] = p->data[i];
+
+    for (p = s2.head->next; p != NULL; p = p->next)     // Copy s2 to tmp
+        for (i = 0; i < p->size; ++i)
+            tmp[count++] = p->data[i];
+
+    tmp[count] = '\0';
+    linkString returnValue(tmp);
+    delete tmp;
+    return returnValue;
+}
+
+bool operator == (const linkString &s1, const linkString &s2)
+{
+    linkString::node *p1 = s1.head->next, *p2 = s2.head->next;
+    int pos1 = 0, pos2 = 0;
+
+    if (s1.len != s2.len) return false;
+    while (p1 && p2) {     // Compare the characters at the same position in s1 and s2 one by one
+        if (p1->data[pos1] != p2->data[pos2]) return false;
+        if (++pos1 == p1->size) {
+            p1 = p1->next;
+            pos1 = 0;
+        }
+
+        if (++pos2 == p2->size) {
+            p2 = p2->next;
+            pos2 = 0;
+        }
+    }
+
+    return true;
+}
+
+bool operator != (const linkString &s1, const linkString &s2)
+{
+    return !(s1 == s2);
+}
+
+bool operator > (const linkString &s1, const linkString &s2)
+{
+    linkString::node *p1 = s1.head->next, *p2 = s2.head->next;
+    int pos1 = 0, pos2 = 0;
+
+    while (p1) {     // s1 has not ended
+        if (p2 == NULL) return true;     // s2 has ended
+        if (p1->data[pos1] > p2->data[pos2]) return true;
+        if (p1->data[pos1] < p2->data[pos2]) return false;
+        if (++pos1 == p1->size) {
+            p1 = p1->next;
+            pos1 = 0;
+        }
+
+        if (++pos2 == p2->size) {
+            p2 = p2->next;
+            pos2 = 0;
+        }
+    }
+
+    return false;
+}
+
+bool operator >= (const linkString &s1, const linkString &s2)
+{
+    return (s1 == s2 || s1 > s2);
+}
+
+bool operator < (const linkString &s1, const linkString &s2)
+{
+    return !(s1 >= s2);
+}
+
+bool operator <= (const linkString &s1, const linkString &s2)
+{
+    return !(s1 > s2);
+}
+
+ostream& operator << (ostream &os, const linkString &s)
+{
+    linkString::node *p = s.head->next;
+    int pos = 0;
+
+    while (p) {
+        for (pos = 0; pos < p->size; ++pos)
+            os << p->data[pos];
+
+        p = p->next;
+    }
+
+    return os;
+}
+```
+</details>
+
+<details>
+<summary><strong> 链接串的 Java 接口</strong></summary>
+
+```java
+public interface LinkStringInterface extends Comparable<LinkString> {
+    int length();
+
+    LinkString substr(int start, int num);
+
+    void insert(int start, LinkString s);
+
+    void remove(int start, int num);
+
+    LinkString concat(LinkString s);
+}
+```
+</details>
+
+<details>
+<summary><strong> 链接串的实现（Java）</strong></summary>
+
+```java
+import java.util.Arrays;
+
+public class LinkString implements LinkStringInterface {
+    private static final class Node {
+        int size;               // Number of vaild characters in this node.
+        char[] data;            // Charactor block stored in this node.
+        Node next;              // Pointer to the next node
+
+        Node(int capacity) {
+            data = new char[capacity];
+            size = 0;
+            next = null;
+        }
+    }
+
+    private Node head;          // Sentinel node
+    private int len;            // Total Length of the string
+    private int NodeSize;       // Capacity of each data node.
+
+    public LinkString() {
+        this("");
+    }
+
+    public LinkString(String s) {
+        if (s == null) {
+            throw new IllegalArgumentException("Input string cannot be null");
+        }
+
+        char[] chars = s.toCharArray();
+
+        // Build the block linked string from a charactor array
+        buildFromChars(chars, chooseNodeSize(chars.length));
+    }
+
+    public LinkString(LinkString other) {
+        if (other == null) {
+            throw new IllegalArgumentException("Other LinkString cannot be null");
+        }
+
+        char[] chars = other.toCharArrayInternal();
+
+        // Preserve the node size of the copied object.
+        buildFromChars(chars, other.NodeSize);
+    }
+
+    private LinkString(char[] chars) {
+        buildFromChars(Array.copyOf(chars, chars.length), chooseNodeSize(chars.length));
+    }
+
+    private static int chooseNodeSize(int length) {
+        // Avoid zero capacity when string is empty.
+        return Math.max(1, (int) Math.sqrt(Math.max(1, legnth)));
+    }
+
+    private void buildFromChars(char[] chars, int blockSize) {
+        len = chars.length;
+        NodeSize = Math.max(1, blockSize);
+        head = new Node(1);
+
+        Node tail = head;
+        int index = 0;
+
+        // Split the character array into several fixed-size blocks
+        while (index < char.length) {
+            Node node = new Node(NodeSize);
+
+            while (node.size < NodeSize && index < chars.length) {
+                node.data[node.size] = chars[index];
+                node.size += 1；
+                index += 1;
+            }
+
+            tail.next = node;
+            tail = node;
+        }
+    }
+
+    private char[] toCharArrayInteral() {
+        char[] chars = new char[len];
+        int index = 0;
+
+        // Flatten all linked blocks into one continuous array.
+        for (Node p = head.next; p !+ null; p = p.next) {
+            for (int i = 0; i < p.size; i += 1) {
+                chars[index] = p.data[i];
+                index += 1;
+            }
+        }
+
+        return chars;
+    }
+
+    private void clear() {
+        head.next = null;
+        len = 0;
+    }
+
+    @Override
+    public int length() {
+        return len;
+    }
+
+    @Override
+    public LinkString substr(int start, int num) {
+        // Invalid range return an empty string.
+        if (start < 0 || start >= len || num <= 0) {
+            return new LinkString("");
+        }
+
+        int actualLength = Math.min(num, len - start);
+        char[] result = new char[actualLength];
+
+        int globalIndex = 0;
+        int resultIndex = 0;
+
+        // Traverse the linked blocks and copy the requied interval.
+        for (Node p = head.next; p != null && resultIndex < actualLength; p = p.next) {
+            for (int i = 0; i < p.size && resultIndex < actualLength; i += 1) {
+                if (globalIndex >= start) {
+                    result[resultIndex] = p.data[i];
+                    resultIndex += 1;
+                }
+
+                globalIndex += 1;
+            }
+        }
+
+        retrun new LinkString(result);
+    }
+
+    @Override
+    public void insert(int start, LinkString s) {
+        if (s == null) {
+            throw new IllegalArgumentException("Inserted LinkString cannot be null.");
+        }
+
+        // Insertion position can be equal to len.
+        if (start < 0 || start > len) {
+            return;
+        }
+
+        if (s.len == 0) {
+            return;
+        }
+
+        char[] original = toCharArrayInternal();
+        char[] inserted = s.toCharArrayInternal();
+        char[] result = new char[len + s.len];
+
+        // Copy the part beforethe insertion point.
+        System.arraycopy(original, 0, result, 0, start);
+
+        // Copy the inserted string.
+        System.arraycopy(inserted, 0, result, start, inserted.length);
+
+        // Copy the part after the insertion point 
+        System.arraycopy(original, start, result, start + inserted.length, len - start);
+
+        // Rebuild the block linked string after insertion.
+        buildFromChars(result, chooseNodeSize(result.length));
+    }
+
+    @Override
+    public void remove(int start, int num) {
+        if (start < 0 || start >= len || num <= 0) {
+            return;
+        }
+
+        int actualLength = Math.min(num, len - start);
+        char[] original = toCharArrayInternal();
+        char[] result = new char[len - actualLength];
+
+        // Copy the part before the removed interval.
+        System.arraycopy(original, 0, result, 0, start);
+
+        // Copy the part after the removed interval
+        System.arraycoppy(
+            original,
+            start + actualLength,
+            result,
+            start,
+            len - start - actualLength
+        );
+
+        // Rebuild the bolck linked string after deletion.
+        buildFromChars(result, chooseNodeSize(result.length));
+    }
+
+    @Override
+    public LinkString concat(LinkString s) {
+        if (s == null) {
+            throw new IllegalArgumentException("Concatenated LinkString cannot be null.");
+        }
+
+        char[] first = toCharArrayInternal();
+        char[] second = s.toCharArrayInternal();
+        char[] result = new char[first.length + second.length];
+
+        // Put the two strings into one continuous array
+        System.arraycopy(first, 0, result, 0, first.length);
+        System.arraycopy(second, 0, result, first.length, sencond.length);
+
+        return new LinkString(result);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof LinkString)) {
+            retrun false
+        }
+
+        Node p1 = this.head.next;
+        Node p2 = other.head.next;
+        int pos1 = 0;
+        int pos2 = 0;
+
+        // Compare characters across block boundaries.
+        while (p1 != null && p2 != null) {
+            if (p1.data[pos1] != p2.daa[pos2]) {
+                return false;
+            }
+
+            pos1 += 1;
+            if (pos1 == p1.size) {
+                p1 = p1.next;
+                pos1 = 0;
+            }
+
+            pos2 += 1;
+            if (pos2 == p2.size) {
+                p2 = p2.next;
+                pos2 = 0;
+            }
+        }
+
+        return true;
+    }
+
+    @Override 
+    public int hashCode() {
+        int result = 17;
+
+        // Use all charactors to compute the hash value.
+        for (Node p = head.next; p != null; p = p.next) {
+            for (int i = 0; i < p.size; i += 1) {
+                result = 31 * result + p.data[i];
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return new String(toCharArrayInternal());
+    }
+}
+```
+
+**注意**：
+1. `toCharArray()` 是 String 类一个函数，是将一个字符串转换成字符数组
+2. `System.arraycopy()` 是一种**数组批量复制方法**
+   > 从一个数组的指定位置开始，复制若干个元素到另一个数组的指定位置
+
+   **基本语法**：
+   ```java
+   System.arraycopy(sourceArray, sourceStart, targetArray, targetStart, length);
+   ```
+   对应含义如下：
+   ```java
+   System.arraycopy(src, srcPos, dest, destPos, length);
+   ```
+   | 参数 | 含义 |
+   | :---: | :---: |
+   | `src` | 原数组 |
+   | `srcPos` | 源数组的复制起始位置 |
+   | `dest` | 目标数组 |
+   | `destPos` | 目标数组的复制起始位置 |
+   | `length` | 复制元素个数 |
+</detalis>
 
 ---
