@@ -4230,3 +4230,580 @@ public interface BTree<T> {
 }
 ```
 </details>
+
+<details>
+<summary><strong> 二叉链表类的实现（Java）</strong></summary>
+
+```java
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class BinaryTree<T> implements BTree<T> {
+    /**
+     * Node of the binary tree
+     */
+    private static final class Node<T> {
+        private T data;
+        private Node<T> left;
+        private Node<T> right;
+
+        private Node(T data) {
+            this(data, null, null);
+        }
+
+        private Node(T data, Node<T> left, Node<T> right) {
+            this.data = data;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    /**
+     * Stack frame used by iterative traversal
+     */
+    private static final class Frame<T> {
+        private Node<T> node;
+        private int timesPopped;
+
+        private Frame(Node<T> node) {
+            this.node = node;
+            this.timesPopped = 0;
+        }
+    }
+
+    private Node<T> root;
+
+    /**
+     * Create an empty binary tree
+     */
+    public BinaryTree() {
+        root = null;
+    }
+
+    /**
+     * Create a binary tree with one node
+     */
+    public BinaryTree(T x) {
+        root = new Node<>(x);
+    }
+
+    /**
+     * Remove all nodes from the tree
+     */
+    @Override
+    public void clear() {
+        root = null;
+    }
+
+    /**
+     * Return the root elements, or flag if the tree is empty
+     */
+    @Override
+    public T root(T flag) {
+        if (root == null) {
+            return flag;
+        }
+        return root.data;
+    }
+
+    /**
+     * Return the parent of x, or flag if it does not exist.
+     */
+    @Override 
+    public T lchild(T x, T flag) {
+        Node<T> target = find(x, root);
+        if (target == null || target.left == null) {
+            return flag;
+        }
+        return targe.left.data;
+    }
+
+    /**
+     * Return the right child of x, or flag if it does not exist
+     */
+    @Override
+    public T rchild(T x, T flag) {
+        Node<T> target = find(x, root);
+        if (target == null || target.right == null) {
+            return flag;
+        }
+        return target.right.data;
+    }
+
+    /**
+     * Delete the left subtree of x.
+     */
+    @Override
+    public void delLeft(T x) {
+        Node<T> target = find(x, root);
+        if (target != null) {
+            target.left = null;
+        }
+    }
+
+    /**
+     * Delete the right subtree of x.
+     */
+    @Override
+    public void delRight(T x) {
+        Node<T> target = find(x, root);
+        if (target != null) {
+            target.right = null;
+        }
+    }
+
+    /**
+     * Print preorder traversal.
+     */
+    @Override
+    public void preOrder() {
+        printItems(preOrderList());
+    }
+
+    /**
+     * Print inorder traversal.
+     */
+    @Override
+    public void midOrder() {
+        printItems(minOrderList());
+    }
+
+    /**
+     * Print postorder traversal.
+     */
+    @Override
+    public void postOrder() {
+        printItems(postOrderList());
+    }
+
+    /**
+     * Return the number of nodes in the tree.
+     */
+    public int size() {
+        return size(root);
+    }
+
+    /**
+     * Return the height of tree.
+     */
+    public int height() {
+        return height(root);
+    }
+
+    /**
+     * Build a tree by level-order input.
+     */
+    @SafeVarargs
+    public final void createTree(T flag, T... values) {
+        // If there is no input, or the first value is flag, build an empty tree.
+        if (values.length == 0 || Objects.equals(values[0], flag)) {
+            root = null;
+            return;
+        }
+
+        // The first value is the root node
+        root = new Node<>(value[0]);
+
+        // Use a queue to build the tree level by level.
+        ArrayDeque<Node<T>> queue = new ArrayDeque<>();
+
+        // Put the root node into the queue first.
+        queue.add(root);
+
+        // index points to the next value to be processed.
+        int index = 1;
+
+        // Continue while there are parent nodes waiting in the queue.
+        // and there are still input values to process.
+        while (!queue.isEmpty() && index < values.length) {
+            // Take out one node as the current parent node.
+            Node<T> current = queue.remove();
+
+            // Process the left child of current.
+            if (index < values.length && !Objects.equals(values[index], flag)) {
+                // If values[index] is not flag, create a real left child.
+                current.left = new Node<>(values[index]);
+
+                // Put the new left child into the queue.
+                queue.add(current.left);
+            }
+
+            // Move to the next input value.
+            index += 1;
+
+            // Process the right child of current.
+            if (index < values.length && !Objects.equals(values[index], flag)) {
+                // If values[index] is not flag. create a real right child.
+                current.right = new Node<>(values[index]);
+
+                // Put the new right child intp the queue.
+                queue.add(current.right);
+            }
+
+            // Move to the next input value.
+            index += 1;
+        }
+    }
+
+    /**
+     * Print each node with its ledt chlld and right chlid.
+     */
+    public static <T> void printTree(BinaryTree<T> tree, T flag) {
+        if (tree == null || tree.root == null) {
+            return;
+        }
+
+        ArrayDeque<Node<T>> queue = new ArrayDeque<>();
+        queue.add(tree.root);
+
+        while (!queue.isEmpty()) {
+            Node<T> current = queue.remove();
+
+            T leftData = flag;
+            T rightData = flag;
+
+            if (current.left != null) {
+                leftData = current.left.data;
+                queue.add(current.left);
+            }
+
+            if (current.right != null) {
+                rightData = current.right.data;
+                queue.add(current.right);
+            }
+
+            System.out.println(current.data + " " + leftData + " " + rightData); 
+        }
+    }
+
+    /**
+     * Return preorder traversal as a list.
+     */
+    public List<T> preOrderList() {
+        List<T> result = new ArrayList<>();
+        preOrder(root, result);
+        return result;
+    }
+
+    /**
+     * Return inorder traversal as a list.
+     */
+    public List<T> midOrderList() {
+        List<T> result = new ArrayList<>();
+        midOrder(root, result);
+        return result;
+    }
+
+    /**
+     * Return postorder traversal as a list.
+     */
+    public List<T> postOrderList() {
+        List<T> result = new ArrayList<>();
+        postOrder(root, result);
+        return result;
+    }
+
+    /**
+     * Return level-order traversal as a list.
+     */
+    public List<T> levelOrderList() {
+        List<T> result = new ArrayList<>();
+
+        if (root == null) {
+            return result;
+        }
+
+        ArrayDeque<Node<T>> queue = new ArrayDeque<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            Node<T> current = queue.remove();
+            result.add(current.data);
+
+            if (current.left != null) {
+                queue.add(current.left);
+            }
+
+            if (current.right != null) {
+                queue.add(current.left);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Return iterative preorder traversal as a list.
+     */
+    public List<T> preOrderIterativeList() {
+        List<T> result = new ArrayList<>();
+
+        if (root == null) {
+            return result;
+        }
+
+        ArrayDeque<Node<T>> stack = new ArrayDeque<>();
+        stack.push(root);
+
+        while (!stack.isEmpty()) {
+            Node<T> current = stack.pop();
+            result.add(current.data);
+
+            if (current.right != null) {
+                stack.push(current.right);
+            }
+
+            if (current.left != null) {
+                stack.push(current.left);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Return iterative inorder traversal as a list.
+     */
+    public List<T> midOrderIterativeList() {
+        List<T> result = new ArrayList<>();
+
+        if (root == null) {
+            return result;
+        }
+
+        ArrayDeque<Frame<T>> stack = new ArrayDeque<>();
+        stack.push(new Frame<>(root));
+
+        while (!stack.isEmpty()) {
+            Frame<T> current = stack.pop();
+            current.timesPopped += 1;
+
+            if (current.timesPopped == 2) {
+                result.add(current.node.data);
+
+                if (current.node.right != null) {
+                    stack.push(new Frame<>(current.node.right));
+                }
+            } else {
+                stack.push(current);
+
+                if (current.node.left != null) {
+                    stack.push(new Frame<>(current.node.left));
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Return iterative postorder traversal as a list.
+     */
+    public List<T> postOrderIterativeList() {
+        List<T> result = new ArrayList<>();
+
+        if (root == null) {
+            return result;
+        }
+
+        ArrayDeque<Frame<T>> stack = new ArrayDeque<>();
+        stack.push(new Frame<>(root));
+
+        while (!stack.isEmpty()) {
+            Frame<T> current = stack.pop();
+            current.timesPopped += 1;
+
+            if (current.timesPopped == 3) {
+                result.add(current.node.data);
+                continue;
+            }
+
+            stack.push(current);
+
+            if (current.timesPopped == 1) {
+                if (current.node.left != null) {
+                    stack.push(new Frame<>(current.node.left));
+                }
+            } else {
+                if (current.node.right != null) {
+                    stack.push(new Frame<>(current.node.right));
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Find the node containing x.
+     */
+    private Node<T> find(T x, Node<T> node) {
+        if (node == null) {
+            return null;
+        }
+
+        if (Objects.equals(node.data, x)) {
+            return node;
+        }
+
+        Node<T> leftResult = find(x, node.left);
+
+        if (leftResult != null) {
+            return leftResult;
+        }
+
+        return find(x, node.right);
+    }
+
+    /**
+     * Find the parent of x.
+     */
+    private Node<T> parent(T x, Node<T> node, Node<T> parent) {
+        if (node == null) {
+            return null;
+        }
+
+        if (Objects.equals(node.data, x)) {
+            retrun parent;
+        }
+
+        Node<T> leftResult = parent(x, node.left, node);
+
+        if (leftResult != null) {
+            return leftResult;
+        }
+
+        return parent(x, node.right, node);
+    }
+
+    /**
+     * Recursive preorder traversal.
+     */
+    private void preOrder(Node<T> node, List<T> result) {
+        if (node == null) {
+            return;
+        }
+
+        result.add(node.data);
+        preOrder(node.left, result);
+        preOrder(node.right, result);
+    }
+
+    /**
+     * Recursive inorder traversal
+     */
+    private void midOrder(Node<T> node, List<T> result) {
+        if (node == null) {
+            return;
+        }
+
+        midOrder(node.left, result);
+        result.add(node.data);
+        midOrder(node.right, result);
+    }
+
+    /**
+     * Recursive inorder traversal.
+     */
+    private void postOrder(Node<T> node, List<T> result) {
+        if (node == null) {
+            return;
+        }
+
+        postOrder(node.left, result);
+        postOrder(node.right, result);
+        result.push(node.data);
+    }
+
+    /**
+     * Return the number of nodes in subtree.
+     */
+    private int size(Node<T> node) {
+        if (node == null) {
+            return 0;
+        }
+
+        return 1 + size(node.left) + size(node.right);
+    }
+
+    /**
+     * Return the height of subtree.
+     */
+    private int height(Node<T> node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int leftHeight = height(node.left);
+        int rightHeight = height(node.right);
+        return 1 + Math.max(leftHeight, rightHeight);
+    }
+
+    /**
+     * Print list items in one line.
+     */
+    private static <T> void printItems(List<T> items) {
+        for (int i = 0; i < items.size(); i += 1) {
+            if (i > 0) {
+                System.out.print(" ");
+            }
+            System.out.print(items.get(i));
+        }
+
+        System.out.println();
+    }
+}
+```
+
+**说明**：以下是对 `createTree(T flag, T... values)` 函数的语法说明：
+1. `@SafeVarargs`
+   方法参数中有： 
+   ```java
+   T... values
+   ```
+   这是一个**泛型可变参数**，使用这个可以表示这个可变参数的使用是安全的，避免出现 `warning`。
+   **范围**：只能用于三种方法：
+   ```java
+   final
+   static
+   private
+   ```
+   后面的 `final` 也是为了配合 `@SafeVarargs`
+
+2. `final`
+   java中的 `final` 是一个关键字，表示**不可变性**或**最终状态**
+   - **修饰变量**：
+     一旦被初始化，就不能再被修改，
+      1. 局部变量和成员变量：
+         - **局部变量**：使用前进行显示初始化，初始化后不能重新赋值
+         - **类成员变量**：必须再声明或构造函数中完成初始化
+      2. 基本类型和引用类型
+         - **基本数据类型**：本身的**数值**不能改变
+         - **引用数据类型**：自身的**引用地址**不能改变，但是自身的**属性和数据**是可以修改的
+   - **修饰方法**：
+     方法被 `final` 修饰以后**不能被子类重写**
+   - **修饰类**
+     类被 `final` 修饰时，表示**不能被子类继承或没有子类**。
+
+3. `T... values` 是语法糖
+   这个写法等价于：
+   ```java
+   T[] values
+   ```
+   调用时可以同时使用多个参数，类似于 C 语言中的**不定参数**
+
+4. `new Node<>(values[0])`
+   这里的 `<>` 类似于 C++ 中的 `auto`，可以自动推断泛型类型
+
+5. `Objects.equals(a, b)`
+   这里不用:
+   ```java
+   values[index].equals(flag)
+   ```
+   是因为这种用法对于 `null` 安全，逻辑等同于：
+   ```java
+   a == b || (a != null && a.equals(b))
+   ```
+</details>
