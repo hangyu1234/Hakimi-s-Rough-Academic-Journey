@@ -1,18 +1,19 @@
 <div align="center">
 
-# Data Structure Notes
+# Data Structure Note
 </div>
 
 ---
 
 笔记内容为对校内教材《数据结构思想与实现》和 CS61B 知识点的整理与概括，细节可能略有误差，若发现问题，欢迎指正，邮箱：[2312786648@qq.com](https://mail.qq.com/)
+本篇侧重数据结构的定义和实现，同目录下的 `Algorithm Note` 侧重对算法进阶结构的论述
 <div align="right">编者：DoroKnight</div>
 <div align="right">注：本笔记的cpp实现是教材的改进，java实现参照 CS61B 的标准</div>
 
 ---
 ## 目录
 
-- [Data Structure Notes](#data-structure-notes)
+- [Data Structure Note](#data-structure-note)
   - [目录](#目录)
   - [一、基础知识](#一基础知识)
     - [1.1 算法与数据结构](#11-算法与数据结构)
@@ -38,10 +39,18 @@
     - [5.1 字符串的顺序实现](#51-字符串的顺序实现)
     - [5.2 字符串的链接实现](#52-字符串的链接实现)
   - [六、树](#六树)
-    - [6.1 二叉树](#61-二叉树)
-      - [6.1.1 二叉树的性质](#611-二叉树的性质)
-      - [6.1.2 二叉树的运算实现](#612-二叉树的运算实现)
-      - [6.1.3 二叉树的链接实现](#613-二叉树的链接实现)
+    - [二叉树](#二叉树)
+      - [6.1 二叉树的性质](#61-二叉树的性质)
+      - [6.2 二叉树的运算实现](#62-二叉树的运算实现)
+      - [6.3 二叉树的链接实现](#63-二叉树的链接实现)
+  - [七、优先级队列](#七优先级队列)
+    - [7.1 二叉堆](#71-二叉堆)
+    - [7.2 优先级队列](#72-优先级队列)
+  - [八、集合](#八集合)
+    - [8.1 映射（Map）](#81-映射map)
+    - [8.2 不相交集](#82-不相交集)
+      - [8.2.1 不相交集的存储](#821-不相交集的存储)
+      - [8.2.2 不相交集的实现](#822-不相交集的实现)
 
 ## 一、基础知识
 ### 1.1 算法与数据结构
@@ -3641,7 +3650,7 @@ public interface Tree<T> {
 ```
 </details>
 
-### 6.1 二叉树
+### 二叉树
 二叉树 (binary tree) 是结点的有限集合，它或者为空，或者由一个根结点及两棵互不相交的左右子树构成，而其左、右子树又都是二叉树。
 注意：二叉树是有序树，必须严格区分左右子树，即使只有一棵子树，也要说明它是左子树还是右子树。
 
@@ -3655,7 +3664,7 @@ public interface Tree<T> {
 
 ![满二叉树和完全二叉树](./images/full-binary-tree-and-complete-binary-tree.png)
 
-#### 6.1.1 二叉树的性质
+#### 6.1 二叉树的性质
 1. 一颗非空二叉树的第 i 层上最多有 $2^{i-1}$ 个节点
 2. 一棵高度为 k 的二叉树，最多有 $2^k - 1$ 个节点
 3. 对于一棵非空二叉树，如果叶子节点数位 $n_0$，度为 2 的节点数为 $n_2$，则有 $n_0 = n_2 + 1$
@@ -3665,7 +3674,7 @@ public interface Tree<T> {
    - 如果 $2i>n$，则编号为 $i$ 的结点为叶子结点，没有儿子；否则，其左儿子的编号为 $2i$。
    - 如果 $2i+1>n$，则编号为 $i$ 的结点无右儿子；否则，其右儿子的编号为 $2i+1$。
 
-#### 6.1.2 二叉树的运算实现
+#### 6.2 二叉树的运算实现
 1) 建树 `create()`: 创建一棵空的二叉树。
 2) 清空 `clear()`: 删除二叉树中的所有结点。
 3) 判空 `isEmpty()`: 判别二叉树是否为空树。
@@ -3795,7 +3804,7 @@ public interface BTree<T> {
 
 二叉树是非线性关系，如果使用顺序存储的话，会很困难（不是不可能就是了），顺序存储适用的情况是**完全二叉树**，我们可是使用其中的数学关系来约束空间关系。但是二叉树并不全是完全二叉树，因此顺序存储不适合，使用**链接关系**实现。
 
-#### 6.1.3 二叉树的链接实现
+#### 6.3 二叉树的链接实现
 二叉树的链接实现有两种方式：
 - 标准存储：**二叉链表**，类似于单链表，只能从上向下遍历，无法通过子节点找到父节点。
 - 广义标准存储：**三叉链表**，类似于双链表，可以反向遍历，可以通过子节点找到父节点
@@ -4806,4 +4815,532 @@ public class BinaryTree<T> implements BTree<T> {
    ```java
    a == b || (a != null && a.equals(b))
    ```
+</details>
+
+---
+## 七、优先级队列
+优先级队列，又称**堆**（Heap），优先级队列有多种实现方式，其中最简单的就是利用先进先出的队列结构。线性表的实现会有出队和入队的时间性能略差，平均为 $O(n)$，基于树状结构的实现可以到达较好的 $O(logN)$，这里记录的为树状结构实现。
+
+### 7.1 二叉堆
+**二叉堆**是一个满足结构性和有序性的二叉树。**树状结构能给出指数的时间性能**，为了维持这种良好的效果，尽量保持二叉堆是一个满二叉树，至少是一个完全二叉树。
+完全二叉树两种存储方式：顺序存储和链状存储。其中顺序存储的方式不需要指向孩子的指针，但是个人认为链状存储的逻辑更好（ CS61B 也是使用的链状存储实现的）
+
+当根节点为最小元素的时候，称为**最小化堆**，又称**小根堆**，同理，根节点为最大元素的时候，称为**最大化堆**，又称**大根堆**。
+![最大堆和最小堆](./images/max-heap-and-min-heap.png)
+
+### 7.2 优先级队列
+与普通队列一样，优先级队列也需要支持下列操作。
+1) 创建一个队列 `create()`: 创建一个空的队列。
+2) 入队 `enQueue(x)`: 将 $x$ 插入队尾, 使之成为队尾元素。
+3) 出队 `deQueue()`: 删除队头元素并返回队头元素值。
+4) 读队头 `getHead()`: 返回队头元素的值。
+5) 判队空 `isEmpty()`: 若队为空, 返回 true, 否则返回 false。
+
+<details>
+<summary><strong> 优先级队列的定义 </strong></summary>
+
+```cpp
+template <class T>
+class priorityQueue : public queue<T> {
+public :
+    priorityQueue(int capacity = 100);
+    priorityQueue(const T data[], int size);
+    ~priorityQueue();
+    bool isEmpty() const;
+    void enQueue(const T& x);
+    T deQueue();
+    T getHead() const;
+
+private :
+    int currentSize;    // The length of queue
+    T *array;
+    int maxSize;        // Capacity
+
+    void doubleSpace();
+    void buildHeap();
+    void percolateDown(int hole);
+};
+```
+</details>
+
+<details>
+<summary><strong> 优先级队列的接口 </strong></summary>
+
+```java
+public interface PriorityQueue<T extends Comparable<T>> {
+    boolean isEnpty();
+
+    int size();
+
+    void enQueue(T x);
+
+    T deQueue();
+
+    T getHead();
+}
+```
+</details>
+
+<details>
+<summary><strong> 优先级队列的实现（cpp）</strong></summary>
+
+由于采用顺序存储，我们将数据存在 `array` 这个动态数组中，构造和析构直接对 `array` 操作即可，此时优先级最高的元素树根放在下表为 1 的位置（下标为 0 的位置是一个辅助点，方便我们用最少的空间来达成操作效果）
+
+入队和出队的操作都是在叶节点中进行的，因为叶节点容易插入和删除，同时不易破坏正常二叉堆的结构。
+
+下面的实现以**最小堆**为例。
+```cpp
+template <class T>
+priorityQueue<T>::priorityQueue(int capacity) {
+    array = new T [capacity];
+    maxSize = capacity;
+    currentSize = 0;
+}
+
+template <class T>
+priotityQueue<T>::~priorityQueue() {
+    delete [] array;
+}
+
+template <class T>
+bool priorityQueue<T>::isEmpty() const {
+    return currentSize == 0;
+}
+
+template <class T>
+T priorityQueue<T>::getHead() const {
+    return array[1];
+}
+
+template <class T>
+void priorityQueue<T>::enQueue(const T& x) {
+    if (currentSize == maxSize - 1) doubleSpace();      // Expand the allcated space for efficient data persistence.
+
+    // Percolate up
+    currentSize += 1;
+    int hole = currentSize;
+    while (hole > 1 && x < array[hole / 2]) {
+        array[hole] = array[hole / 2];
+        hole /= 2;
+    }
+
+    array[hole] = x;        // Set the destination equals to x.
+}
+
+template <class T>
+T priorityQueue<T>::deQueue() {
+    T minItem;
+    minItem = array[1];     // Write down the minimun item.
+    array[1] = array[currentSize];
+    currentSize -= 1;
+    
+    // Percolate down
+    percolateDown(1);
+    return minItem;
+}
+
+template <class T>
+void proirityQueue<T>::percolateDown(int hole) {
+    int child;
+    T temp = array[hole];
+
+    while (hole * 2 <= currentSize) {
+        child = hole * 2;       // Find the left child
+        if (child != currentSize && array[child + 1] < array[child]) {
+            child += 1;     // Right child is less than left child
+        }
+
+        if (array[child] < temp) {
+            array[hole] = array[child];     // Swap the child value and hole value.
+        } else {
+            break;
+        }
+
+        hole = child;
+    }
+
+    array[hole] = temp;
+}
+
+template <class T>
+void priorityQueue<T>::buildHeap() {
+    for (int i = currentSize / 2; i > 0; i -= 1) {
+        percolateDown(i);
+    }
+}
+
+template <class T>
+priorityQueue<T>::priorityQueue(const T *items, int size) : maxSize(size + 10), currentSize(size) {
+    array = new T [maxSize];
+    for (int i = 0; i < size; i += 1) {
+        array[i + 1] = items[i];
+    }
+
+    buildHeap();
+}
+
+template <class T>
+priorityQueue<T>::doubleSpace() {
+    T *temp = array;
+    maxSize *= 2;
+    array = new T [maxSize];
+    for (int i = 1; i <= currentSize; i += 1) {
+        array[i] = temp[i];
+    }
+
+    delete [] temp;
+}
+```
+</details>
+
+<details>
+<summary><strong> 优先级队列的实现（java）</strong></summary>
+
+```java
+import java.util.NoSuchElementException;
+
+public class MinHeapPriorityQueue<T extends Comparable<T>> implements PriorityQueue<T> {
+    private int currentSize;        // The number of elements in the heap
+    private T[] array;              // The heap array, using index 1 as the root.
+    private int maxSize;            // The maximum number of elements the heap can store.
+
+    @SuppressWarnings("unchecked")
+    public MinHeapPriorityQueue(int capacity) {
+        if (capacity < 1) {
+            throw new IllegalArgumentException("capacity must be positive");
+        }
+
+        currentSize = 0;
+        maxSize = capacity;
+
+        // Create a generic array indirectly.
+        array = (T[]) new Comparable[maxSize + 1];
+    }
+
+    public MinHeapPriorityQueue() {
+        this(100);
+    }
+
+    @SuppressWarings("unchecked")
+    public MinHeapPriorityQueue(T[] items, int size) {
+        if (items == null) {
+            throw new IllegalArgumentException("items cannot be null");
+        }
+
+        if (size < 0 || size > items.length) {
+            throw new IllegalArgumentException("invaild size.");
+        }
+
+        currentSize = size;
+        maxSize = size + 10;
+
+        // Create a generic array indirectly.
+        array = (T[]) new Comparable[maxSize + 1];
+
+        for (int i = 0; i < size; i += 1) {
+            if (items[i] == null) {
+                throw new IllegalArgumentException("items cannot contain null");
+            }
+
+            // Store items from index 1;
+            array[i + 1] = items[i];
+        }
+
+        buildHeap();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return currentSize == 0;
+    }
+
+    @Override
+    public T getHead() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("priority queue is empty");
+        }
+
+        return array[1];
+    }
+
+    @Override
+    public void enQueue(T x) {
+        if (x == null) {
+            throw new IllegalArgumentException("x cannot be null.");
+        }
+
+        if (currentSize == maxSize - 1) {
+            doubleSpace();
+        }
+
+        // Percolate up.
+        currentSize += 1;
+        int hole = currentSize;
+
+        whlie (hole > 1 && less(x, array[hole / 2])) {
+            array[hole] = array[hole / 2];
+            hole /= 2;
+        }
+
+        array[hole] = x;
+    }
+
+    @Override
+    public T deQueue() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("priority queue is empty");
+        }
+
+        T minItem = array[1];
+
+        // Move the last item to the root;
+        T lastItem = array[currentSize];
+        array[currentSize] = null;
+        currentSize -= 1;
+
+        if (!isEmpty()) {
+            array[1] = lastItem;
+            percolateDown(1);
+        }
+
+        return minItem;
+    }
+
+    private void percolateDown(int hole) {
+        T temp = array[hole];
+        while (hole * 2 <= currentSize) {
+            int child = hole * 2;
+
+            // Choose the smaller child;
+            if (child != currentSize && array[child + 1] < array[child]) {
+                child += 1;
+            }
+
+            if (less(array[child], temp)) {
+                array[hole] = array[child];
+                hole = child;
+            } else {
+                break;
+            }
+        }
+    }
+
+    private void buildHeap() {
+        for (int i = currentSize / 2; i > 0; i -= 1) {
+            percolateDown(i);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void doubleSpace() {
+        T[] oldArray = array;
+        maxSize *= 2;
+
+        // Create a larger generric array indriectly.
+        array = (T[]) new Comparable[maxSize + 1];
+
+        for (int i = 1; i <= currentSize; i += 1) {
+            array[i] = oldArray[i];
+        }
+    }
+
+    private boolean less(T a, T b) {
+        return a.compareTo(b) < 0;
+    }
+}
+```
+</details>
+
+---
+## 八、集合
+集合中的数据元素的关系很松散，除了在一个集合外，没有任何逻辑关系。集合中的每个数据元素有一个区别于其他元素的唯一标识，通常称为**键值**或**关键字值**。
+
+集合是一种存储不重复元素的数据结构
+<details>
+<summary><strong> 集合的定义 </strong></summary>
+
+```cpp
+template <class K, class Other>
+struct set {
+    K key;           // The key of set.
+    Other other;     // Other part of set.
+};
+```
+</details>
+
+<details>
+<summary><strong> 集合的接口 </strong></summary>
+
+```java
+public interface Set<T> {
+    boolean isEmpty();
+
+    int size();
+
+    boolean contains(T x);
+
+    void add(T x);
+
+    void remove(T x);
+}
+```
+</details>
+
+### 8.1 映射（Map）
+
+### 8.2 不相交集
+定义在集合 \(S\) 上的关系 \(R\) 是指：对集合中的每一对元素 \((a,b), a,b \in S\), \(aRb\) 要么是真，要么是假。如果 \(aRb\) 为真，则称 \(a\) 与 \(b\) 相关。
+
+等价关系是一种定义在集合 \(S\) 上的满足以下 3 个特性的关系 \(R\)。
+
+* **(1) 自反性：** 对所有的 \(a \in S\), \(aRa\) 为真。
+* **(2) 对称性：** 当且仅当 \(bRa\) 为真时，\(aRb\) 为真。
+* **(3) 传递性：** \(aRb\) 和 \(bRc\) 为真隐含了 \(aRc\) 为真。
+
+一个集合中的元素若有之间具有等价关系，将他们放在一起，称为**等价类**，所有的等价类合一起就是集合 $S$，这样的集合称为**不相交集合**，又称**并查集**。
+
+#### 8.2.1 不相交集的存储
+并查集可以使用顺序表存储，也可以使用树来存储，61B中使用的是树，因为逻辑更好理解。教材采用的是**顺序存储的树**。此处的树不同于之前的树，这里我们关注的是节点的父节点，可以采用**双亲表示法**。
+
+在双亲表示法中，有 `parent` 数组表示元素 i 的父节点的下标值。
+![并查集](./images/disjointSet.png)
+
+#### 8.2.2 不相交集的实现
+并查集的核心在于**查找**和**合并**。
+<details>
+<summary><strong> 不相交集的定义 </strong></summary>
+
+```cpp
+class DisjointSet {
+private : 
+    int size;
+    int *parent;
+
+public :
+    DisjointSet(int s);
+    ~DisJointSet() { delete [] parent; }
+    void union(int root1, int root2);       // Union two subtree.
+    int find(int s)                         // Find the root of tree contained element x
+};
+```
+</details>
+
+<details>
+<summary><strong> 不相交集的接口 </strong></summary>
+
+```java
+public interface DisjointSets {
+    /** Connects two items P and Q **/
+    void connect(int p, int q);
+
+    /** Checks to see if two items are connected **/
+    boolean isConnected(int p, int q);
+}
+```
+</details>
+
+1. `find` 操作
+   由于每棵树都可以使用双亲表示法，这样我们可以根据 `parent` 数组，找到值为 -1 的节点（为根节点，没有父节点了）。为了更好的操作，可以改进算法————**路径压缩**。在每一次查找时，都进行路径压缩，这样可以维持最小化树的高度（尽量维持在高度为 2 或 1），查找时更加方便。
+2. `union` 操作
+   由于对树的结构没有明显的要求，直接修改 `parent` 数组中的值即可，即将一个树变成另一个的子树。但是这样会导致树的结构很差，甚至退化成单链表。可以使用改进的算法————**按规模并**或**按高度并**，这样保证了高度尽可能增长的缓慢一些。
+
+下面是实现：
+<details>
+<summary><strong> 不相交集的实现（cpp）</strong></summary>
+
+```cpp
+DisjointSet::DisjointSet(int n) {
+    size = n;
+    parent = new int [size];
+    for (int i = 0; i < size; i += 1) parent[i] = -1;   // Each node is initially its own root.
+}
+
+int DisjointSet::find(int x) {
+    if (parent[x] < 0) return x;            // Found the root
+    return parent[x] = find(parent[x]);     // Path compression
+}
+
+void DisjointSet::union(int root1, int root2) {
+    if (root1 == root2) return;
+
+    // Compare the algebraic values of the root. A strictly greater negative value imploes a smaller set size.
+    if (parent[root1] > parent[root2]) {    // The size of root1 is smaller than root2.
+        parent[root2] += parent[root1];
+        parent[root1] = root2;
+    } else {        // The size of root2 is smaller than root1.
+        parent[root1] += parent[root2];
+        parent[root2] = root1;
+    }
+}
+```
+</details>
+
+<details>
+<summary><strong> 不相交集的实现（java）</strong></summary>
+
+```java
+public class WeightedQuickUnionWithPathCompreesionDS implements DisjointSets {
+    private int[] parent;
+
+    public WeightedQuickUnionWithPathCompressionDS(int N) {
+        if (N < 0) {
+            throw new IllegalArgumentException("N cannot be negative");
+        }
+
+        parent = new int [N];
+
+        for (int i = 0; i < N; i += 1) {
+            parent[i] = -1;     // Each item is initially its own root.
+        }
+    }
+
+    private void vaildate(int x) {
+        if (x < 0 || x >= parent.length) {
+            throw new IllegalArgumentException("index out of bounds: " + x);
+        }
+    }
+
+    private int find(int x) {
+        validate(x);
+
+        if (parent[x] < 0) {
+            return x;       // Found the root;
+        }
+
+        parent[x] = find(parent[x]);        // Path compression.
+        return parent[x];
+    }
+
+    @Override
+    public void connect(int p, int q) {
+        int rootP = find(p);
+        int rootQ = find(q);
+
+        if (rootP == rootQ) {
+            return;
+        }
+
+        // parent[root] stores the negative size of the set.
+        if (parent[rootP] > parent[rootQ]) {
+            // rootP has a smaller set.
+            parent[rootQ] += parent[rootP];
+            parent[rootP] = rootQ;
+        } else {
+            // rootQ has a smaller or equal-sized set.
+            parent[rootP] += parent[rootQ];
+            parent[rootQ] = rootP;
+        }
+    }
+
+    @Override
+    public boolean isConnected(int p, int q) {
+        return find(p) == find(q);
+    }
+
+    public int sizeOf(int x) {
+        int root = find(x);
+        return -parent[root];
+    }
+}
+```
 </details>
