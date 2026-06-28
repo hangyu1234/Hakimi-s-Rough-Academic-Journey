@@ -53,6 +53,12 @@
     - [8.2 不相交集](#82-不相交集)
       - [8.2.1 不相交集的存储](#821-不相交集的存储)
       - [8.2.2 不相交集的实现](#822-不相交集的实现)
+  - [九、图](#九图)
+    - [9.1 图的基本术语](#91-图的基本术语)
+    - [9.2 图的基本运算](#92-图的基本运算)
+    - [9.3 图的存储](#93-图的存储)
+      - [9.3.1 邻接矩阵表示法](#931-邻接矩阵表示法)
+      - [9.3.2 邻接表表示法](#932-邻接表表示法)
 
 ## 一、基础知识
 ### 1.1 算法与数据结构
@@ -5963,6 +5969,604 @@ public class WeightedQuickUnionWithPathCompreesionDS implements DisjointSets {
     public int sizeOf(int x) {
         int root = find(x);
         return -parent[root];
+    }
+}
+```
+</details>
+
+---
+## 九、图
+**图**有一个顶点集和链接各个顶点的边集组成，通常表示为一个二元组 $G=(V,E)$，其中的 $V$ 表示**顶点集**， $E$ 表示**边集**。顶点又称为**结点**。
+按照边有无方向可以分为两种：
+- **有向图**：使用 `<>` 表示，`<u, v>` 表示从 $u$ 到 $v$ 的一条边，即 $v$ 是 $u$ 的直接后继，$u$ 是 $v$ 的直接前驱。
+- **无向图**：又称**双向图**，使用 `()` 表示，`(u, v)` 表示顶点 $u$ 与 $v$ 之间的一条边，两者互为前驱和后继
+
+有时候这两个图的边会有第三个属性，称为**边的代价**或**权值**，此时图被称为**加权图**。如果有向的话称为是**加权有向图**，无向称为**加权无向图**。分别表示为 `<u, v, w>` 和 `(u, v, w)`，权值记为 $w$。
+
+![有向图和无向图](./images/directed-and-undirected-graph.png)
+![加权图](./images/weighted-graph.png)
+
+### 9.1 图的基本术语
+1. **邻接**
+   无向图中的邻接不强调方向，直接说 $V_i$ 和 $V_j$ 是邻接的。而有向图则需要强调方向，需要说：从 $V_i$ 到 $V_j$ 邻接
+
+2. **度**
+   无向图中，结点的度是与该结点关联的边数。
+   有向图中，度分为**出度**和**入度**。入度为有向图中进入该结点的边数，出度为有向图中离开该结点的边数。
+
+3. **子图**
+   简而言之就是图A中所有的结点和边都在图B中有对应：
+   > 假设有两个图 $G=(V,E)$ 和 $G'=(V',E')$, 如果 $V'\subseteq V,E'\subseteq E$, 则称 $G'$ 是 $G$ 的子图。
+   ![子图](./images/subgraph.png)
+
+4. **路径与路径长度**
+   路径是图中由边连接而成的结点序列。
+   如果两个点 $u$ 和 $v$ 之间有一条**路径**，则称结点之间是**连通**的。
+   每一条路径都有一个衡量路径长度的值。**非加权路径长度**就是组成路径的边数，**加权路径长度**是路径上所有边的权值之和。
+   如果一个路径上所有的结点（除了起始节点和终止结点）都不相同，则称其为**简单路径**。一个**回路**或**环**就是一条简单路径，且路径长度至少为 1.
+   不含有环的有向图称为**有向无环图（DAG）**
+
+5. **连通图和连通分量**
+   若一个无向图 $G$ 任意两个结点之间都是连通的，称 $G$ 为**连通图**。反之则为**非连通图**。
+   如果一个非连通图中取出一个极大的连通子图，我们称这个子图为一个**连通分量**。
+   ![]
+
+6. **强连通图和强连通分量**
+    若一个有向图 $G$ 任意两个结点之间都是连通的，称 $G$ 为**强连通图**。相应的，每一个极大强连通子图称为**强连通分量**。
+    如果一个有向图 $G$ 不是强连通的，但是当成无向图的时候是连通的，则称其为**弱连通图**
+
+7. **完全图**
+   每两个结点之间都有边的无向图称为**无向完全图**，边数为：$C_n^2 = \frac{n(n-1)}{2}$
+   每两个结点之间都有边的有向图称为**有向完全图**，边数为：$2C_n^2 = n(n + 1)$
+
+8. **生成树**
+   生成树是无向连通图的极小连通子图。有全部的 $n$ 个结点，但是只有图中的 $n - 1$ 条边。这 $n - 1$条边使得这$n$个结点互相连通。
+
+### 9.2 图的基本运算
+图的基本操作有以下几种：
+- 构造一个由若干个结点，若干个边组成的图
+- 判断两个结点之间是否有边的存在
+- 在图中添加或删除一条边
+- 返回结点数或边数
+- 遍历所有结点
+
+下面是对应的定义和接口：
+<details>
+<summary><strong> 图的定义 </strong></summary>
+
+```cpp
+template <typename Tv, typename Te>
+class graph {
+public:
+    virtual void insert(Tv x, Tv y, Te w) = 0;      // Add the edge between the x and y
+    virtual void remove(Tv x, Tv y) = 0;            // Remove the edge between the x and y
+    virtual bool exist(Tv x, Tv y) const = 0;       // Return the existance of edge between the x and y.
+    int numOfVer() const {return vers;}             // Return the number of vers.
+    int numOfEdge() const {return edges;}           // Return the number of edges.
+
+protected:
+    int vers, edges;
+}
+```
+</details>
+
+<details>
+<summary><strong> 图的接口 </strong></summary>
+
+```java
+public interface Graph<V, E> {
+    /**
+     * Adds an edge between v2 and v2 with the given weight.
+     */
+    void addEdge(V v1, V v2, E weight);
+
+    /**
+     * Removes the edge between v1 and v2.
+     */
+    void removeEdge(V v1, V v2);
+
+    /**
+     * Return true if there is an edge between v1 and v2.
+     */
+    boolean containsEdge(V v1, V v2);
+
+    /**
+     * Return the number of vertices.
+     */
+    int numVertices();
+
+    /**
+     * Return the number of edges.
+     */
+    int numEdges();
+}
+```
+</details>
+
+### 9.3 图的存储
+图常用的两种存储方式是**邻接矩阵**和**邻接表**。
+
+#### 9.3.1 邻接矩阵表示法
+设有向图或无向图有 $n$ 个顶点, 则可用 $n$ 行 $n$ 列的布尔矩阵 $A$ 表示。如果编号为 $i$ 的顶点到编号 为 $j$ 的 顶点之间存在一条自顶点 $i$ 到 $j$ 的有向边或无向边, 那么 $A[i][j]=1$, 否则 $A[i][j]=0$。 另外, 通常 设 $A[i][i]=0$。
+用邻接矩阵表示的图的定义为
+$$A[i][j]=\begin{cases}1 & \langle i,j \rangle \in E \text{ 或 } (i,j) \in E \\ 0 & \text{否则, 或 } i=j\end{cases}$$
+
+注：如果您有幸学习了电路理论，您会发现这个就是我们说的 **关联矩阵**。
+
+两个结论：
+1) 无向图中：邻接矩阵中的第 $i$ 行或第 $i$ 列的元素之和代表了对应结点的度。正常的邻接矩阵是一个对称矩阵，因此我们可以只存储上三角或下三角矩阵。
+   
+2) 有向图中：第 $i$ 行为结点 $i$ 的出度，第 $i$ 列为结点 $i$ 的入度。
+
+如果存储的是加权图，就不能使用简单的布尔矩阵了。使用整形矩阵或实型矩阵来存储：有边且有权重就正常存储权重，没有边就将权重设置成无穷。
+
+下面是定义与实现：
+<details>
+<summary><strong> 邻接矩阵的定义 </strong></summary>
+
+```cpp
+template <typename Tv, typename Te>
+class adjMatrixGraph : public graph<Tv, Te> {
+public:
+    adjMatrixGraph(int vSize, const Tv d[], const Te noEdgeFlag);
+    void insert(Tv x, Tv y, Te w);
+    void remove(Tv x, Tv y);
+    bool exist(Tv x, Tv y) const;
+    ~adjMatrixGraph();
+
+private:
+    Te **edge;              // Store the adjacency matrix.
+    Tv *ver;                // Store the value of vertax.
+    Te noEdge;              // Store the flag.
+    int find(Tv v) const {
+        for (int i = 0; i < vers; i += 1) {
+            if (ver[i] == v) return i;
+        }
+
+        return -1;      // Not exist.
+    }   
+}
+```
+</details>
+
+<details>
+<summary><strong> 邻接矩阵的实现（cpp）</strong></summary>
+
+```cpp
+template <typename Tv, typename Te>
+adjMatrixGraph<Tv, Te>::adjMatrixGraph(
+    int vSize,
+    const Tv d[], 
+    const Te noEdgeFlag
+) {
+    int i, j;
+    
+    vers = vSize;
+    edges = 0;
+    noEdge = noEdgeFlag;
+
+    // Initialize the array which stores the vertices.
+    ver = new Tv [vSize];
+    for (i = 0; i < vSize; i += 1) ver[i] = d[i];
+
+    // Initialize the adjacency matrix
+    edge = new Te* [vSize];
+    for (i = 0; i < vers; i += 1) {
+        edge[i] = new Te[vSize];
+        for (j = 0; j < vSize; j += 1) edge[i][j] = noEdge;
+        edge[i][j] = 0;
+    }
+}
+
+template <typename Tv, typename Te>
+adjMatrixGraph<Tv, Te>::~adjMatrixEdgeGraph() {
+    delete [] ver;
+    for (int i = 0; i < vers; i += 1) delete [] edge[i];
+    delete [] edge;
+}
+
+template <typename Tv, typename Te>
+adjMatrixGraph<Tv, Te>::insert(Tv x, Tv y, Te w) {
+    int u = find(x), v = find(y);
+    edge[u][v] = w;
+    edges += 1;
+}
+
+template <typename Tv, typename Te>
+void adjMatrixGraph<Tv, Te>::remove(Tv x, Te y) {
+    int u = find(x), v = find(y);
+    edge[u][v] = noEdge;
+    edges -= 1;
+}
+
+template <typename Tv, typename Te>
+bool adjMatrixGraph<Tv, Te>::exist(Tv x, Tv y) {
+    int u = find(x), v = find(y);
+    if (edge[u][v] == noEdge) return false;
+    else return true;
+}
+```
+</details>
+
+<details>
+<summary><strong> 邻接矩阵的实现（java）</strong></summary>
+这里的实现为无向图的实现，对于有向图，将其中的构造函数中的 `edges[i][j] = weight;` 删除函数中的 `edges[i][j] = noEdge;` 保留一个即可。
+
+```java
+import java.util.Objects;
+
+public class AdjMatrixGraph<V, E> implements Graph<V, E> {
+    private final Object[][] edges;         // Store the adjacency matrix.
+    private final Object[] vertices;        // Store the vertex values.
+    private final E noEdge;                 // Stores the no-edge flag.
+
+    private int numVertices;
+    private int numEdges;
+
+    /**
+     * Create an adjacency matrix graph.
+     */
+    public AdjMatrixGraph(V[] data, E noEdgeFlag) {
+        numVertices = data.length;
+        numEdges = 0;
+        noEdge = noEdgeFlag;
+
+        vertices = new Object[numVertices];
+        edges = new Object[numVertices][numVertices];
+
+        for (int i = 0; i < numVertices; i += 1) {
+            vertices[i] = data[i];
+        }
+
+        for (int i = 0; i < numVertices; i += 1) {
+            for (int j = 0; j < numVertices; j += 1) {
+                edges[i][j] = noEdge;
+            }
+        }
+    }
+
+    @Override
+    public void addEdge(V v1, V v2, E weight) {
+        int i = find(v1);
+        int j = find(v2);
+
+        if (i == -1 || j == -1) {
+            throw new IllegalArgumentException("Vertex does not exist");
+        }
+
+        if (Objects.equals(edges[i][j], noEdge)) {
+            numEdges += 1;
+        }
+
+        edges[i][j] = weight;
+        edges[j][i] = weight;
+    }
+
+    @Override
+    public void removeEdge(V v1, V v2) {
+        int i = find(v1);
+        int j = find(v2);
+
+        if (i == -1 || j == -1) {
+            throw new IllegalArgumentException("Vertex does not exist");
+        }
+
+        if (!Objects.equals(edges[i][j], noEdge)) {
+            edges[i][j] = noEdge;
+            edges[i][j] = noEdge;
+            numEdge -= 1;
+        }
+    }
+
+    @Override
+    public boolean containsEdge(V v1, V v2) {
+        int i = find(v1);
+        int j = find(v2);
+
+        if (i == -1 || j == -1) {
+            return false;
+        }
+
+        return !Objects.equals(edges[i][j], noEdge);
+    }
+
+    @Override
+    public int numVertices() {
+        return numVertices;
+    }
+
+    @Override
+    public int numEdges() {
+        return numEdges;
+    }
+
+    /**
+     * Return the index of the given vertex.
+     */
+    private int find(V vertex) {
+        for (int i = 0; i < numVertices; i += 1) {
+            if (Objects.equals(vertices[i], vertex)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
+```
+</details>
+
+#### 9.3.2 邻接表表示法
+对于稀疏图来说，邻接矩阵浪费很多空间，一个更好的方法是使用**邻接表**。
+邻接表存储每一个存在的边，并不为不存在的边预留空间，其将每一个结点的林姐姐点组成一个链表，链表的每一个结点表示一个边。
+邻接表表示法有两个要素：**保存顶点**和**保存边**。顶点集用一个数组存储，数组由**顶点值**和**顶点对应链表的首地址（哨兵结点）**。边集用一个单链表示。
+
+![邻接表](./images/adjacency-list.png)
+
+邻接表实现中，边集的结点总数等于图的边数，在无向图中，结点总数是边数的两倍。
+
+下面是邻接表的定义与实现：
+<details>
+<summary><strong> 邻接表的定义 </strong></summary>
+
+```cpp
+template <typename Tv, typename Te>
+class adjListGraph : public graph<Tv, Te> {
+public:
+    adjListGraph(int vSize, const Tv d[]);
+    void insert(Tv x, Tv y, Te w);
+    void remove(Tv x, Tv y);
+    bool exist(Tv x, Tv y) const;
+    ~adjListGraph();
+
+private:
+    struct edgeNode {       // The class to store the edges
+        int end;        // The index of vertex
+        Te weight;      // The weight of the edge.
+        edgeNode *next;
+
+        edgeNode(int e, Te w, edgeNode *n = nullptr)    
+            : end(e), weight(w), next(n) {}
+    };
+
+    struct verNode {        // The class to store the data of vertices
+        Tv ver;         // The value of vertex
+        edgeNode *head; 
+
+        verNode(edgeNode *h = nullptr) { head = h; }
+    };
+
+    verNode *verList;
+    int find(Tv v) const {
+        for (int i = 0; i < vers; i += 1) {
+            if (verList[i].ver == v) return i;
+        }
+    }
+};
+```
+
+注意这里的 `end` 表示的是 `verList` 中对应元素的下标。是**边的终点点编号**。
+
+![adjacencyList-construction](./images/adjacencyList-construction.png)
+</details>
+
+<details>
+<summary><strong> 邻接表的实现（cpp）</strong></summary>
+
+```cpp
+template <typename Tv, typename Te>
+adjListGraph<Tv, Te>::adJListGraph(int vSize, const Tv d[]) {
+    vers = vSize;
+    edges = 0;
+
+    verList = new verNode[vSize];
+    for (int i = 0; i < vers; i += 1) {
+        verList[i].ver = d[i];
+    }
+}
+
+template <typename Tv, typename Te>
+adjListGraph<Tv, Te>::~adjListGraph() {
+    int i;
+    edgeNode *p;
+
+    for (i = 0; i < vers; i += 1) {
+        while (p != nullptr) {
+            // Delete the i-th single-link.
+            p = verList[i].head;
+            verList[i].head = p->next;
+            delete p;
+        }
+    }
+
+    delete [] verList;
+}
+
+template <typename Tv, typename Te>
+void adjListGraph<Tv, Te>::insert(Tv x, Tv y, Te w) {
+    int u = find(x), v = find(y);   
+    verList[u].head = new edgeNode(v, w, verList[u].head);      // Insert from the head.
+    edges += 1；
+}
+
+template <typename Tv, typename Te>
+void adjListGraph<Tv, Te>::remove(Tv x, Tv y) {
+    int u = find(x), v = find(y);
+    edgeNode *p = verList[u].head, *q;
+
+    if (p == nullptr) return;       // Not exist the edge linked with node u
+
+    if (p->end == v) {
+        // The first node is the target.
+        verList[u].head = p->next;
+        delete p;
+        edges -= 1;
+        return;
+    }
+
+    while (p->next != nullptr && p->next->end != v) {  // Find the target.
+        p = p->next;    
+    }
+
+    if (p->next != nullptr) {
+        q = p->next;
+        p->next = q->next;
+        delete q;
+        edges -= 1;
+    }
+}
+
+template <typename Tv, typename Te>
+bool adjListGraph<Tv, Te>::exist(Tv x, Tv y) const {
+    int u = find(x), v = find(y);
+    edgeNode *p = verList[u].head;
+
+    while (p != nullptr && p->end != v) p = p->next;
+    if (p == nullptr) return false;
+    else return true;
+}
+```
+</details>
+
+<details>
+<summary><strong> 邻接表的实现（java）</strong></summary>
+
+```java
+import java.util.Objects;
+
+public class AdjListGraph<V, E> implements Graph<V, E> {
+    private final VertexNode<V, E>[] vertices;
+    private int numVertices;
+    private int numEdges;
+
+    /**
+     * Vertex node in the adjacency list.
+     */
+    private static class VertexNode<V, E> {
+        private V vertex;
+        private EdgeNode<E> head;
+
+        VertexNode(V vertex) {
+            this.vertex = vertex;
+            this.head = null;
+        }
+    }
+
+    /**
+     * Edge node in a single linked list.
+     */
+    private static class EdgeNode<E> {
+        private int end;
+        private E weight;
+        private EdgeNode<E> next;
+
+        EdgeNode(int end, E weight, EdgeNode<E> next) {
+            this.end = end;
+            this.weight = weight;
+            this.next = next;
+        }
+    }
+
+    /**
+     * Create an adjacency-list graph.
+     */
+    @SuppressWarnings("unchecked")
+    public AdjListGraph(V[] data) {
+        numVertices = data.length;
+        numEdges = 0;
+
+        vertices = (VertexNode<V, E>[]) new VertexNode[data.length];
+
+        for (int i = 0; i < numVertices; i += 1) {
+            vertices[i] = new VertexNode<>(data[i]);
+        }
+    }
+
+    @Override
+    public void addEdge(V v1, V v2, E weight) {
+        int start = find(v1);
+        int end = find(v2);
+
+        if (start == -1 || end == -1) {
+            throw new IllegalArgumentException("Vertex does not exist.");
+        }
+
+        if (!containsEdge(v1, v2)) {
+            vertices[start].head = new EdgeNode<>(end, weight, wertices[start].head);
+            numEdge += 1;
+        }
+    }
+
+    @Override
+    public void removeEdge(V v1, V v2) {
+        int start = find(v1);
+        int end = find(v2);
+
+        if (start == -1 || end == -1) {
+            throw new IllegalArgumentException("Vertex does not exist.");
+        }
+
+        EdgeNode<E> current = vertices[start].head;
+
+        if (current == null) {
+            return;
+        }
+
+        if (current.end == end) {
+            vertices[start].head = current.next;
+            numEdges -= 1;
+            return;
+        }
+
+        while (current.next != null && current.next.end != end) {
+            current = current.next;
+        }
+
+        if (current.next != null) {
+            current.next = current.next.next;
+            numEdges -= 1;
+        }
+    }
+
+    @Override
+    public boolean containsEdge(V v1, V v2) {
+        int start = find(v1);
+        int end = find(v2);
+
+        if (start == -1 || end == -1) {
+            return false;
+        }
+
+        EdgeNode<E> current = vertices[start].head;
+
+        while (current != null && current.end != end) {
+            current = current.next;
+        }
+
+        return current != null;
+    }
+
+    @Override
+    public int numVertices() {
+        return numVertices;
+    }
+
+    @Override
+    public int numEdgea() {
+        return numEdges;
+    }
+
+    /**
+     * Return the index of the given vertex
+     */
+    private int find(V vertex) {
+        for (int i = 0; i < numVertices; i += 1) {
+            if (Objects.equals(vertices[i].vertex, vertex)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
 ```
