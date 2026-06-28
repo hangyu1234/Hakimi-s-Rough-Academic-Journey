@@ -48,6 +48,8 @@
     - [7.2 优先级队列](#72-优先级队列)
   - [八、集合](#八集合)
     - [8.1 映射（Map）](#81-映射map)
+      - [8.1.1 Map的基本操作](#811-map的基本操作)
+      - [8.1.2 Map的实现](#812-map的实现)
     - [8.2 不相交集](#82-不相交集)
       - [8.2.1 不相交集的存储](#821-不相交集的存储)
       - [8.2.2 不相交集的实现](#822-不相交集的实现)
@@ -5187,6 +5189,626 @@ public interface Set<T> {
 </details>
 
 ### 8.1 映射（Map）
+Map 是一种**键值映射结构**（key-value mapping），他保存的是一组键值对`key -> value`
+核心语义：
+> 通过 key 快速找到对应的 value
+
+#### 8.1.1 Map的基本操作
+```
+put(key, value)       插入或更新键值对
+get(key)              根据 key 查找 value
+containsKey(key)      判断 key 是否存在
+remove(key)           删除 key 对应的键值对
+size()                返回键值对数量
+clear()               清空 Map
+keySet()              返回所有 key
+```
+
+这里的 `put()` 函数有两种情况：
+- key不存在：插入新的键值对
+- key存在：修改原来的键值对
+
+#### 8.1.2 Map的实现
+同之前的数据结构一样，可以选择线性表，也可以选择链状实现。线性表实现简单，但不适用于大范围的查找。因此这里选择二叉树的形式.
+
+<details>
+<summary><strong> Map的定义</strong></summary>
+
+```cpp
+#include <vector>
+
+template <typename K, typename V>
+class BSTMap {
+private:
+    // A tree node that stores one key-value pair.
+    struct Node {
+        K key;
+        V value;
+        Node *left, *right;
+
+        Node(const K &key, const V &value);
+    };
+
+    Node *root;
+    int mapSize;
+
+    static void destroy(Node *node);
+    static Node *clone(Node *node);
+
+    static Node *findNode(Node *node, const K &key);
+    static const Node *findNode(const Node *node, const K &key);
+
+    static Node *put(Node *node, const K &key, const V &value, bool &added);
+
+    static Node *remove(Node *node, const K &key, V *removedValue, bool &removed);
+    static Node *minNode(Node *node);
+    static Node *deleteMin(Node *node);
+
+    static void addKeys(Node *node, std::vector<K> &keys);
+
+public:
+    BSTMap();
+    BSTMap(const BSTMap &other);
+    BSTMap &operator=(const BSTMap &other);
+    ~BSTMap();
+
+    void clear();
+
+    bool containsKey(const K& key) const;
+     
+    V *get(const K &key);
+    const V *get(const K &key) const;
+
+    int size() const;
+    bool empty() const;
+
+    void put(const K &key, const V &value);
+
+    bool remove(const K &key, V &removedValue);
+
+    std::vector<K> keySet() const;
+};
+```
+</details>
+
+<details>
+<summary><strong> Map的接口 </strong></summary>
+
+```java
+import java.util.Set;
+
+public interface Map61B<K, V> extends Iterable<K> {
+    // Remove all key-value pairs from this map.
+    void clear();
+
+    // Return true if this map contains the given key.
+    boolean containsKey(K key);
+
+    // Return the value associated with the given key.
+    V get(K key);
+
+    // Return the number of key-value pairs.
+    int size();
+
+    // Inserts or updates a key-value pair.
+    void put(K key, V value);
+
+    // Return a set containing all keys.
+    Set<K> keySet();
+
+    // Remove the key-value pair with the given key.
+    V remove(K key);
+
+    // Remove the key-value pair only if both key and value match.
+    V remove(K key, V value);
+}
+```
+</details>
+
+<details>
+<summary><strong> Map的实现（cpp）</strong></summary>
+
+```cpp
+template <typename K, typename V>
+BSTMap<K, V>::Node::Node(const K &key, const V &value) 
+    : key(key), value(value), left(nullptr), right(nullptr) {}
+
+template <typename K, typename V>
+BSTMap<K, V>::BSTMap()
+    : root(nullptr), mapSize(0) {}
+
+template <typename K, typename V>
+BSTMap<K, V>::BSTMap(const BSTMap &other)
+    : root(clone(other.root)), mapSize(other.mapSize) {}
+
+template <typename K, typename V>
+BSTMap<K, V> &BSTMap<K, V>::operator=(const BSTMap &other) {
+    if (this == &other) return *this;
+
+    destory(root);
+    root = clone(other.root);
+    mapSize = other.mapSize;
+
+    return *this;
+}
+
+template <typename K, typename V>
+BSTMap<K, V>::~BSTMap() {
+    destory(root);
+}
+
+template <typename K, typename V>
+void BSTMap<K, V>::clear() {
+    destory(root);
+    root = nullptr;
+    mapSize = 0;
+}
+
+template <typename K, typename V>
+bool BSTMap<K, V>::containsKey(const K *key) const {
+    return findNode(root, key) != nullptr;
+}
+
+template <typename K, typename V>
+V *BSTMap<, V>::get(const K &key) {
+    Node *node = findNode(root, key);
+
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    return &(node->value);
+}
+
+template <typename K, typename V>
+const V *BSTMap<K, V>::get(const K &key) const {
+    const Node *node = findNode(root, key);
+
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    return &(node->value);
+}
+
+template <typename K, typename V>
+int BSTMap<K, V>::size() const {
+    return mapSize;
+}
+
+template <typename K, typename V>
+bool BSTMap<K, V>::empty() const {
+    return mapSize == 0;
+}
+
+template <typename K, typename V>
+void BSTMap<K, V>::put(const K &key, const V &value) {
+    bool added = false;
+    root = put(root, key, value, added);
+
+    if (added) {
+        mapSize += 1;
+    }
+}
+
+template <typename K, typename V>
+bool BSTMap<K, V>::remove(const K &key, V &removedValue) {
+    bool removed = false;
+    root = remove(root, key, &removedValue, removed);
+
+    if (removed) {
+        mapSize -= 1;
+    }
+
+    return removed;
+}
+
+template <typename K, typename V>
+std::vector<K> BSTMap<K ,V>keySet() const {
+    std::vector<K> keys;
+    addKeys(root, keys);
+    return keys;
+}
+
+template <typename K, typename V>
+void BSTMap<K, V>::destory(Node *node) {
+    if (node == nullptr) {
+        return;
+    }
+
+    destory(node->left);
+    destory(node->right);
+    delete node;
+}
+
+template <typename K, typename V>
+typename BSTMap<K, V>::Node *BSTMap<K, V>::clone(Node *node) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    Node *newNode = new Node(node->key, node->value);
+    newNode->left = clone(node->left);
+    newNode->right = clone(node->right);
+
+    return newNode;
+}
+
+template <typename K, typename V>
+typename BSTMap<K, V>::Node *BSTMap<K, V>::findNode(Node *node, const K &key) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    if (key < node->key) {
+        return findNode(node->left, key);
+    }
+
+    if (node->key < key) {
+        return findNode(node->right, key);
+    }
+
+    return node;
+}
+
+template <typename K, typename V>
+const typename BSTMap<K, V>::Node *BSTMap<K, V>::findNode(
+    const Node *node,
+    const K &key
+) {
+    if (node == nullptr) [
+        return nullptr;
+    ]
+
+    if (key < node->key) {
+        return findNode(node->left, key);
+    }
+
+    if (node->key < key) {
+        return findNode(node->right, key);
+    }
+
+    return node;
+}
+
+template <typename K, typename V>
+typename BETMap<K, V>::Node *BSTMap<K, V>::put(
+    Node *node,
+    const K &key,
+    const V &value,
+    bool &added
+) {
+    if (node == nullptr) {
+        added = true;
+        return new Node(key, value);
+    }
+
+    if (key < node->key) {
+        node->left = put(node->left, key, value, added);
+    } else if (node->key < key) {
+        node->right = put(node->right, key, value, added);
+    } else {
+        node->value = value;
+    }
+
+    return node;
+}
+
+template <typename K, typename V>
+typename BSTMap<K, V>::Node *BSTMap<K, V>::remove(
+    Node *node,
+    const K &key,
+    V &removedValue,
+    bool &removed
+) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    if (key < node->key) {
+        node->left = remove(node->left, key, removedValue, removed);
+    } else if (node->key < key) {
+        node->right = remove(node->right, key, removedValue, removed);
+    } else {
+        removed = true;
+
+        if (removeValue != nullptr) {
+            *removeValue = node->value;
+        }
+
+        if (node->left == nullptr) {
+            Node *rightChild = node->right;
+            delete node;
+            return rightChild;
+        }
+
+        if (node->right == nullptr) {
+            Node *leftChild = node->left;
+            delete node;
+            return leftChild;
+        }
+
+        Node *successor = minNode(node->right);
+        node->key = successor->key;
+        node->value = successor->value;
+        node->right = deleteMin(node->right);
+    }
+
+    return node;
+}
+
+template <typename K, typename V>
+typename BSTMap<K, V>::Node *BSTMap<K, V>::minNode(Node *node) {
+    if (node->left == nullptr) {
+        return node;
+    }
+
+    return minNode(node->left);
+}
+
+template <typename K, typename V>
+typename BSTMap<K, V>::Node *BSTMap<K, V>::deleteMin(Node *node) {
+    if (node->left == nullptr) {
+        Node *rightChild = node->right;
+        delete node;
+        return rightChild;
+    }
+
+    node->left = deleteMin(node->left);
+    return node;
+}
+
+template <typename K, typename V>
+void BSTMap<K, V>::addKeys(Node *node, std::vector<K> &keys) {
+    if (node == nullptr) {
+        return;
+    }
+
+    addKeys(node->left, keys);
+    keys.push_back(node->key);
+    addKeys(node->right, keys);
+}
+```
+</details>
+
+<details>
+<summary><strong> Map 的实现（java）</strong></summary>
+
+```java
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
+    private class Node {
+        private K key;
+        private V value;
+        private Node left;
+        private Node right;
+
+        private Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+            this.left = null;
+            this.right = null;
+        }
+    }
+    
+    private Node root;
+    private int size;
+
+    /**
+     * Create an empty BSTMap.
+     */
+    public BSTMap() {
+        root = null;
+        size = 0;
+    }
+
+    /**
+     * Removes all key-value pairs.
+     */
+    @Override
+    public void clear() {
+        root = null;
+        size = 0;
+    }
+
+    /**
+     * Returns true if the key exists
+     */
+    @Override
+    public boolean containsKey(K key) {
+        checkKey(key);
+        return findNode(root, key) != null;
+    }
+
+    /**
+     * Return the value associated with the key.
+     */
+    @Override
+    public V get(K key) {
+        checkKey(key);
+
+        Node node = findNode(root, key);
+        if (node == null) {
+            return null;
+        }
+        return node.value;
+    }
+
+    /**
+     * Insert or updates a key-value pair.
+     */
+    @Override
+    public Set<K> keySet() {
+        Set<K> keys = new TreeSet<>();
+        addKeys(root, keys);
+        return keys;
+    }
+
+    /**
+     * Removes the key-value pair with the given key.
+     */
+    @Override
+    public V remove(K key) {
+        checkKey(key);
+
+        Node target = findNode(root, key);
+        if (target == null) {
+            return null;
+        }
+
+        V removeValue = target.value;
+        root = remove(root, key);
+        size -= 1;
+        return removeValue;
+    }
+
+    /**
+     * Removes the key-value pair only if both key and value match.
+     */
+    @Override
+    public V remove(K key, V value) {
+        checkKey(key);
+
+        Node target = findNode(root, key);
+        if (target == null) {
+            return null;
+        }
+
+        if (!Objects.equals(target.value, value)) {
+            return null;
+        }
+
+        return remove(key);
+    }
+
+    /**
+     * Return an iterator over all keys.
+     */
+    @Override
+    public Iterator<K> iterator() {
+        return keySet().iterator();
+    }
+
+    /**
+     * Throws an exception if key is null.
+     */
+    private void checkKey(K key) {
+        if (key == null) {
+            throw new IllegalArgumentsException("Key cannot be null.");
+        }
+    }
+
+    /**
+     * Find the node containing the given key.
+     */
+    private Node findNode(Node node, K key) {
+        if (node == null) {
+            return null;
+        }
+
+        int cmp = key.compareTo(node.key);
+
+        if (cmp < 0) {
+            return findNode(node.left, key);
+        } else if (cmp > 0) {
+            return findNode(node.right, key);
+        } else {
+            return node;
+        }
+    }
+
+    /**
+     * Insert or updates a key-value pair in the subtree.
+     */
+    private Node put(Node node, K key, V value) {
+        if (node == null) {
+            size += 1;
+            return new Node(key, value);
+        }
+
+        int cmp = key.compareTo(node.key);
+
+        if (cmp < 0) {
+            node.left = put(node.left, key, value);
+        } else if (cmp > 0){
+            node.right = put(node.right, key, value);
+        } else {
+            node.value = value;
+        }
+
+        return node;
+    }
+
+    /**
+     * Add all keys in the subtree to the set.
+     */
+    private void addKeys(Node node, Set<K> keys) {
+        if (node == null) {
+            return;
+        }
+
+        addKeys(node.left, keys);
+        keys.add(node.key);
+        addKeys(node.right, keys);
+    }
+
+    /**
+     * Remove the node with the given key from the subtree.
+     */
+    private Node remove(Node node, K key) {
+        int cmp = key.compareTo(node.key);
+
+        if (cmp < 0) {
+            node.left = remove(node.left, key);
+        } else if (cmp > 0) {
+            node.right = remove(node.right, key);
+        } else {
+            if (node.left == null) {
+                return node.right;
+            }
+
+            if (node.right == null) {
+                return node.left;
+            }
+
+            Node successor = min(node.right);
+            node.key = successor.key;
+            node.value = successor.value;
+            node.right = deleteMin(node.right);
+        }
+
+        return node;
+    }
+
+    /**
+     * Return the node with the smallest key in the subtree.
+     */
+    private Node min(Node node) {
+        if (node.left == null) {
+            return node;
+        }
+
+        return min(node.left);
+    }
+
+    /**
+     * Deletes the node with the smallest key in the subtree.
+     */
+    private Node deleteMin(Node node) {
+        if (node.left == null) {
+            return node.right;
+        }
+
+        node.left = deleteMin(node.left);
+        return node;
+    }
+}
+```
+</details>
 
 ### 8.2 不相交集
 定义在集合 \(S\) 上的关系 \(R\) 是指：对集合中的每一对元素 \((a,b), a,b \in S\), \(aRb\) 要么是真，要么是假。如果 \(aRb\) 为真，则称 \(a\) 与 \(b\) 相关。
@@ -5207,6 +5829,12 @@ public interface Set<T> {
 
 #### 8.2.2 不相交集的实现
 并查集的核心在于**查找**和**合并**。
+
+1. `find` 操作
+   由于每棵树都可以使用双亲表示法，这样我们可以根据 `parent` 数组，找到值为 -1 的节点（为根节点，没有父节点了）。为了更好的操作，可以改进算法————**路径压缩**。在每一次查找时，都进行路径压缩，这样可以维持最小化树的高度（尽量维持在高度为 2 或 1），查找时更加方便。
+2. `union` 操作
+   由于对树的结构没有明显的要求，直接修改 `parent` 数组中的值即可，即将一个树变成另一个的子树。但是这样会导致树的结构很差，甚至退化成单链表。可以使用改进的算法————**按规模并**或**按高度并**，这样保证了高度尽可能增长的缓慢一些。
+
 <details>
 <summary><strong> 不相交集的定义 </strong></summary>
 
@@ -5238,11 +5866,6 @@ public interface DisjointSets {
 }
 ```
 </details>
-
-1. `find` 操作
-   由于每棵树都可以使用双亲表示法，这样我们可以根据 `parent` 数组，找到值为 -1 的节点（为根节点，没有父节点了）。为了更好的操作，可以改进算法————**路径压缩**。在每一次查找时，都进行路径压缩，这样可以维持最小化树的高度（尽量维持在高度为 2 或 1），查找时更加方便。
-2. `union` 操作
-   由于对树的结构没有明显的要求，直接修改 `parent` 数组中的值即可，即将一个树变成另一个的子树。但是这样会导致树的结构很差，甚至退化成单链表。可以使用改进的算法————**按规模并**或**按高度并**，这样保证了高度尽可能增长的缓慢一些。
 
 下面是实现：
 <details>
