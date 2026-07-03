@@ -1,5 +1,4 @@
 # UCB CS61A：Structure and Interpretation of Computer Programs
-本部编号 2026-3-B
 ___
 ## 目录
 [Chapter 1: Building Abstractions with Functions](#chapter1)<br>

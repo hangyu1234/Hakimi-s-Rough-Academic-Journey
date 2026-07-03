@@ -1,5 +1,4 @@
 # UCB CS188：Introduction to Artificial Intelligence
-本部编码 2026-6-B
 > 由于GitHub上markdown的渲染与IDE内的差异，导致部分数学符号未能正确显示，请将代码拉取到IDE中查看
 ___
 ## 目录 <a id = "目录"></a>

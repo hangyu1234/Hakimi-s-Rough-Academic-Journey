@@ -1,5 +1,4 @@
 # Python 初级教程
-支部编号 2026-2-1
 ## 目录
 - [一、什么是Python](#什么是Python)
    - 1. 如何安装Python（Windows版）
