@@ -1,5 +1,4 @@
 # Markdown 初级教程
-支部编号 2026-1-1
 ___
 ## 目录：
 [一、什么是markdown](#一什么是markdown)<br>
