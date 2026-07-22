@@ -863,6 +863,8 @@ printf("%zu\n", sizeof array / sizeof array[0]);
 
 除变长数组外，`sizeof` 通常在编译期求值，并且不会计算其中普通表达式的副作用。
 
+**补充**：这里的 `size_t` 并不是内置类型，在 C 的许多标准库中都有声明（比如 `<stdio.h>` 和 `<stddef.h>` ），但标准定义在 `<stddef.h>` 中。
+
 ---
 
 ## 八、数组
