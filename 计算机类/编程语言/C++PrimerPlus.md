@@ -58,8 +58,8 @@
     - [2.9 浮点数](C++PrimerPlus.md#29-浮点数)
       - [2.9.1 浮点数书写](C++PrimerPlus.md#291-浮点数书写)
       - [2.9.2 浮点类型](C++PrimerPlus.md#292-浮点类型)
-        - [2.9.3 浮点常量](C++PrimerPlus.md#293-浮点常量)
-        - [2.9.4 浮点数的优缺点](C++PrimerPlus.md#294-浮点数的优缺点)
+      - [2.9.3 浮点常量](C++PrimerPlus.md#293-浮点常量)
+      - [2.9.4 浮点数的优缺点](C++PrimerPlus.md#294-浮点数的优缺点)
     - [2.10 C++11 中的 auto 声明](C++PrimerPlus.md#210-c11-中的-auto-声明)
     - [2.11 算数运算符](C++PrimerPlus.md#211-算数运算符)
       - [2.11.1 运算符的优先级](C++PrimerPlus.md#2111-运算符的优先级)
@@ -105,7 +105,7 @@
       - [3.8.10 指针数组](C++PrimerPlus.md#3810-指针数组)
       - [3.8.11 数组的替代品](C++PrimerPlus.md#3811-数组的替代品)
       - [3.8.12 const 和数组](C++PrimerPlus.md#3812-const-和数组)
-    - [3.8.13 空指针](C++PrimerPlus.md#3813-空指针)
+      - [3.8.13 空指针](C++PrimerPlus.md#3813-空指针)
     - [3.9 存储方式](C++PrimerPlus.md#39-存储方式)
   - [四、循环和关系表达式](C++PrimerPlus.md#四循环和关系表达式)
     - [4.1 for 循环](C++PrimerPlus.md#41-for-循环)
@@ -241,16 +241,21 @@
     - [9.11 抽象数据类型](C++PrimerPlus.md#911-抽象数据类型)
   - [十、使用类](C++PrimerPlus.md#十使用类)
     - [10.1 运算符重载](C++PrimerPlus.md#101-运算符重载)
+      - [10.1.1 运算过程与返回值](C++PrimerPlus.md#1011-运算过程与返回值)
+      - [10.1.2 时长相加的完整示例](C++PrimerPlus.md#1012-时长相加的完整示例)
     - [10.2 运算符重载限制](C++PrimerPlus.md#102-运算符重载限制)
     - [10.3 成员函数与非成员函数](C++PrimerPlus.md#103-成员函数与非成员函数)
     - [10.4 友元函数](C++PrimerPlus.md#104-友元函数)
     - [10.5 重载输出运算符](C++PrimerPlus.md#105-重载输出运算符)
     - [10.6 常见运算符的返回类型](C++PrimerPlus.md#106-常见运算符的返回类型)
     - [10.7 类的自动转换](C++PrimerPlus.md#107-类的自动转换)
+      - [10.7.1 直接初始化与复制初始化](C++PrimerPlus.md#1071-直接初始化与复制初始化)
     - [10.8 转换函数](C++PrimerPlus.md#108-转换函数)
     - [10.9 状态成员与不同表示](C++PrimerPlus.md#109-状态成员与不同表示)
+      - [10.9.1 直角坐标与极坐标](C++PrimerPlus.md#1091-直角坐标与极坐标)
   - [十一、类和动态内存分配](C++PrimerPlus.md#十一类和动态内存分配)
     - [11.1 动态内存与类](C++PrimerPlus.md#111-动态内存与类)
+      - [11.1.1 浅复制、深复制与所有权](C++PrimerPlus.md#1111-浅复制、深复制与所有权)
     - [11.2 静态数据成员](C++PrimerPlus.md#112-静态数据成员)
     - [11.3 特殊成员函数](C++PrimerPlus.md#113-特殊成员函数)
       - [11.3.1 复制构造函数](C++PrimerPlus.md#1131-复制构造函数)
@@ -258,46 +263,61 @@
       - [11.3.3 析构函数](C++PrimerPlus.md#1133-析构函数)
     - [11.4 三法则、五法则与零法则](C++PrimerPlus.md#114-三法则五法则与零法则)
     - [11.5 改进字符串类](C++PrimerPlus.md#115-改进字符串类)
+      - [11.5.1 三法则的完整示例](C++PrimerPlus.md#1151-三法则的完整示例)
     - [11.6 在构造函数中使用 `new` 的规则](C++PrimerPlus.md#116-在构造函数中使用-new-的规则)
     - [11.7 返回对象与引用](C++PrimerPlus.md#117-返回对象与引用)
     - [11.8 指向对象的指针](C++PrimerPlus.md#118-指向对象的指针)
     - [11.9 定位 `new`](C++PrimerPlus.md#119-定位-new)
     - [11.10 队列类](C++PrimerPlus.md#1110-队列类)
+      - [11.10.1 入队、出队与边界状态](C++PrimerPlus.md#11101-入队、出队与边界状态)
+      - [11.10.2 ATM 模拟的统计口径](C++PrimerPlus.md#11102-atm-模拟的统计口径)
   - [十二、类继承](C++PrimerPlus.md#十二类继承)
     - [12.1 基类与派生类](C++PrimerPlus.md#121-基类与派生类)
     - [12.2 派生类构造与析构](C++PrimerPlus.md#122-派生类构造与析构)
     - [12.3 `is-a` 关系与公有继承](C++PrimerPlus.md#123-is-a-关系与公有继承)
+      - [12.3.1 向上转换与对象切片](C++PrimerPlus.md#1231-向上转换与对象切片)
     - [12.4 多态公有继承](C++PrimerPlus.md#124-多态公有继承)
     - [12.5 静态联编与动态联编](C++PrimerPlus.md#125-静态联编与动态联编)
     - [12.6 虚析构函数](C++PrimerPlus.md#126-虚析构函数)
     - [12.7 虚函数注意事项](C++PrimerPlus.md#127-虚函数注意事项)
+      - [12.7.1 重载、覆盖与隐藏](C++PrimerPlus.md#1271-重载、覆盖与隐藏)
     - [12.8 `protected` 访问控制](C++PrimerPlus.md#128-protected-访问控制)
     - [12.9 抽象基类与纯虚函数](C++PrimerPlus.md#129-抽象基类与纯虚函数)
     - [12.10 继承与动态内存](C++PrimerPlus.md#1210-继承与动态内存)
+      - [12.10.1 默认复制与手写复制的区别](C++PrimerPlus.md#12101-默认复制与手写复制的区别)
     - [12.11 类设计检查表](C++PrimerPlus.md#1211-类设计检查表)
   - [十三、C++ 中的代码重用](C++PrimerPlus.md#十三c-中的代码重用)
     - [13.1 包含对象成员的类](C++PrimerPlus.md#131-包含对象成员的类)
     - [13.2 `valarray` 类](C++PrimerPlus.md#132-valarray-类)
     - [13.3 私有继承](C++PrimerPlus.md#133-私有继承)
+      - [13.3.1 组合与三种继承方式对比](C++PrimerPlus.md#1331-组合与三种继承方式对比)
     - [13.4 保护继承与 `using`](C++PrimerPlus.md#134-保护继承与-using)
     - [13.5 多重继承](C++PrimerPlus.md#135-多重继承)
     - [13.6 虚基类与菱形继承](C++PrimerPlus.md#136-虚基类与菱形继承)
     - [13.7 多重继承中的歧义与支配](C++PrimerPlus.md#137-多重继承中的歧义与支配)
     - [13.8 类模板](C++PrimerPlus.md#138-类模板)
+      - [13.8.1 实例化与类型要求](C++PrimerPlus.md#1381-实例化与类型要求)
+      - [13.8.2 固定容量栈的完整示例](C++PrimerPlus.md#1382-固定容量栈的完整示例)
     - [13.9 非类型模板参数](C++PrimerPlus.md#139-非类型模板参数)
     - [13.10 模板的多功能性](C++PrimerPlus.md#1310-模板的多功能性)
     - [13.11 模板具体化](C++PrimerPlus.md#1311-模板具体化)
+      - [13.11.1 实例化、全特化与偏特化](C++PrimerPlus.md#13111-实例化、全特化与偏特化)
     - [13.12 成员模板与模板参数](C++PrimerPlus.md#1312-成员模板与模板参数)
     - [13.13 模板类与友元](C++PrimerPlus.md#1313-模板类与友元)
+      - [13.13.1 约束与非约束模板友元](C++PrimerPlus.md#13131-约束与非约束模板友元)
     - [13.14 模板别名](C++PrimerPlus.md#1314-模板别名)
   - [十四、友元、异常和其他](C++PrimerPlus.md#十四友元异常和其他)
     - [14.1 友元类](C++PrimerPlus.md#141-友元类)
     - [14.2 友元成员函数](C++PrimerPlus.md#142-友元成员函数)
+      - [14.2.1 前置声明与定义顺序](C++PrimerPlus.md#1421-前置声明与定义顺序)
     - [14.3 其他友元关系](C++PrimerPlus.md#143-其他友元关系)
     - [14.4 嵌套类](C++PrimerPlus.md#144-嵌套类)
+      - [14.4.1 嵌套类访问外层对象](C++PrimerPlus.md#1441-嵌套类访问外层对象)
     - [14.5 错误处理方式](C++PrimerPlus.md#145-错误处理方式)
     - [14.6 异常机制](C++PrimerPlus.md#146-异常机制)
+      - [14.6.1 异常控制流与栈展开示例](C++PrimerPlus.md#1461-异常控制流与栈展开示例)
     - [14.7 异常对象](C++PrimerPlus.md#147-异常对象)
+      - [14.7.1 异常匹配与重新抛出](C++PrimerPlus.md#1471-异常匹配与重新抛出)
     - [14.8 栈展开与 RAII](C++PrimerPlus.md#148-栈展开与-raii)
     - [14.9 异常安全保证](C++PrimerPlus.md#149-异常安全保证)
     - [14.10 异常规范与 `noexcept`](C++PrimerPlus.md#1410-异常规范与-noexcept)
@@ -313,10 +333,13 @@
       - [14.14.4 `reinterpret_cast`](C++PrimerPlus.md#14144-reinterpret_cast)
   - [十五、`string` 类和标准模板库](C++PrimerPlus.md#十五string-类和标准模板库)
     - [15.1 `string` 类](C++PrimerPlus.md#151-string-类)
+      - [15.1.1 构造参数、空字符与子串边界](C++PrimerPlus.md#1511-构造参数、空字符与子串边界)
     - [15.2 `string` 输入](C++PrimerPlus.md#152-string-输入)
     - [15.3 `string` 查询与访问](C++PrimerPlus.md#153-string-查询与访问)
+      - [15.3.1 长度、容量与有效下标](C++PrimerPlus.md#1531-长度、容量与有效下标)
     - [15.4 `string` 修改](C++PrimerPlus.md#154-string-修改)
     - [15.5 `string` 搜索](C++PrimerPlus.md#155-string-搜索)
+      - [15.5.1 查找子串与字符集合](C++PrimerPlus.md#1551-查找子串与字符集合)
     - [15.6 字符串种类](C++PrimerPlus.md#156-字符串种类)
     - [15.7 智能指针](C++PrimerPlus.md#157-智能指针)
       - [15.7.1 `unique_ptr`](C++PrimerPlus.md#1571-unique_ptr)
@@ -326,15 +349,22 @@
       - [15.7.5 自定义删除器](C++PrimerPlus.md#1575-自定义删除器)
     - [15.8 标准模板库概览](C++PrimerPlus.md#158-标准模板库概览)
     - [15.9 `vector` 容器](C++PrimerPlus.md#159-vector-容器)
+      - [15.9.1 容量与元素数量](C++PrimerPlus.md#1591-容量与元素数量)
+      - [15.9.2 迭代器失效与遍历删除](C++PrimerPlus.md#1592-迭代器失效与遍历删除)
     - [15.10 迭代器](C++PrimerPlus.md#1510-迭代器)
+      - [15.10.1 半开区间与迭代器能力](C++PrimerPlus.md#15101-半开区间与迭代器能力)
+      - [15.10.2 反向、插入与流迭代器](C++PrimerPlus.md#15102-反向、插入与流迭代器)
     - [15.11 泛型编程概念](C++PrimerPlus.md#1511-泛型编程概念)
     - [15.12 序列容器](C++PrimerPlus.md#1512-序列容器)
     - [15.13 关联容器](C++PrimerPlus.md#1513-关联容器)
+      - [15.13.1 键查找、等价与修改限制](C++PrimerPlus.md#15131-键查找、等价与修改限制)
     - [15.14 无序关联容器](C++PrimerPlus.md#1514-无序关联容器)
     - [15.15 函数对象](C++PrimerPlus.md#1515-函数对象)
     - [15.16 函数适配器](C++PrimerPlus.md#1516-函数适配器)
     - [15.17 STL 算法](C++PrimerPlus.md#1517-stl-算法)
     - [15.18 算法注意事项](C++PrimerPlus.md#1518-算法注意事项)
+      - [15.18.1 排序、去重与累积示例](C++PrimerPlus.md#15181-排序、去重与累积示例)
+      - [15.18.2 输出空间与算法前提](C++PrimerPlus.md#15182-输出空间与算法前提)
     - [15.19 `vector`、`valarray` 与 `array`](C++PrimerPlus.md#1519-vectorvalarray-与-array)
     - [15.20 `initializer_list`](C++PrimerPlus.md#1520-initializer_list)
   - [十六、输入、输出和文件](C++PrimerPlus.md#十六输入输出和文件)
@@ -344,17 +374,23 @@
     - [16.4 `ostream` 输出](C++PrimerPlus.md#164-ostream-输出)
     - [16.5 其他 `ostream` 方法](C++PrimerPlus.md#165-其他-ostream-方法)
     - [16.6 输出格式状态](C++PrimerPlus.md#166-输出格式状态)
+      - [16.6.1 宽度、精度与格式标志](C++PrimerPlus.md#1661-宽度、精度与格式标志)
     - [16.7 输出操纵符](C++PrimerPlus.md#167-输出操纵符)
     - [16.8 `cin >>` 的读取规则](C++PrimerPlus.md#168-cin--的读取规则)
     - [16.9 流状态](C++PrimerPlus.md#169-流状态)
+      - [16.9.1 流状态真值表与 EOF](C++PrimerPlus.md#1691-流状态真值表与-eof)
+      - [16.9.2 恢复失败与重试输入](C++PrimerPlus.md#1692-恢复失败与重试输入)
     - [16.10 异常与流状态](C++PrimerPlus.md#1610-异常与流状态)
     - [16.11 非格式化输入方法](C++PrimerPlus.md#1611-非格式化输入方法)
+      - [16.11.1 输入接口对照与字符计数](C++PrimerPlus.md#16111-输入接口对照与字符计数)
     - [16.12 文本文件 I/O](C++PrimerPlus.md#1612-文本文件-io)
     - [16.13 文件打开模式](C++PrimerPlus.md#1613-文件打开模式)
+      - [16.13.1 文件模式组合与截断规则](C++PrimerPlus.md#16131-文件模式组合与截断规则)
     - [16.14 打开多个文件与命令行](C++PrimerPlus.md#1614-打开多个文件与命令行)
     - [16.15 二进制文件](C++PrimerPlus.md#1615-二进制文件)
     - [16.16 文件随机访问](C++PrimerPlus.md#1616-文件随机访问)
     - [16.17 内存字符串流](C++PrimerPlus.md#1617-内存字符串流)
+      - [16.17.1 严格解析整行与复用字符串流](C++PrimerPlus.md#16171-严格解析整行与复用字符串流)
   - [十七、C++11 新标准](C++PrimerPlus.md#十七c11-新标准)
     - [17.1 新类型与字符支持](C++PrimerPlus.md#171-新类型与字符支持)
     - [17.2 统一初始化](C++PrimerPlus.md#172-统一初始化)
@@ -363,9 +399,12 @@
     - [17.5 作用域枚举](C++PrimerPlus.md#175-作用域枚举)
     - [17.6 类内成员初始化](C++PrimerPlus.md#176-类内成员初始化)
     - [17.7 右值引用](C++PrimerPlus.md#177-右值引用)
+      - [17.7.1 引用绑定与值类别](C++PrimerPlus.md#1771-引用绑定与值类别)
     - [17.8 移动语义](C++PrimerPlus.md#178-移动语义)
+      - [17.8.1 独占缓冲区的移动示例](C++PrimerPlus.md#1781-独占缓冲区的移动示例)
     - [17.9 `std::move`](C++PrimerPlus.md#179-stdmove)
     - [17.10 特殊成员函数规则](C++PrimerPlus.md#1710-特殊成员函数规则)
+      - [17.10.1 特殊成员生成条件](C++PrimerPlus.md#17101-特殊成员生成条件)
     - [17.11 `= default` 与 `= delete`](C++PrimerPlus.md#1711--default-与--delete)
     - [17.12 委托构造函数](C++PrimerPlus.md#1712-委托构造函数)
     - [17.13 继承构造函数](C++PrimerPlus.md#1713-继承构造函数)
@@ -377,6 +416,7 @@
     - [17.19 `std::bind`](C++PrimerPlus.md#1719-stdbind)
     - [17.20 可变参数模板](C++PrimerPlus.md#1720-可变参数模板)
     - [17.21 展开参数包](C++PrimerPlus.md#1721-展开参数包)
+      - [17.21.1 展开模式与完美转发](C++PrimerPlus.md#17211-展开模式与完美转发)
     - [17.22 并发支持](C++PrimerPlus.md#1722-并发支持)
     - [17.23 新增标准库组件](C++PrimerPlus.md#1723-新增标准库组件)
     - [17.24 低级编程支持](C++PrimerPlus.md#1724-低级编程支持)
@@ -1937,7 +1977,7 @@ ptr2 = &ptr1;
 
 <a id="3813-空指针"></a>
 
-### 3.8.13 空指针
+#### 3.8.13 空指针
 C++ 有两个版本的空指针：`NULL` 和 `nullptr`。
 - `NULL`: 这里的“空指针”其实并不是真正的空指针。`NULL` 其实是一个字符，ASCII码为 0.
   - 本质是一个**宏定义**
@@ -4620,9 +4660,14 @@ private:
 
 ## 十、使用类
 
+本章对应原书第 11 章（所提供 PDF 第 811—902 页）。查阅顺序：先看运算符的声明与调用，再看友元和类型转换，最后看多种数据表示。示例默认采用 C++11；后续标准的写法会单独标注。
+
+**后续章节的查阅约定**：章节编号沿用本笔记，与原书编号相差一章；所列页码为提供的 PDF 从 1 开始的阅读器页序，不是纸书印刷页码。标有“完整示例”的代码块可以独立编译，其余为声明、表达式或局部实现片段，需要相应头文件和上下文，不应将相邻示例直接拼成同一个程序。
+
 <a id="101-运算符重载"></a>
 
 ### 10.1 运算符重载
+
 运算符重载让自定义类型使用与内置类型相似的表达式：
 ```cpp
 class Time {
@@ -4654,9 +4699,71 @@ Time total2 = a.operator+(b);
 
 重载运算符本质上仍然是函数，不会改变运算符的优先级、结合性和操作数个数，也不会改变内置类型原有含义。
 
+<a id="1011-运算过程与返回值"></a>
+
+#### 10.1.1 运算过程与返回值
+
+**运算过程**：在 `a + b` 中，`a` 是调用对象，`b` 绑定到参数 `other`。参数使用 `const Time&`，避免复制整个对象，也承诺不修改右操作数；函数末尾的 `const` 则承诺不修改左操作数。这两个 `const` 限定的对象不同。
+
+`a + b + c` 按左结合规则相当于 `(a + b) + c`。第一次相加产生临时 `Time` 对象，临时对象再与 `c` 相加。因此加法返回 `Time` 值，不能返回指向函数内 `result` 的引用。
+
+<a id="1012-时长相加的完整示例"></a>
+
+#### 10.1.2 时长相加的完整示例
+
+下面给出一个可以独立编译的例子。这里使用总分钟数保存时间间隔，避免每个运算符重复处理进位；它表示时长，不表示一天中的钟点。
+
+```cpp
+// 完整示例：时长相加和链式输出，C++11
+#include <iostream>
+
+class Duration
+{
+private:
+    int minutes;
+
+public:
+    explicit Duration(int value = 0) : minutes(value) {}
+
+    Duration& operator+=(const Duration& other)
+    {
+        minutes += other.minutes;
+        return *this;
+    }
+
+    friend Duration operator+(Duration left, const Duration& right)
+    {
+        left += right;
+        return left;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const Duration& value)
+    {
+        return os << value.minutes << " min";
+    }
+};
+
+int main()
+{
+    Duration first(75), second(50);
+    std::cout << first + second << '\n';
+    std::cout << first << '\n';
+}
+```
+
+输出如下：
+
+```text
+125 min
+75 min
+```
+
+非成员 `operator+` 的左参数按值传递，目的是取得一个可修改的副本；复用 `+=` 后，两个运算符不必分别实现相加逻辑。这个简化例子假定结果在 `int` 的表示范围内；实际时长类还应确定溢出处理策略。
+
 <a id="102-运算符重载限制"></a>
 
 ### 10.2 运算符重载限制
+
 不能重载的运算符包括：
 ```text
 sizeof  .  .*  ::  ?:  typeid
@@ -4672,9 +4779,24 @@ const_cast  dynamic_cast  reinterpret_cast  static_cast
 
 建议让重载后的语义与原运算符直觉一致：`+` 不应修改操作数，`+=` 应修改左操作数，比较运算符应保持一致的顺序关系。
 
+**注意事项**：
+
+- 重载 `+` 不会自动获得 `+=`，重载 `==` 也不会在 C++11 中自动获得 `!=`，需要分别定义。
+- 不能用默认参数把普通运算符改成可变操作数形式；函数调用运算符 `()` 的参数规则另当别论。
+- 重载的 `&&`、`||` 不具有内置逻辑运算符的短路求值特性，不能依赖它们保护右侧的危险操作。
+- 前置和后置自增用一个虚设的 `int` 参数区分，该参数用于区别函数签名，不表示递增量。
+
+```cpp
+Counter& operator++();    // ++value：通常返回修改后的对象本身
+Counter operator++(int);  // value++：通常返回修改前的副本
+```
+
+以上为成员声明形式。后置版本通常先保存副本，再执行前置自增，最后返回旧值；因此不需要旧值时可以使用前置版本。
+
 <a id="103-成员函数与非成员函数"></a>
 
 ### 10.3 成员函数与非成员函数
+
 二元运算符作为成员函数时，左操作数是调用对象：
 ```cpp
 Time operator+(const Time& other) const;
@@ -4685,7 +4807,7 @@ Time operator+(const Time& other) const;
 Time operator+(const Time& left, const Time& right);
 ```
 
-同一个参数列表不能同时提供两个版本，否则表达式会产生二义性。选择原则：
+如果成员版本和非成员版本对同一运算表达式同样匹配，重载决议可能产生二义性，不宜重复提供同等候选。选择原则：
 - 需要修改左操作数的 `=`, `+=`, `[]` 等通常是成员
 - 需要对左右操作数进行对称转换的算术、比较运算符通常是非成员
 - 需要访问私有成员的非成员函数可以声明为友元
@@ -4693,6 +4815,11 @@ Time operator+(const Time& left, const Time& right);
 <a id="104-友元函数"></a>
 
 ### 10.4 友元函数
+
+友元是类主动授予的访问权限，关键字 `friend` 写在类内声明中；类外定义函数时不再写 `friend`，也不加 `类名::`。声明放在 `public` 或 `private` 区域不会改变友元资格。
+
+友元函数没有 `this` 指针，必须通过参数、局部对象等明确指出要访问哪个对象。它并不是绕过封装的任意入口：只有类声明指定的函数才获得权限。
+
 友元不是类成员，但可以访问类的私有和保护成员：
 ```cpp
 class Time {
@@ -4719,6 +4846,11 @@ Time operator*(double factor, const Time& time) {
 <a id="105-重载输出运算符"></a>
 
 ### 10.5 重载输出运算符
+
+**为什么通常定义为非成员函数**：表达式 `cout << object` 的左操作数是 `ostream`，如果把 `operator<<` 写成当前类的成员，调用对象就必须位于左边，表达式会变成 `object << cout`。输出函数只有需要直接读取私有成员时才必须是友元；能通过公有查询接口完成输出时，也可以是普通非成员函数。
+
+**返回类型**：返回 `ostream&`，使 `cout << a << b` 可以继续使用同一个流。流参数不能是 `const`，因为输出会修改流的缓冲和状态；被输出对象通常使用 `const T&`。函数内部应向参数流 `os` 输出，不能固定向 `cout` 输出，否则文件流和字符串流会失效。
+
 `std::cout << object` 的左操作数是 `std::ostream`，所以输出运算符通常写成非成员友元：
 ```cpp
 class Time {
@@ -4748,6 +4880,7 @@ std::istream& operator>>(std::istream& input, Time& time);
 <a id="106-常见运算符的返回类型"></a>
 
 ### 10.6 常见运算符的返回类型
+
 | 运算符                 | 常见返回类型      | 说明                             |
 | :--------------------- | :---------------- | :------------------------------- |
 | `operator+`            | 新对象            | 通常不修改操作数                 |
@@ -4775,6 +4908,36 @@ Counter Counter::operator++(int) {
 <a id="107-类的自动转换"></a>
 
 ### 10.7 类的自动转换
+
+<a id="1071-直接初始化与复制初始化"></a>
+
+#### 10.7.1 直接初始化与复制初始化
+
+类型转换要分清方向：**转换构造函数负责“其他类型 → 当前类”**；[转换函数](#108-转换函数)负责“当前类 → 其他类型”。二者都是用户定义转换，过多隐式转换会使普通表达式难以判断实际调用哪个函数。
+
+```cpp
+class Weight
+{
+private:
+    double kilograms;
+public:
+    explicit Weight(double kg) : kilograms(kg) {}
+    double value() const { return kilograms; }
+};
+
+Weight a(12.5);                 // 直接初始化，允许 explicit 构造函数
+Weight b{12.5};                 // 直接列表初始化，允许
+// Weight c = 12.5;             // 复制初始化，不允许隐式调用 explicit 构造函数
+// Weight d = {12.5};           // 复制列表初始化选中 explicit 构造函数也会报错
+Weight e = static_cast<Weight>(12.5); // 显式转换，允许
+```
+
+这里的“复制初始化”是初始化语法的分类，不代表一定调用复制构造函数。若去掉 `explicit`，`Weight c = 12.5` 可以直接通过 `Weight(double)` 完成初始化。
+
+**可触发隐式转换的位置**：初始化类对象、向已有对象赋值、向按值或 `const` 引用参数传入其他类型、从函数返回其他类型，以及运算符的实参匹配。赋值时可能先构造临时对象，再调用赋值运算符；这不是“给已有对象重新调用构造函数”。
+
+一次隐式转换序列最多包含一次用户定义转换。例如 `A → B → C` 若需要连续调用两个转换构造函数，编译器不会自动完成整条链。一次用户定义转换前后可以包含允许的标准转换，例如 `int → double → Weight`。
+
 单参数构造函数可以把其他类型转换成类类型：
 ```cpp
 StoneWeight weight = 150.0;
@@ -4791,6 +4954,30 @@ StoneWeight weight = 150.0;
 <a id="108-转换函数"></a>
 
 ### 10.8 转换函数
+
+转换函数必须是非静态成员函数，没有显式返回类型，也没有普通参数；目标类型写在 `operator` 后面。通常添加末尾的 `const`，使常量对象也能转换。
+
+```cpp
+class Reading
+{
+private:
+    double value;
+public:
+    explicit Reading(double x) : value(x) {}
+    explicit operator double() const { return value; }
+    explicit operator bool() const { return value != 0.0; }
+};
+
+Reading r(3.5);
+double x = static_cast<double>(r);
+// double y = r; // explicit 阻止普通隐式转换
+if (r) { }      // 条件中的布尔转换允许 explicit operator bool()
+```
+
+同时提供隐式 `operator int()` 和 `operator double()` 后，`cout << object` 等表达式可能出现多个同样合适的候选。优先保留含义明确的具名查询函数，或使用 `explicit` 控制转换入口。
+
+成员运算符不会先把左操作数转换为当前类再查找成员；非成员运算符的两个参数都可以按规则转换。因此对称算术运算经常采用非成员函数。是否声明为友元只决定访问权限，不决定能否进行类型转换。
+
 转换函数把类对象转换为其他类型：
 ```cpp
 class StoneWeight {
@@ -4820,6 +5007,7 @@ double pounds = static_cast<double>(weight);
 <a id="109-状态成员与不同表示"></a>
 
 ### 10.9 状态成员与不同表示
+
 一个类可能允许不同表示，例如二维向量可以使用直角坐标或极坐标输入，但应选择一种稳定的内部表示：
 ```cpp
 class Vector {
@@ -4845,15 +5033,39 @@ private:
 
 重复存储同一信息可能失去同步，因此修改任何基础数据后都必须维护类不变量。
 
+<a id="1091-直角坐标与极坐标"></a>
+
+#### 10.9.1 直角坐标与极坐标
+
+原书矢量类同时保存直角坐标、模和角，并使用状态成员决定显示方式。上面的例子采用只保存直角坐标的写法，目的是减少同步要求；两种实现提供相同接口时，使用者不必依赖内部存储方式。
+
+**直角坐标与极坐标的转换**：
+
+| 已知量 | 计算公式 | 注意事项 |
+| :--- | :--- | :--- |
+| 模 `r`、弧度 `theta` | `x = r * cos(theta)`，`y = r * sin(theta)` | `<cmath>` 三角函数采用弧度 |
+| `x`、`y` | `r = hypot(x, y)` | 模非负 |
+| `x`、`y` | `theta = atan2(y, x)` | 能识别象限，优于 `atan(y / x)` |
+| 角度 `degrees` | `theta = degrees * pi / 180` | 输入、存储和输出单位要明确 |
+
+零向量的方向没有数学上的唯一值，类可以约定显示为 0；不能把显示约定误认为零向量具有唯一方向。相加、相减宜用直角坐标，一元负号同时改变 `x`、`y` 的符号；负数倍乘还会改变方向，不能只修改模。
+
+**随机漫步示例的查阅要点**：原书通过不断累加固定步长、随机方向的矢量，直到离起点的距离达到目标值。循环条件检查的是结果矢量的模，累计路程则是“步数 × 步长”，两者不同。计时或统计步数前应重置结果矢量；用于比较多次试验时，应记录平均值、最小值和最大值，不能把一次结果视为固定规律。
+
 ---
 
 <a id="十一类和动态内存分配"></a>
 
 ## 十一、类和动态内存分配
 
+本章对应原书第 12 章（PDF 第 903—1015 页）。重点是区分对象本身与对象拥有的资源，以及初始化、赋值、销毁三种不同操作。移动操作另见[第十七章](#178-移动语义)。
+
 <a id="111-动态内存与类"></a>
 
 ### 11.1 动态内存与类
+
+**对象占用的空间不等于资源占用的空间**。类内的 `char*` 只是指针成员，`sizeof(对象)` 不包括该指针指向的动态字符数组。两个对象各有自己的指针成员，但这些指针可能保存相同地址。
+
 如果类使用 `new` 获取资源，普通的逐成员复制往往只会复制指针，导致多个对象指向同一块内存。对象销毁时可能出现重复释放、悬空指针和数据互相干扰。
 
 ```cpp
@@ -4869,11 +5081,29 @@ private:
 2. 复制对象时共享资源还是复制资源
 3. 对象销毁、重新赋值时怎样释放旧资源
 
+<a id="1111-浅复制、深复制与所有权"></a>
+
+#### 11.1.1 浅复制、深复制与所有权
+
+假定 `a.text` 指向一块字符数组，默认复制得到 `b` 后：
+
+```text
+浅复制：a.text ─┐
+               ├── 同一块字符数组
+        b.text ─┘
+
+深复制：a.text ──── 原字符数组
+        b.text ──── 内容相同、地址不同的新字符数组
+```
+
+浅复制本身不是错误。如果指针只是观察者，它可以合理地指向同一个对象；问题在于两个对象都把同一指针当作独占资源，并都在析构时释放它。必须先确定所有权，再决定复制方式。
+
 现代 C++ 更推荐直接使用 `std::string`、`std::vector`、智能指针等 RAII 类型，让成员自己管理资源，这称为**零法则**。
 
 <a id="112-静态数据成员"></a>
 
 ### 11.2 静态数据成员
+
 静态数据成员属于类，而不是某个对象：
 ```cpp
 class String {
@@ -4889,6 +5119,10 @@ int String::object_count = 0;
 
 所有对象共享同一个静态成员。静态成员不会计入单个对象的大小，其生命周期持续到程序结束。
 
+`int String::object_count = 0;` 应放在一个实现文件中。C++11 中把这一定义直接放进被多个源文件包含的头文件，可能违反单一定义规则。C++17 的 `inline static` 可以在类内定义变量，但不属于本书的基础写法。
+
+统计存活对象时，每一种成功构造都应增加计数，包括复制构造；析构减少计数；赋值不创建新对象，不应改变计数。计数应在可能失败的资源分配之后增加，否则构造抛出异常时可能留下错误统计。
+
 静态成员函数没有 `this` 指针，只能直接访问静态成员：
 ```cpp
 class String {
@@ -4902,6 +5136,7 @@ int count = String::count();
 <a id="113-特殊成员函数"></a>
 
 ### 11.3 特殊成员函数
+
 编译器可能自动声明或定义以下特殊成员函数：
 1. 默认构造函数
 2. 析构函数
@@ -4910,11 +5145,24 @@ int count = String::count();
 5. 移动构造函数（C++11）
 6. 移动赋值运算符（C++11）
 
-另外还会提供取地址运算符。编译器生成的复制操作通常执行逐成员复制；对值语义成员很好，对拥有裸指针资源的类通常不够。
+未重载取地址运算符时，可以使用内置 `&` 取得对象地址；它不属于上述六个特殊成员函数。编译器生成的复制操作通常执行逐成员复制；对值语义成员很好，对拥有裸指针资源的类通常不够。
+
+| 代码 | 对象是否已经存在 | 主要操作 |
+| :--- | :--- | :--- |
+| `String a;` | 否 | 默认构造 |
+| `String b(a);` | 否 | 复制构造 |
+| `String c = a;` | 否 | 复制初始化，通常调用复制构造 |
+| `b = a;` | 是 | 复制赋值 |
+| `String d = std::move(a);` | 否 | 优先匹配移动构造；也可能复制 |
+| `b = std::move(c);` | 是 | 优先匹配移动赋值；也可能复制 |
+| 离开自动对象作用域 | 是 | 析构 |
+
+只要用户声明了构造函数，编译器就不再隐式声明无参默认构造函数。自动生成不等于一定可用：例如类含不可复制成员时，其默认复制操作可能被定义为删除。
 
 <a id="1131-复制构造函数"></a>
 
 #### 11.3.1 复制构造函数
+
 复制构造函数从同类型对象创建新对象：
 ```cpp
 String(const String& other);
@@ -4928,7 +5176,7 @@ take_by_value(a);  // 按值传参
 return a;          // 按值返回，可能被复制消除
 ```
 
-参数必须通常是 `const` 引用，否则按值传参本身又需要复制构造，会无限递归。
+第一个参数必须是当前类的引用，通常写成 `const String&`；还可以有带默认值的其他参数。不能写成 `String(String)`：按值接收实参本身就需要复制，语言直接禁止这种构造函数声明。
 
 深复制示例：
 ```cpp
@@ -4943,6 +5191,7 @@ String::String(const String& other)
 <a id="1132-复制赋值运算符"></a>
 
 #### 11.3.2 复制赋值运算符
+
 复制赋值作用于已经存在的对象：
 ```cpp
 String& operator=(const String& other);
@@ -4966,9 +5215,14 @@ String& String::operator=(const String& other) {
 
 这里先成功分配新内存，再释放旧内存，可在分配失败时保持原对象不变。返回 `*this` 支持 `a = b = c`。
 
+**自赋值为什么需要考虑**：执行 `a = a` 时，`other.text` 与 `text` 指向同一块存储。如果先 `delete[] text` 再从 `other.text` 复制，读取的就是已释放内存。`this == &other` 判断两者是否是同一个对象，不是比较字符串内容。
+
+先复制、后提交也能自然支持自赋值，因此自赋值检查不是所有实现都必不可少；它是这里避免无用分配的快捷路径。
+
 <a id="1133-析构函数"></a>
 
 #### 11.3.3 析构函数
+
 ```cpp
 String::~String() {
     delete[] text;
@@ -4981,6 +5235,7 @@ String::~String() {
 <a id="114-三法则五法则与零法则"></a>
 
 ### 11.4 三法则、五法则与零法则
+
 - **三法则**：如果类需要自定义析构、复制构造、复制赋值中的一个，通常三个都需要
 - **五法则**：C++11 后还应考虑移动构造和移动赋值
 - **零法则**：优先组合标准资源管理类型，使类不必手写这些函数
@@ -5005,6 +5260,9 @@ String& String::operator=(String other) {
 <a id="115-改进字符串类"></a>
 
 ### 11.5 改进字符串类
+
+原书从 `StringBad` 到 `String` 的改进重点不是增加更多字符串功能，而是使每条资源路径一致：空字符串也有可用的终止字符，复制得到独立资源，赋值释放旧资源，常量对象只能读取字符。
+
 一个基本字符串类通常需要：
 - 默认、C 风格字符串、复制构造函数
 - 析构函数与复制赋值
@@ -5037,9 +5295,79 @@ bool operator<(const String& left, const String& right) {
 
 输入未知长度字符串时，应先读入受控缓冲区或使用 `std::string`，不要让输入越过数组边界。
 
+<a id="1151-三法则的完整示例"></a>
+
+#### 11.5.1 三法则的完整示例
+
+下面把分散的资源操作放在一个完整例子中。它只实现观察深复制所需的最小接口；`operator[]` 的前提是下标小于 `size()`。
+
+```cpp
+// 完整示例：独占字符数组的三法则，C++11
+#include <cassert>
+#include <cstddef>
+#include <cstring>
+#include <iostream>
+
+class Text
+{
+private:
+    std::size_t length;
+    char* data;
+
+public:
+    explicit Text(const char* source = "")
+        : length(std::strlen(source)), data(new char[length + 1])
+    {
+        std::strcpy(data, source);
+    }
+
+    Text(const Text& other) : Text(other.data) {}
+
+    Text& operator=(const Text& other)
+    {
+        if (this == &other)
+            return *this;
+        char* replacement = new char[other.length + 1];
+        std::strcpy(replacement, other.data);
+        delete[] data;
+        data = replacement;
+        length = other.length;
+        return *this;
+    }
+
+    ~Text() { delete[] data; }
+
+    std::size_t size() const { return length; }
+    char& operator[](std::size_t i) { return data[i]; }
+    const char& operator[](std::size_t i) const { return data[i]; }
+
+    friend std::ostream& operator<<(std::ostream& os, const Text& value)
+    {
+        return os << value.data;
+    }
+};
+
+int main()
+{
+    Text a("cat");
+    Text b = a;
+    b[0] = 'B';
+    Text c;
+    c = b;
+    c = c;
+    assert(a[0] == 'c' && b[0] == 'B' && c[0] == 'B');
+    std::cout << a << ' ' << b << ' ' << c << '\n';
+}
+```
+
+输出为 `cat Bat Bat`。`b` 的修改没有影响 `a`，说明复制的不只是指针。构造函数要求 `source` 指向有效的、以 `\0` 结尾的字符序列，不接受空指针。日常字符串处理直接使用 `std::string`，此例用于理解资源管理机制。
+
+**从 C 字符串赋值**：可以提供 `String& operator=(const char*)`，减少“先创建临时 `String` 再赋值”的开销。但参数也可能指向自身缓冲区，例如 `s = s.c_str() + 1`；仍应先复制出新内容，再释放旧缓冲区，不能只检查参数是否等于缓冲区起点。
+
 <a id="116-在构造函数中使用-new-的规则"></a>
 
 ### 11.6 在构造函数中使用 `new` 的规则
+
 如果成员指针拥有动态内存，应遵循：
 1. 构造函数要么成功建立完整对象，要么抛出异常
 2. 析构函数释放所有已拥有资源
@@ -5062,6 +5390,9 @@ class Person {
 <a id="117-返回对象与引用"></a>
 
 ### 11.7 返回对象与引用
+
+按引用返回可以避免创建副本，但它不延长原对象的生命周期。例如“返回两个参数中较长的字符串”可以返回 `const String&`，前提是调用者保证所选实参仍然存在；传入临时对象后长期保存返回引用可能悬空。不能只根据“大对象复制慢”决定返回引用。
+
 选择返回方式时首先考虑被返回对象的生命周期：
 
 | 返回方式   | 适用情况                                   |
@@ -5086,6 +5417,7 @@ const String& wrong() {
 <a id="118-指向对象的指针"></a>
 
 ### 11.8 指向对象的指针
+
 ```cpp
 String* pointer = new String("dynamic");
 std::cout << pointer->length() << '\n';
@@ -5101,14 +5433,17 @@ delete pointer;
 
 更推荐：
 ```cpp
-auto pointer = std::make_unique<String>("dynamic");
+auto pointer = std::make_unique<String>("dynamic"); // C++14
 ```
 
 智能指针在离开作用域时自动销毁对象。
 
+C++11 对应写法为 `std::unique_ptr<String> pointer(new String("dynamic"));`。`new String[3]` 构造三个元素，要求可默认构造；必须以 `delete[]` 销毁，元素按构造的相反顺序析构。删除指针不会自动把其他指向同一对象的指针置空。
+
 <a id="119-定位-new"></a>
 
 ### 11.9 定位 `new`
+
 定位 `new` 在调用者提供的内存中构造对象：
 ```cpp
 #include <new>
@@ -5126,9 +5461,12 @@ object->~String(); // 显式调用析构函数
 
 这是底层工具，普通业务代码很少需要直接使用。
 
+定位 `new` 分开了两件事：取得存储空间、在存储空间中启动对象生命周期。上例的 `storage` 是自动数组，会自动回收；显式析构只结束 `String` 的生命周期，不负责回收这块数组。如果底层缓冲区由 `new unsigned char[...]` 分配，最后还要对原始缓冲区指针执行对应的 `delete[]`，不能对定位构造得到的对象指针执行 `delete`。
+
 <a id="1110-队列类"></a>
 
 ### 11.10 队列类
+
 队列是先进先出（FIFO）的抽象数据类型：
 ```cpp
 class Queue {
@@ -5167,15 +5505,46 @@ Queue& operator=(const Queue&) = delete;
 
 析构函数必须遍历并释放所有节点。生产代码通常直接使用 `std::queue<Item>`。
 
+<a id="11101-入队、出队与边界状态"></a>
+
+#### 11.10.1 入队、出队与边界状态
+
+**入队操作的顺序**：
+
+1. 若 `count == capacity`，返回失败，队列不变。
+2. 先构造新节点，令 `next == nullptr`；分配失败时原队列仍然完整。
+3. 原队列为空时令 `front` 指向新节点，否则令旧 `rear->next` 指向新节点。
+4. 更新 `rear`，最后增加 `count`。
+
+**出队操作的顺序**：
+
+1. 空队列返回失败。
+2. 先把头节点的值赋给输出参数；若 `Item` 的赋值可能抛异常，应在改动链表前完成。
+3. 保存旧头节点，令 `front = front->next`，删除旧节点，减少 `count`。
+4. 若队列变空，还必须令 `rear = nullptr`，否则尾指针悬空。
+
+构造函数应写 `Queue::Queue(std::size_t n) : capacity(n) {}`；`const` 成员必须初始化，不能进入函数体后再赋值。引用成员同样必须绑定到对象。这也是原书在队列类中引入成员初始化列表的重要原因。
+
+<a id="11102-atm-模拟的统计口径"></a>
+
+#### 11.10.2 ATM 模拟的统计口径
+
+**ATM 模拟中的量**：客户保存到达时刻和所需服务时间；队列保存等待客户；当前正在服务的客户不计入等待队列。每个时间步先按约定处理新到达者，再在柜台空闲时出队，累计“开始服务时刻 − 到达时刻”，并更新剩余服务时间。统计口径应固定，不能一处把当前服务者算在队列中、另一处不算。
+
+平均等待时间的分母应是已经开始服务的客户数，平均队长的分母是模拟的时间步数；分母为 0 时不能相除。原书简化为每分钟最多到达一个客户，适用于该模型的参数范围，不能直接用于任意高到达率。模拟结束后队列中仍可能有人，接收人数与已服务人数不必相等。
+
 ---
 
 <a id="十二类继承"></a>
 
 ## 十二、类继承
 
+本章对应原书第 13 章（PDF 第 1016—1124 页）。查阅时分清三个问题：成员能否访问、对象能否转换、函数调用哪个版本。这三者分别由访问控制、继承关系和虚函数规则决定。
+
 <a id="121-基类与派生类"></a>
 
 ### 12.1 基类与派生类
+
 继承允许新类复用并扩展已有类：
 ```cpp
 class RatedPlayer : public Player {
@@ -5201,6 +5570,7 @@ private:
 <a id="122-派生类构造与析构"></a>
 
 ### 12.2 派生类构造与析构
+
 构造派生对象时：
 1. 先构造虚基类
 2. 再按声明顺序构造直接基类
@@ -5217,9 +5587,14 @@ RatedPlayer::RatedPlayer(unsigned int value, const Player& player)
 
 若不写，编译器会尝试调用基类默认构造函数。派生类不能直接初始化基类的私有数据成员。
 
+即使基类数据是 `protected`，派生类也不能在自己的初始化列表中直接写该基类成员名；初始化基类部分必须通过基类构造函数。进入派生构造函数体时，基类子对象已经构造完成，再调用某个基类成员函数属于修改已有对象。
+
+**构造失败**：若派生成员构造时抛出异常，已经构造完成的成员和基类子对象会被销毁，但整个派生对象的析构函数不会执行，因为完整对象尚未构造成功。把资源放在 RAII 成员中，才能覆盖这条失败路径。
+
 <a id="123-is-a-关系与公有继承"></a>
 
 ### 12.3 `is-a` 关系与公有继承
+
 公有继承表达“派生类是一种基类”：
 ```cpp
 RatedPlayer player;
@@ -5227,7 +5602,21 @@ Player& base_reference = player;
 Player* base_pointer = &player;
 ```
 
-派生类对象可以隐式转换为公有基类引用或指针，称为向上转换。向上转换安全，因为每个派生对象都包含完整基类子对象。
+派生类对象可以隐式转换为可访问且无歧义的公有基类引用或指针，称为向上转换。转换使引用或指针指向相应基类子对象，不会复制或删除派生部分；多重继承中指针地址可能需要调整。
+
+<a id="1231-向上转换与对象切片"></a>
+
+#### 12.3.1 向上转换与对象切片
+
+| 形式 | 是否保留原派生对象 | 含义 |
+| :--- | :--- | :--- |
+| `Base& r = derived;` | 是 | 引用基类子对象，可用于多态 |
+| `Base* p = &derived;` | 是 | 指向基类子对象，可用于多态 |
+| `Base b = derived;` | 否，新建独立基类对象 | 只复制基类部分，发生切片 |
+| `base = derived;` | 目标本来就是基类对象 | 用派生对象的基类部分给目标赋值 |
+| `Derived d = base;` | 不适用 | 通常不成立，基类信息不足以构造派生部分 |
+
+基类引用可以接受派生对象，所以接收 `const Base&` 的函数也可以接收派生对象；但函数体只能通过基类接口操作，不能直接调用仅在派生类中声明的方法。
 
 反向转换不一定安全，必须确认对象实际类型。公有继承不适合表达：
 - `has-a`：拥有某对象，应使用组合
@@ -5237,6 +5626,7 @@ Player* base_pointer = &player;
 <a id="124-多态公有继承"></a>
 
 ### 12.4 多态公有继承
+
 如果希望通过基类引用或指针调用派生行为，基类函数必须声明为 `virtual`：
 ```cpp
 class Brass {
@@ -5264,6 +5654,7 @@ delete account;
 <a id="125-静态联编与动态联编"></a>
 
 ### 12.5 静态联编与动态联编
+
 - **静态联编**：编译期根据表达式静态类型决定函数，普通成员函数默认如此
 - **动态联编**：运行时根据对象实际类型决定最终覆盖函数，虚函数如此
 
@@ -5282,7 +5673,8 @@ std::vector<std::unique_ptr<Brass>> accounts;
 <a id="126-虚析构函数"></a>
 
 ### 12.6 虚析构函数
-如果类会被当作多态基类使用，析构函数必须是虚函数：
+
+如果要允许通过基类指针 `delete` 派生对象，基类析构函数必须是虚函数：
 ```cpp
 class Base {
 public:
@@ -5300,14 +5692,56 @@ delete pointer;
 
 构造函数不能是虚函数，因为确定动态类型本身就是构造过程。静态成员函数没有 `this`，也不能是虚函数。
 
+“基类有虚函数”不等于“析构自动成为虚函数”。必须显式声明虚析构，或继承一个已经是虚函数的析构函数。另一个设计选择是使用受保护的非虚析构，禁止外部通过基类删除；本书的多态示例采用公有虚析构。
+
 <a id="127-虚函数注意事项"></a>
 
 ### 12.7 虚函数注意事项
+
 1. 在构造函数和析构函数中调用虚函数，不会分派到尚未构造或已经销毁的派生部分
 2. 派生类同名函数会隐藏基类的所有同名重载，可用 `using Base::function;` 恢复
 3. 默认参数根据表达式的静态类型绑定，不随虚函数动态变化
 4. 返回类型通常必须相同，但基类指针/引用返回值允许协变为派生类指针/引用
 5. 若不希望继续覆盖，可使用 `final`
+
+<a id="1271-重载、覆盖与隐藏"></a>
+
+#### 12.7.1 重载、覆盖与隐藏
+
+**重载、覆盖、隐藏的区别**：
+
+| 名称 | 判断依据 | 常见结果 |
+| :--- | :--- | :--- |
+| 重载 | 同一作用域中同名、参数不同 | 编译期选择合适版本 |
+| 覆盖 | 派生类匹配基类虚函数 | 运行时分派至最终覆盖版本 |
+| 隐藏 | 派生作用域出现同名声明 | 基类同名重载不再直接参与名称查找 |
+
+```cpp
+class BasePrinter
+{
+public:
+    virtual ~BasePrinter() = default;
+    virtual void print(int) const {}
+    void print(const char*) const {}
+};
+
+class Printer : public BasePrinter
+{
+public:
+    using BasePrinter::print;            // 引入基类的重载集
+    void print(int) const override {}    // 覆盖虚函数
+};
+
+Printer printer;
+printer.print("text");                  // 使用基类字符串版本
+BasePrinter& ref = printer;
+ref.print(3);                           // 调用 Printer::print(int)
+ref.BasePrinter::print(3);              // 显式限定，调用基类版本
+```
+
+如果派生版本漏写末尾的 `const`，它就不覆盖 `print(int) const`；`override` 会让这种不匹配成为编译错误。返回类型不能用来区分普通重载。
+
+**默认参数不随动态类型变化**：若基类声明 `virtual void f(int n = 1)`，派生类覆盖时写 `void f(int n = 2)`，通过 `Base&` 调用 `f()` 会执行派生函数体，但传入 `1`。因此虚函数不宜在不同层次使用不同默认参数。
 
 ```cpp
 class Derived final : public Base {
@@ -5319,6 +5753,7 @@ public:
 <a id="128-protected-访问控制"></a>
 
 ### 12.8 `protected` 访问控制
+
 `protected` 成员对类外代码不可见，但派生类成员函数可以访问：
 ```cpp
 class Base {
@@ -5329,9 +5764,26 @@ protected:
 
 保护数据会让所有派生类依赖基类内部表示，降低封装性。通常更推荐私有数据配合受保护或公有成员函数。
 
+还有一个容易忽略的限制：派生类成员并不能通过任意 `Base` 对象访问其受保护的非静态成员。它通常需要通过自身或适当的派生对象访问。
+
+```cpp
+class Parent { protected: int value = 0; };
+class Child : public Parent
+{
+public:
+    void change(Child& child, Parent& parent)
+    {
+        child.value = 1;   // 可以
+        // parent.value = 1; // 不可以：通过 Parent 对象访问
+        (void)parent;
+    }
+};
+```
+
 <a id="129-抽象基类与纯虚函数"></a>
 
 ### 12.9 抽象基类与纯虚函数
+
 纯虚函数在声明末尾写 `= 0`：
 ```cpp
 class Shape {
@@ -5344,13 +5796,16 @@ public:
 
 含纯虚函数的类是抽象类，不能直接创建对象，但可以声明指针和引用。派生类只有实现所有纯虚函数后才能成为具体类。
 
-纯虚函数也可以拥有定义，派生类仍必须覆盖它；其定义可用于共享默认实现。
+纯虚函数也可以在类外提供定义，其定义可用于显式限定调用；仅提供这个定义不会使基类成为具体类。派生类要成为具体类，每个纯虚函数都必须具有非纯的最终覆盖版本，该版本也可以从中间派生类继承。
+
+纯虚析构是特殊的常见情况：`virtual ~Base() = 0;` 仍必须有定义，例如类外的 `Base::~Base() {}`，因为销毁派生对象时会执行基类析构。派生类隐式生成的析构函数就可以覆盖它，不必仅为消除抽象性再写一个空析构。
 
 抽象基类用于表达共同接口，把“不应该存在的普通基类对象”从类型系统中排除。
 
 <a id="1210-继承与动态内存"></a>
 
 ### 12.10 继承与动态内存
+
 若派生类不新增资源，编译器生成的复制操作会先复制基类部分，再复制派生成员，通常足够。
 
 若派生类新增资源，需要：
@@ -5374,9 +5829,20 @@ Derived& Derived::operator=(const Derived& other) {
 
 如果基类资源成员已经使用 `std::string`、`std::vector`、智能指针等 RAII 类型，派生类也应继续遵守零法则。
 
+<a id="12101-默认复制与手写复制的区别"></a>
+
+#### 12.10.1 默认复制与手写复制的区别
+
+默认生成的派生复制构造会调用基类复制构造；但**手写**派生复制构造却漏掉 `Base(other)` 时，基类部分将尝试默认构造。默认生成的派生赋值会处理基类部分；但手写赋值不会自动替你调用 `Base::operator=(other)`。这是“使用默认实现”与“自己实现”之间的重要区别。
+
+上面的手写赋值是步骤示意，不自动提供强异常保证：如果基类赋值成功后派生资源复制失败，基类部分已改变。需要强保证时，应先准备完整替代状态，再通过不抛异常的提交操作更新整个对象。
+
+友元输出函数也不会自动获得派生类私有成员的访问权。派生输出函数可以把对象转成 `const Base&`，复用基类输出，再输出自己有权限访问的成员；不能在派生输出函数中直接再次输出同一个派生类型对象，否则可能无限递归。
+
 <a id="1211-类设计检查表"></a>
 
 ### 12.11 类设计检查表
+
 设计基类时检查：
 - 是否真的存在稳定的 `is-a` 关系
 - 是否需要运行时多态，若需要则提供虚接口和虚析构
@@ -5398,9 +5864,12 @@ Derived& Derived::operator=(const Derived& other) {
 
 ## 十三、C++ 中的代码重用
 
+本章对应原书第 14 章（PDF 第 1125—1268 页）。组合与继承解决类之间的组织关系；类模板解决同一种结构适用于不同类型的问题。两者可以结合，但不能互相替代。
+
 <a id="131-包含对象成员的类"></a>
 
 ### 13.1 包含对象成员的类
+
 组合表达 `has-a` 关系：
 ```cpp
 class Student {
@@ -5428,9 +5897,14 @@ double Student::average() const {
 
 组合通常比继承耦合更低，也是代码复用的首选方式。
 
+**组合中的构造**：`name(name)` 调用 `std::string` 的复制构造，`scores(scores)` 调用 `valarray` 的复制构造。成员初始化列表并非普通赋值列表；把这些语句改写到构造函数体内，会变为先默认构造，再赋值。
+
+**只公开需要的功能**：学生有姓名，不代表学生是一种字符串；不应为了重用字符串存储就向调用者公开字符串的所有接口。`Student::name()` 可以返回 `const std::string&`，`average()` 可以提供计算结果，调用者不必知道成绩实际使用 `valarray` 还是其他存储。
+
 <a id="132-valarray-类"></a>
 
 ### 13.2 `valarray` 类
+
 `std::valarray<T>` 面向数值数组，支持逐元素运算：
 ```cpp
 std::valarray<double> values{1.0, 2.0, 3.0};
@@ -5443,9 +5917,22 @@ double maximum = values.max();
 
 它提供 `size`、`sum`、`min`、`max`、`shift`、`cshift`、`apply` 和切片功能，但接口与 STL 容器不同。通用容器需求通常使用 `std::vector`，密集数值计算则常使用专业数学库。
 
+```cpp
+#include <valarray>
+
+std::valarray<double> a(2.0, 3); // 参数顺序：初值、元素数，得到 2、2、2
+std::valarray<double> b{1.0, 2.0, 3.0};
+std::valarray<double> c = a + b; // 逐元素相加，得到 3、4、5
+std::valarray<double> d = b.shift(1);  // 左移，得到 2、3、0
+std::valarray<double> e = b.cshift(1); // 循环左移，得到 2、3、1
+```
+
+两数组逐元素运算要求长度符合相应操作的前提，不能理解成自动补零。`min()`、`max()` 要求数组非空；计算平均值同样先检查 `size()`。`valarray::resize()` 不应按 `vector::resize()` 的“保留前缀”语义理解，它会重新设置数组大小和元素值。
+
 <a id="133-私有继承"></a>
 
 ### 13.3 私有继承
+
 ```cpp
 class Student : private std::string,
                 private std::valarray<double> {
@@ -5457,6 +5944,19 @@ class Student : private std::string,
 
 私有继承可复用基类实现，并允许访问保护成员和覆盖虚函数；如果只需要“拥有一个对象”，组合通常更清楚。
 
+<a id="1331-组合与三种继承方式对比"></a>
+
+#### 13.3.1 组合与三种继承方式对比
+
+| 设计方式 | 类外能否隐式转成基类 | 能否直接使用基类保护接口 | 典型关系 |
+| :--- | :--- | :--- | :--- |
+| 公有继承 | 可以，前提是基类无歧义 | 可以 | `is-a` |
+| 私有继承 | 不可以 | 派生类内部可以 | 使用基类实现 |
+| 保护继承 | 不可以 | 派生链内部可以 | 可继续派生的实现复用 |
+| 组合 | 没有这项继承转换 | 不能因此获得保护权限 | `has-a` |
+
+私有继承类的成员内部可以把 `*this` 转成其私有基类引用，从而复用基类的非成员接口。使用 `static_cast<const Base&>(*this)` 可以避免创建副本；直接构造一个 `Base(*this)` 则会复制基类部分。
+
 访问无名基类子对象时使用类型名：
 ```cpp
 const std::string& Student::name() const {
@@ -5467,6 +5967,7 @@ const std::string& Student::name() const {
 <a id="134-保护继承与-using"></a>
 
 ### 13.4 保护继承与 `using`
+
 保护继承使基类公有、保护成员在派生类中都成为保护成员。它主要用于还要继续派生的实现层次，普通接口设计中较少使用。
 
 可以用 `using` 调整继承成员的可访问性，而不编写转发函数：
@@ -5482,6 +5983,7 @@ public:
 <a id="135-多重继承"></a>
 
 ### 13.5 多重继承
+
 多重继承让一个类直接拥有多个基类：
 ```cpp
 class SingingWaiter : public Waiter, public Singer {
@@ -5503,6 +6005,7 @@ object.Singer::show();
 <a id="136-虚基类与菱形继承"></a>
 
 ### 13.6 虚基类与菱形继承
+
 如果两个直接基类都继承同一个基类，最终派生类默认包含两份共同基类子对象：
 ```text
         Worker
@@ -5526,9 +6029,16 @@ SingingWaiter::SingingWaiter(/*...*/)
 
 如果没有显式初始化，将调用虚基类默认构造函数。
 
+**谁是最底层类**取决于正在构造的完整对象。单独创建 `Waiter` 时，`Waiter` 负责初始化 `Worker`；创建 `SingingWaiter` 时，由 `SingingWaiter` 负责，`Waiter` 初始化列表中关于虚基类 `Worker` 的初始化在这次构造中不执行。
+
+虚继承解决共同基类的重复存储，不自动解决两个直接基类都提供 `show()` 的歧义。最终类可以覆盖 `show()`，先输出共同基类信息一次，再分别调用两条路径中只处理各自新增数据的辅助函数，避免共同信息重复显示。
+
+`virtual` 继承与 `virtual` 函数含义不同：前者控制基类子对象是否共享，后者控制成员调用是否动态分派；二者可以独立使用。
+
 <a id="137-多重继承中的歧义与支配"></a>
 
 ### 13.7 多重继承中的歧义与支配
+
 即使只有一份虚基类，同名函数仍可能来自多条继承路径。解决方式：
 - 在最终派生类中定义自己的版本
 - 使用作用域解析明确选择
@@ -5539,6 +6049,7 @@ SingingWaiter::SingingWaiter(/*...*/)
 <a id="138-类模板"></a>
 
 ### 13.8 类模板
+
 类模板把数据类型作为参数：
 ```cpp
 template <typename T>
@@ -5564,9 +6075,74 @@ bool Stack<T>::push(const T& item) {
 
 模板定义通常必须放在头文件中，因为编译器实例化时需要看到完整定义。
 
+<a id="1381-实例化与类型要求"></a>
+
+#### 13.8.1 实例化与类型要求
+
+**模板并非一种已经完成的类型**：C++11 中创建对象应写 `Stack<int>`、`Stack<std::string>`；模板内的 `T` 会被具体类型替换。不同实例具有独立的静态数据成员，例如 `Box<int>::count` 与 `Box<double>::count` 不是同一变量。
+
+模板成员只在需要时实例化是理解报错位置的重要线索：某个 `T` 可能支持 `push`，却不支持额外定义的排序成员。模板声明本身看起来正确，不代表所有类型实参都满足所有成员的要求。
+
+<a id="1382-固定容量栈的完整示例"></a>
+
+#### 13.8.2 固定容量栈的完整示例
+
+下面用固定容量栈把类型参数和非类型参数结合起来。`pop` 通过引用输出被移除值，返回值只表示操作是否成功。
+
+```cpp
+// 完整示例：固定容量类模板，C++11
+#include <array>
+#include <cassert>
+#include <cstddef>
+#include <iostream>
+#include <string>
+
+template <typename T, std::size_t N = 10>
+class FixedStack
+{
+private:
+    std::array<T, N> items{};
+    std::size_t used = 0;
+public:
+    bool empty() const { return used == 0; }
+    bool full() const { return used == N; }
+    bool push(const T& value)
+    {
+        if (full()) return false;
+        items[used] = value;
+        ++used;
+        return true;
+    }
+    bool pop(T& value)
+    {
+        if (empty()) return false;
+        value = items[used - 1];
+        --used;
+        return true;
+    }
+};
+
+int main()
+{
+    FixedStack<std::string, 2> words;
+    assert(words.push("first"));
+    assert(words.push("second"));
+    assert(!words.push("third"));
+    std::string word;
+    while (words.pop(word))
+        std::cout << word << '\n';
+    assert(words.empty());
+}
+```
+
+输出顺序为 `second`、`first`。该实现要求 `T` 能被默认构造和复制赋值，且逻辑出栈时不立即销毁数组槽位中的对象；它适合解释模板和栈接口，不等同于标准容器的完整生命周期管理。
+
+**指针实参的陷阱**：`Stack<const char*>` 保存的是地址，不会复制字符串内容。若不断把同一输入缓冲区的地址压栈，各元素会观察同一块被反复修改的存储；缓冲区销毁后所有地址都会失效。要保存每次输入的值，使用 `Stack<std::string>`。
+
 <a id="139-非类型模板参数"></a>
 
 ### 13.9 非类型模板参数
+
 模板参数也可以是编译期值：
 ```cpp
 template <typename T, std::size_t N>
@@ -5580,9 +6156,19 @@ Array<int, 10> values;
 
 `N` 是模板的一部分，`Array<int, 10>` 和 `Array<int, 20>` 是不同类型。非类型参数必须满足标准允许的编译期形式。
 
+```cpp
+const std::size_t fixed = 8;
+Array<double, fixed> a;   // fixed 是可用的整型常量表达式
+int runtime = 8;
+// Array<double, runtime> b; // 错误：普通运行时变量不能作为该模板实参
+```
+
+非类型参数不在运行期改变；不能在成员函数中执行 `++N`。C++11 允许的非类型参数类型包括整数、枚举及满足限制的指针或引用等，不能直接用浮点类型作此类模板参数。运行时容量应保存为数据成员，或交给 `vector` 管理。
+
 <a id="1310-模板的多功能性"></a>
 
 ### 13.10 模板的多功能性
+
 模板可以：
 - 接收多个类型参数
 - 继承普通类或模板实例
@@ -5604,6 +6190,7 @@ public:
 <a id="1311-模板具体化"></a>
 
 ### 13.11 模板具体化
+
 - **隐式实例化**：编译器根据使用自动生成实例
 - **显式实例化**：显式要求生成某个实例
 - **显式具体化**：为特定模板实参提供完全不同实现
@@ -5625,9 +6212,20 @@ class Holder<T*> { /* partial specialization */ };
 template class Stack<int>;
 ```
 
+<a id="13111-实例化、全特化与偏特化"></a>
+
+#### 13.11.1 实例化、全特化与偏特化
+
+**实例化与具体化**：实例化仍然使用通用模板的实现；显式具体化则是另写一个特定版本。完整具体化的类需要自行声明所需成员，不会自动继承主模板中的成员。
+
+部分具体化按模式匹配。例如主模板 `Pair<T, U>` 可以为 `Pair<T, int>` 或 `Pair<T, T>` 提供专用版本；若多个候选都匹配且不存在唯一更专门的候选，会报二义性，而不是按代码书写先后选择。函数模板不能部分具体化，通常通过重载实现类似效果。
+
+另外，原书中的部分模板说明沿用了旧标准背景：**C++11 允许函数模板的模板参数有默认值**。不要把旧式“只有类模板类型参数可有默认值”的限制当成 C++11 规则。
+
 <a id="1312-成员模板与模板参数"></a>
 
 ### 13.12 成员模板与模板参数
+
 普通类和类模板都可以包含成员模板：
 ```cpp
 class Converter {
@@ -5647,9 +6245,29 @@ class Wrapper {
 
 模板模板参数的形参结构必须与传入模板兼容。
 
+`template <typename> class Container` 在严格 C++11 下不应直接匹配有两个类型参数的 `std::vector`，即使它的分配器参数有默认值。可以提供参数结构明确的一参数别名：
+
+```cpp
+template <typename T>
+using VectorOf = std::vector<T>;
+
+Wrapper<int, VectorOf> wrapped;
+```
+
+在模板中引用依赖于模板参数的嵌套类型时，通常需要 `typename`，让编译器知道这是类型而非静态成员：
+
+```cpp
+template <typename Container>
+typename Container::value_type first_copy(const Container& values)
+{
+    return *values.begin(); // 前提：容器非空
+}
+```
+
 <a id="1313-模板类与友元"></a>
 
 ### 13.13 模板类与友元
+
 模板中的友元可分为：
 1. **非模板友元**：每个实例都把同一个普通函数设为友元
 2. **约束模板友元**：友元类型或函数与当前模板实参相关
@@ -5664,9 +6282,41 @@ class Box {
 
 友元模板的声明顺序和尖括号语法较复杂，通常应先前置声明模板，再在类中声明友元。
 
+<a id="13131-约束与非约束模板友元"></a>
+
+#### 13.13.1 约束与非约束模板友元
+
+约束模板友元的完整声明关系如下：
+
+```cpp
+template <typename T> class Secret;
+template <typename T> T read(const Secret<T>&);
+
+template <typename T>
+class Secret
+{
+private:
+    T value;
+public:
+    explicit Secret(T x) : value(x) {}
+    friend T read<T>(const Secret<T>&);
+};
+
+template <typename T>
+T read(const Secret<T>& object)
+{
+    return object.value;
+}
+```
+
+`read<int>` 是 `Secret<int>` 的友元，不因此获得访问 `Secret<double>` 的权限。若类内写成 `template <typename U> friend U read(const Secret<U>&);`，则授予该函数模板所有实例访问当前类实例的权限，属于非约束友元。
+
+还有一种常用形式是在类模板内部直接定义 `friend operator<<`。每次类模板实例化会得到相应参数类型的普通非模板友元函数；它不是函数模板的显式具体化，不要把这两种形式混为一谈。
+
 <a id="1314-模板别名"></a>
 
 ### 13.14 模板别名
+
 C++11 使用 `using` 为模板建立别名：
 ```cpp
 template <typename T>
@@ -5683,9 +6333,12 @@ StringMap<int> scores;
 
 ## 十四、友元、异常和其他
 
+本章对应原书第 15 章（PDF 第 1269—1377 页）。友元处理协作访问，嵌套类限制类型名称的可见范围，异常处理跨调用层的失败，RTTI 与显式转换处理类型识别。这些工具的目的不同，应分别查阅。
+
 <a id="141-友元类"></a>
 
 ### 14.1 友元类
+
 一个类可以把另一个类声明为友元：
 ```cpp
 class Television {
@@ -5707,6 +6360,7 @@ private:
 <a id="142-友元成员函数"></a>
 
 ### 14.2 友元成员函数
+
 可以只授予另一个类的某个成员函数访问权：
 ```cpp
 class Television;
@@ -5723,9 +6377,38 @@ class Television {
 
 编译器在解析友元成员声明时必须已经知道 `Remote` 以及该成员函数的声明，因此类的声明顺序很重要。若两个类互相引用，通常使用前置声明打破依赖环。
 
+<a id="1421-前置声明与定义顺序"></a>
+
+#### 14.2.1 前置声明与定义顺序
+
+**声明顺序**：先前置声明 `Television`，让 `Remote` 可以声明接收 `Television&` 的方法；再完整声明 `Remote`，让 `Television` 可以识别 `Remote::set_channel`；最后定义需要访问电视内部成员的方法。
+
+```cpp
+class Screen;
+class Controller
+{
+public:
+    void select(Screen&, int);
+};
+class Screen
+{
+private:
+    int channel = 1;
+    friend void Controller::select(Screen&, int);
+};
+void Controller::select(Screen& screen, int value)
+{
+    if (value >= 1 && value <= 100)
+        screen.channel = value;
+}
+```
+
+只有 `class Screen;` 时可以声明指针或引用，但不能定义包含 `Screen` 值成员的对象布局，也不能读取 `screen.channel`。编译器必须先看到完整类型定义，才知道成员和访问权限。
+
 <a id="143-其他友元关系"></a>
 
 ### 14.3 其他友元关系
+
 两个类可以互为友元：
 ```cpp
 class Analyzer;
@@ -5757,6 +6440,7 @@ class Probe {
 <a id="144-嵌套类"></a>
 
 ### 14.4 嵌套类
+
 在另一个类的作用域中声明的类称为嵌套类：
 ```cpp
 class Queue {
@@ -5770,7 +6454,8 @@ private:
 
 嵌套类的名称受外层类作用域控制。嵌套类和外层类是两个独立类：
 - 嵌套类不会自动获得外层对象，也没有特殊 `this` 指针
-- 外层类和嵌套类不会自动互相访问私有成员
+- C++11 中，嵌套类可访问外层类的私有、保护成员；访问非静态成员时仍需要具体的外层对象
+- 外层类不会因为嵌套关系自动获得嵌套类私有成员的访问权
 - 访问权限决定外部代码能否使用嵌套类型名
 
 ```cpp
@@ -5785,9 +6470,37 @@ private:
 
 模板中也可以嵌套类，每个外层模板实例会得到相应嵌套类型。
 
+<a id="1441-嵌套类访问外层对象"></a>
+
+#### 14.4.1 嵌套类访问外层对象
+
+```cpp
+class OuterValue
+{
+private:
+    int value = 42;
+public:
+    class Reader
+    {
+    public:
+        int get(const OuterValue& object) const
+        {
+            return object.value; // 有访问权限，并通过参数指定对象
+        }
+    };
+};
+
+OuterValue object;
+OuterValue::Reader reader;       // public 嵌套类型可以在类外命名
+int result = reader.get(object); // 42
+```
+
+在类外定义嵌套类成员时使用完整限定名，如 `Outer::Inner::function()`。若嵌套类声明位于 `private` 区域，类外不能直接写该类型名创建对象；这适合把链表节点等实现细节隐藏在容器内部。
+
 <a id="145-错误处理方式"></a>
 
 ### 14.5 错误处理方式
+
 常见错误处理方式：
 
 | 方式       | 优点                         | 局限                         |
@@ -5799,9 +6512,12 @@ private:
 
 `std::abort()` 会异常终止程序；`std::exit()` 执行正常终止清理。库代码通常不应因可恢复错误擅自终止整个程序。
 
+这里的“正常终止清理”不等于逐层退出函数：`std::exit()` 不会销毁当前调用链上的普通自动对象；从 `main` 返回才会先销毁 `main` 的局部对象，再进行程序终止处理。异常在找到处理器的传播过程中会进行栈展开，三者不能混用来替代资源清理。
+
 <a id="146-异常机制"></a>
 
 ### 14.6 异常机制
+
 异常使用 `try`、`throw`、`catch`：
 ```cpp
 double harmonic_mean(double a, double b) {
@@ -5825,9 +6541,66 @@ try {
 - 保留多态信息，防止切片
 - 允许接收派生异常对象
 
+<a id="1461-异常控制流与栈展开示例"></a>
+
+#### 14.6.1 异常控制流与栈展开示例
+
+**控制流**：抛出后，当前路径中 `throw` 之后的语句不执行；匹配的处理器执行完后，从整个 `try`/`catch` 结构之后继续，而不是回到原来的抛出点。需要重试时，应把这段结构放进循环。
+
+```cpp
+// 完整示例：异常传播时的析构顺序，C++11
+#include <iostream>
+#include <stdexcept>
+
+struct Trace
+{
+    const char* name;
+    explicit Trace(const char* text) : name(text)
+    {
+        std::cout << "construct " << name << '\n';
+    }
+    ~Trace() { std::cout << "destroy " << name << '\n'; }
+};
+
+void calculate()
+{
+    Trace inner("inner");
+    throw std::runtime_error("calculation failed");
+}
+
+int main()
+{
+    Trace outer("outer");
+    try
+    {
+        calculate();
+        std::cout << "unreachable\n";
+    }
+    catch (const std::exception& error)
+    {
+        std::cout << error.what() << '\n';
+    }
+    std::cout << "continue\n";
+}
+```
+
+输出如下：
+
+```text
+construct outer
+construct inner
+destroy inner
+calculation failed
+continue
+destroy outer
+```
+
+`inner` 在进入处理器之前销毁，`outer` 所在作用域没有因这次异常退出，所以在 `main` 结束时才销毁。
+
 <a id="147-异常对象"></a>
 
 ### 14.7 异常对象
+
 自定义异常类型可以携带错误上下文：
 ```cpp
 class BadMean : public std::logic_error {
@@ -5861,9 +6634,18 @@ try {
 
 在 `catch` 中单独写 `throw;` 会重新抛出当前异常，并保留其动态类型。
 
+<a id="1471-异常匹配与重新抛出"></a>
+
+#### 14.7.1 异常匹配与重新抛出
+
+**异常匹配不等同于普通函数实参转换**：`throw 3` 不会被 `catch(double)` 捕获，也不会为匹配处理器自动调用用户定义转换。常见匹配包括相同异常类型，以及公开且无歧义的派生异常到基类异常的匹配。
+
+`throw;` 与 `throw error;` 不同。若 `error` 是基类引用，后者会根据表达式的静态类型创建新的异常对象，可能切掉派生信息；前者继续传播原异常。没有当前正在处理的异常时执行裸 `throw;` 会调用 `std::terminate()`。
+
 <a id="148-栈展开与-raii"></a>
 
 ### 14.8 栈展开与 RAII
+
 异常传播时，控制流离开沿途已经进入的作用域，自动对象会按相反顺序销毁，这称为**栈展开**。
 
 ```cpp
@@ -5882,9 +6664,14 @@ void process() {
 
 不要在析构函数中让异常逃逸，尤其是栈展开期间再次抛出异常会调用 `std::terminate()`。
 
+裸指针局部变量会随作用域消失，但它指向的动态对象不会因此自动删除。例如 `int* p = new int[10]; risky(); delete[] p;` 中，如果 `risky()` 抛出，`delete[]` 被跳过，资源仍泄漏。栈展开自动调用的是已构造对象的析构函数，并不会猜测每个地址的所有权。
+
+构造函数抛出时，完整对象自身的析构函数不执行，但已成功构造的基类和成员会销毁。若构造过程中要取得多个资源，应分别由资源管理成员接管，避免“第一个 `new` 成功、第二个 `new` 失败”留下泄漏。
+
 <a id="149-异常安全保证"></a>
 
 ### 14.9 异常安全保证
+
 函数的异常安全常分为：
 1. **无抛出保证**：承诺不抛异常
 2. **强保证**：失败时状态与调用前相同
@@ -5898,6 +6685,7 @@ void process() {
 <a id="1410-异常规范与-noexcept"></a>
 
 ### 14.10 异常规范与 `noexcept`
+
 旧式动态异常规范：
 ```cpp
 void function() throw(Type1, Type2);
@@ -5918,9 +6706,21 @@ void wrapper(T& value) noexcept(noexcept(value.swap(value))) {
 
 移动构造函数若为 `noexcept`，标准容器扩容时更愿意使用移动而不是复制。
 
+`noexcept` 是不让异常越过函数边界的承诺，不代表函数体中绝对不能出现 `throw`。内部抛出并在内部捕获是允许的；未捕获的异常越过边界才导致终止。它也不会把异常转换成错误码。
+
+```cpp
+void safe() noexcept;
+void possible();
+static_assert(noexcept(safe()), "safe is non-throwing");
+static_assert(!noexcept(possible()), "possible may throw");
+```
+
+这里 `noexcept(表达式)` 不执行表达式，只检查其潜在抛出属性。旧书代码中的 `throw()` 表示不抛出；`throw(Type1, Type2)` 是旧式动态异常规范，不能作为现代异常接口的推荐模板。
+
 <a id="1411-标准异常层次"></a>
 
 ### 14.11 标准异常层次
+
 `<exception>` 中的 `std::exception` 是标准异常基类，提供虚函数 `what()`。
 
 常见 `<stdexcept>` 异常：
@@ -5942,10 +6742,11 @@ void wrapper(T& value) noexcept(noexcept(value.swap(value))) {
 <a id="1412-new-失败"></a>
 
 ### 14.12 `new` 失败
+
 普通 `new` 分配失败时抛出 `std::bad_alloc`：
 ```cpp
 try {
-    auto data = std::make_unique<int[]>(count);
+    std::unique_ptr<int[]> data(new int[count]); // C++11
 } catch (const std::bad_alloc& error) {
     std::cerr << error.what() << '\n';
 }
@@ -5961,9 +6762,14 @@ if (data == nullptr) {
 
 两种风格不要混淆。使用智能指针可以确保后续步骤抛异常时已分配内存仍被释放。
 
+`new (std::nothrow) Widget` 只改变分配失败的处理方式，`Widget` 构造函数自身仍可能抛异常；不能把它理解为整个表达式绝不抛出。使用 `std::nothrow` 需要 `<new>`。
+
 <a id="1413-rtti"></a>
 
 ### 14.13 RTTI
+
+需要包含 `<typeinfo>` 才能使用 `std::type_info`、`std::bad_cast` 和 `std::bad_typeid` 的声明。向下或横向进行运行时检查的 `dynamic_cast` 要求源类型是多态类；普通向上转换不需要为了转换专门加入虚函数。
+
 运行阶段类型识别（RTTI）用于在多态层次中查询对象的实际类型。它只对含虚函数的多态类型最有意义，主要工具为：
 1. `dynamic_cast`
 2. `typeid`
@@ -5974,6 +6780,7 @@ if (data == nullptr) {
 <a id="14131-dynamic_cast"></a>
 
 #### 14.13.1 `dynamic_cast`
+
 指针转换失败返回 `nullptr`：
 ```cpp
 Base* base = get_object();
@@ -5996,6 +6803,13 @@ try {
 <a id="14132-typeid-与-type_info"></a>
 
 #### 14.13.2 `typeid` 与 `type_info`
+
+`typeid` 回答“实际是哪种类型”，`dynamic_cast` 回答“能否作为目标类型使用”。若 `Further` 派生自 `Derived`，`dynamic_cast<Derived*>(p)` 可接受一个 `Further` 对象，而 `typeid(*p) == typeid(Derived)` 对它为假。
+
+对多态对象的引用或解引用表达式使用 `typeid`，可以取得动态类型；对非多态对象则得到静态类型。`typeid(pointer)` 查询的是指针类型，不是所指对象类型。若空指针指向多态类型，`typeid(*pointer)` 会抛出 `std::bad_typeid`。
+
+`type_info::name()` 的结果由实现决定，可能是经过修饰的类型名，不能用作可移植的类名、文件格式标记或业务判断依据。
+
 ```cpp
 if (typeid(*base) == typeid(Derived)) {
     // exact dynamic type is Derived
@@ -6010,9 +6824,19 @@ if (typeid(*base) == typeid(Derived)) {
 
 ### 14.14 C++ 类型转换运算符
 
+| 转换 | 主要目的 | 是否进行运行时类型检查 | 失败或误用风险 |
+| :--- | :--- | :--- | :--- |
+| `static_cast<T>(x)` | 数值转换、已知安全的相关类型转换 | 不检查向下转换的真实对象 | 截断、精度损失或无效向下转换 |
+| `dynamic_cast<T>(x)` | 多态层次中的受检查转换 | 对向下/横向转换检查 | 指针失败为空，引用失败抛异常 |
+| `const_cast<T>(x)` | 调整相关指针/引用的 cv 限定 | 不检查原对象是否可修改 | 修改原本为 `const` 的对象是未定义行为 |
+| `reinterpret_cast<T>(x)` | 底层指针等表示层转换 | 不验证目标对象是否存在 | 对齐、别名规则、生命周期错误 |
+
+强制转换成功编译，并不代表转换后的访问一定有效。优先使用能准确表达意图的那个运算符；不要因为 `static_cast` 不允许某个操作就直接升级到 `reinterpret_cast`。
+
 <a id="14141-static_cast"></a>
 
 #### 14.14.1 `static_cast`
+
 用于相关类型之间编译期可检查的转换：
 ```cpp
 double value = static_cast<double>(integer);
@@ -6024,11 +6848,13 @@ Derived* derived = static_cast<Derived*>(base); // 不检查实际动态类型
 <a id="14142-dynamic_cast"></a>
 
 #### 14.14.2 `dynamic_cast`
+
 用于多态继承层次的运行时安全转换，失败可以检测。它不能代替普通数值转换。
 
 <a id="14143-const_cast"></a>
 
 #### 14.14.3 `const_cast`
+
 只改变 `const`/`volatile` 限定：
 ```cpp
 const int value = 10;
@@ -6041,6 +6867,7 @@ int* mutable_pointer = const_cast<int*>(pointer);
 <a id="14144-reinterpret_cast"></a>
 
 #### 14.14.4 `reinterpret_cast`
+
 进行底层、依赖实现的位级或地址解释：
 ```cpp
 std::uintptr_t address = reinterpret_cast<std::uintptr_t>(pointer);
@@ -6054,9 +6881,12 @@ std::uintptr_t address = reinterpret_cast<std::uintptr_t>(pointer);
 
 ## 十五、`string` 类和标准模板库
 
+本章对应原书第 16 章（PDF 第 1378—1538 页）。按“字符串 → 资源所有权 → 容器 → 迭代器 → 算法”组织。常用接口见各条目，集中索引另见[附录 F](#f1-string-api-索引)与[附录 G](#g1-容器公共接口)。
+
 <a id="151-string-类"></a>
 
 ### 15.1 `string` 类
+
 `std::string` 管理动态字符序列，负责内存分配、复制和销毁：
 ```cpp
 #include <string>
@@ -6080,9 +6910,29 @@ std::string range(text.begin(), text.end());
 | `string(begin, end)`        | 从迭代器区间构造               |
 | `string(initializer_list)`  | C++11 列表初始化               |
 
+<a id="1511-构造参数、空字符与子串边界"></a>
+
+#### 15.1.1 构造参数、空字符与子串边界
+
+**构造参数的区别**：
+
+```cpp
+std::string a(3, 'x');            // "xxx"：数量和字符
+std::string b{'a', 'b', 'c'};     // "abc"：字符初始化列表
+const char raw[] = {'A', '\0', 'B', '\0'};
+std::string c(raw);              // "A"，在第一个空字符处结束
+std::string d(raw, 3);           // 保存三个字符，包括中间的 '\0'
+std::string e(d, 1, 20);         // 从下标 1 到结尾；数量超过剩余长度时截短
+```
+
+`d.size()` 为 3，而 `strlen(d.c_str())` 为 1，说明 C++ 字符串可以包含空字符。带长度的指针构造要求源区域至少有指定数量的可读字符；这个长度不是目标缓冲区容量。
+
+子串构造和 `substr(pos, count)` 中，`pos == size()` 得到空串，`pos > size()` 抛出 `out_of_range`。字符串能保存的最大长度由 `max_size()` 表示；`npos` 是“无位置/直到结尾”的特殊值，不应把它当作一定可分配的长度。
+
 <a id="152-string-输入"></a>
 
 ### 15.2 `string` 输入
+
 ```cpp
 std::string word;
 std::cin >> word;              // 读取一个单词
@@ -6101,9 +6951,16 @@ std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 std::getline(std::cin, text);
 ```
 
+如果前面的数字读取失败，必须先处理失败状态再考虑后续输入；单独 `ignore()` 不会让失败流恢复。
+
+`std::getline` 不跳过前导空白：空行会得到空字符串，但只要成功提取了换行分隔符，这次读取就可以成功。最后一行没有换行符但确实读到了字符时，也可以成功得到该行，同时设置 `eofbit`；下一次读取才失败。
+
+`std::getline(std::cin >> std::ws, text)` 会跳过所有前导空白，包括空行和缩进。只有明确不需要保留这些内容时才使用，不能作为所有混合输入问题的通用替换。
+
 <a id="153-string-查询与访问"></a>
 
 ### 15.3 `string` 查询与访问
+
 | 操作                 | 作用                            |
 | :------------------- | :------------------------------ |
 | `size()`、`length()` | 字符数量                        |
@@ -6118,9 +6975,20 @@ std::getline(std::cin, text);
 
 修改字符串后，之前取得的指针、引用或迭代器可能失效。不要长期保存 `c_str()` 的返回指针。
 
+<a id="1531-长度、容量与有效下标"></a>
+
+#### 15.3.1 长度、容量与有效下标
+
+**长度与容量**：`reserve(n)` 为未来增长预留空间，不创建 `n` 个字符；`resize(n, ch)` 改变字符数，增长时填充 `ch`，缩小时截去尾部。`clear()` 把长度变为 0，不承诺释放已分配容量。
+
+C++11 的 `data()` 和 `c_str()` 都提供以空字符结尾的只读字符存储；可修改的 `data()` 重载是 C++17 功能。可修改普通字符应使用合法下标或迭代器。
+
+有效字符下标是 `[0, size())`。C++11 中读取 `s[s.size()]` 可得到终止空字符，但不能把该位置改成非零字符；`s.at(s.size())` 则抛异常。空串不能调用 `front()`、`back()` 或 `pop_back()`。
+
 <a id="154-string-修改"></a>
 
 ### 15.4 `string` 修改
+
 ```cpp
 text += " world";
 text.append("!");
@@ -6142,9 +7010,24 @@ text.clear();
 
 `operator+` 返回新字符串，频繁循环拼接时可先 `reserve` 或使用输出字符串流减少重新分配。
 
+```cpp
+std::string s = "abcdef";
+s.erase(2, 2);            // "abef"：从下标 2 删除 2 个字符
+s.insert(2, "CD");       // "abCDef"：在下标 2 前插入
+s.replace(2, 2, "-");    // "ab-ef"：用一个字符替换两个字符
+std::string part = s.substr(3); // "ef"，s 自身不变
+
+char buffer[4];
+std::size_t n = s.copy(buffer, 3, 0);
+buffer[n] = '\0';        // copy 不自动追加终止符，需要额外空间
+```
+
+`compare()` 返回负数、零或正数，不保证恰好是 `-1`、`0`、`1`。字符串关系运算按字符序列的字典序比较，不按长度排序，也不是自然语言词典排序，例如 `"10" < "2"` 为真。
+
 <a id="155-string-搜索"></a>
 
 ### 15.5 `string` 搜索
+
 搜索失败返回 `std::string::npos`：
 ```cpp
 std::size_t position = text.find("key");
@@ -6164,9 +7047,38 @@ if (position != std::string::npos) {
 
 大多数搜索函数可接收起始位置，并提供字符、C 字符串、`string` 等重载。
 
+<a id="1551-查找子串与字符集合"></a>
+
+#### 15.5.1 查找子串与字符集合
+
+```cpp
+std::string text = "red, green; blue";
+auto a = text.find("green");         // 5：查找整个子串
+auto b = text.find_first_of(",;");   // 3：查找 ',' 或 ';'
+auto c = text.find_first_not_of(' ', 4); // 5：跳过从下标 4 开始的空格
+```
+
+`find_first_of("abc")` 查找集合中的任意一个字符，不是查找子串 `"abc"`。`rfind` 的起始位置限制匹配的起点，搜索方向向前；不要把它的第二参数当成搜索长度。
+
+**连续查找**：
+
+```cpp
+std::string text = "one one one";
+std::string key = "one"; // 此循环要求 key 非空
+std::size_t pos = 0;
+while ((pos = text.find(key, pos)) != std::string::npos)
+{
+    std::cout << pos << ' '; // 0 4 8
+    pos += key.size();      // 不重叠匹配；要找重叠匹配则递增 1
+}
+```
+
+位置应使用 `std::string::size_type`、`std::size_t` 或 `auto`，不要用有符号 `int` 接收 `npos`。必须先比较是否为 `npos`，再进行加减；无符号回绕可能把失败位置变成一个看似正常的小下标。
+
 <a id="156-字符串种类"></a>
 
 ### 15.6 字符串种类
+
 `basic_string<CharT>` 是通用模板，常见别名：
 ```cpp
 std::string    // char
@@ -6180,6 +7092,7 @@ std::u32string // char32_t，C++11
 <a id="157-智能指针"></a>
 
 ### 15.7 智能指针
+
 智能指针用对象生命周期自动管理动态资源：
 ```cpp
 #include <memory>
@@ -6188,9 +7101,10 @@ std::u32string // char32_t，C++11
 <a id="1571-unique_ptr"></a>
 
 #### 15.7.1 `unique_ptr`
+
 表示独占所有权，不可复制但可移动：
 ```cpp
-auto pointer = std::make_unique<Widget>(arguments);
+std::unique_ptr<Widget> pointer(new Widget(arguments)); // C++11
 std::unique_ptr<Widget> other = std::move(pointer);
 ```
 
@@ -6201,12 +7115,25 @@ std::unique_ptr<Widget> other = std::move(pointer);
 
 ```cpp
 std::vector<std::unique_ptr<Base>> objects;
-objects.push_back(std::make_unique<Derived>());
+objects.push_back(std::unique_ptr<Base>(new Derived)); // Base 应有虚析构
 ```
+
+`std::make_unique<T>(args...)` 自 C++14 提供，可替代显式 `new` 的创建方式。移动 `unique_ptr` 后，源指针为空；这是该标准库类型的明确保证，不代表所有移动后的对象都为空。
+
+| 操作 | 是否释放原对象 | 所有权变化 |
+| :--- | :--- | :--- |
+| `p.get()` | 否 | 返回观察用裸指针，p 仍拥有资源 |
+| `p.release()` | 否 | p 变空，调用者接手返回指针的释放责任 |
+| `p.reset()` | 是 | 销毁原对象，p 变空 |
+| `p.reset(new T)` | 是 | 销毁原对象，接管新对象 |
+| `q = std::move(p)` | 先释放 q 原对象 | q 接管 p 的资源，p 变空 |
+
+`release()` 不是“立即删除”，忽略其返回值可能泄漏；`get()` 不是“转移所有权”，不能对返回值随意 `delete`。数组使用 `std::unique_ptr<T[]>`，支持 `p[i]` 并以 `delete[]` 清理；不要用 `unique_ptr<T>` 管理 `new T[n]`。
 
 <a id="1572-shared_ptr"></a>
 
 #### 15.7.2 `shared_ptr`
+
 使用引用计数共享所有权：
 ```cpp
 auto first = std::make_shared<Widget>();
@@ -6223,9 +7150,20 @@ A <--shared_ptr-- B
 
 其中一条非拥有关系应改为 `weak_ptr`。
 
+**共享的是所有权，不只是相同地址**：
+
+```cpp
+auto p = std::make_shared<int>(42);
+auto q = p;                       // 共享同一控制块，正确
+// std::shared_ptr<int> bad(p.get()); // 错误：另建控制块，会重复释放
+```
+
+复制 `shared_ptr` 不复制所指对象；通过 `*q` 修改对象，`p` 也观察到变化。引用计数的同步不等于所指对象的线程安全，多个线程修改对象内容仍需另外同步。C++11 中不要直接用 `shared_ptr<T>` 默认删除器管理 `new T[n]` 数组，优先用 `vector<T>` 或 `unique_ptr<T[]>`。
+
 <a id="1573-weak_ptr"></a>
 
 #### 15.7.3 `weak_ptr`
+
 `weak_ptr` 观察由 `shared_ptr` 管理的对象，不增加引用计数：
 ```cpp
 std::weak_ptr<Widget> observer = first;
@@ -6236,14 +7174,20 @@ if (auto locked = observer.lock()) {
 
 `expired()` 可检查对象是否已销毁，但 `lock()` 一次完成检查和获取，更适合并发环境。
 
+`weak_ptr` 没有直接解引用接口，必须通过 `lock()` 获得临时 `shared_ptr`；该强引用在使用期间保持对象存活。`expired()` 检查后对象仍可能被其他线程释放，不能检查一次后就假定之后一直有效。
+
+**选择原则**：唯一拥有者用 `unique_ptr`；多个独立持有者确实需要共同决定对象寿命时用 `shared_ptr`；观察共享对象、缓存或打破所有权环用 `weak_ptr`；仅借用对象且寿命由外部保证时，可以使用普通引用或裸指针。
+
 <a id="1574-auto_ptr"></a>
 
 #### 15.7.4 `auto_ptr`
+
 `auto_ptr` 复制时会转移所有权，语义危险，不能安全放入标准容器。C++11 已弃用，C++17 删除。新代码使用 `unique_ptr`。
 
 <a id="1575-自定义删除器"></a>
 
 #### 15.7.5 自定义删除器
+
 智能指针也能管理文件句柄等资源：
 ```cpp
 auto closer = [](std::FILE* file) {
@@ -6257,6 +7201,7 @@ std::unique_ptr<std::FILE, decltype(closer)>
 <a id="158-标准模板库概览"></a>
 
 ### 15.8 标准模板库概览
+
 STL 主要由以下组件组成：
 - **容器**：保存对象
 - **迭代器**：统一访问容器元素
@@ -6270,6 +7215,7 @@ STL 主要由以下组件组成：
 <a id="159-vector-容器"></a>
 
 ### 15.9 `vector` 容器
+
 `vector` 是动态连续数组：
 ```cpp
 std::vector<int> values{1, 2, 3};
@@ -6288,9 +7234,54 @@ values.emplace_back(5);
 
 扩容、插入和删除可能使迭代器、指针、引用失效。`reserve` 改变容量但不改变 `size`；`resize` 改变元素数量。
 
+<a id="1591-容量与元素数量"></a>
+
+#### 15.9.1 容量与元素数量
+
+```cpp
+std::vector<int> a(3, 7); // 7、7、7
+std::vector<int> b{3, 7}; // 3、7
+std::vector<int> c;
+c.reserve(100);
+// c[0] = 1;             // 错误：容量有了，但 size() 仍为 0
+c.push_back(1);          // 创建第一个元素
+c.resize(3);            // 现在为 1、0、0
+```
+
+<a id="1592-迭代器失效与遍历删除"></a>
+
+#### 15.9.2 迭代器失效与遍历删除
+
+**迭代器失效规则**：
+
+| 操作 | 对已有元素的迭代器、指针和引用的影响 |
+| :--- | :--- |
+| 扩容导致重新分配 | 全部失效，包括旧 `end()` |
+| 尾部插入且未重新分配 | 已有元素仍有效，但旧 `end()` 失效 |
+| 中间插入且未重新分配 | 插入位置及之后失效 |
+| `erase` | 删除位置及之后失效，包括旧 `end()` |
+| `clear` | 所有元素被销毁，指向元素的句柄失效 |
+
+`reserve` 可以减少重新分配，但不能防止中间插入/删除导致的位置失效。尾部追加通常具有均摊常数复杂度，中间插入需要移动后续元素，通常为线性复杂度。
+
+遍历并删除时使用 `erase` 返回的新迭代器：
+
+```cpp
+for (auto it = values.begin(); it != values.end(); )
+{
+    if (*it < 0)
+        it = values.erase(it);
+    else
+        ++it;
+}
+```
+
+不能删除后继续递增已经失效的旧迭代器。范围 `for` 隐含保存迭代器，改变容器结构时也要遵守相同规则。
+
 <a id="1510-迭代器"></a>
 
 ### 15.10 迭代器
+
 ```cpp
 for (auto iterator = values.begin(); iterator != values.end(); ++iterator) {
     std::cout << *iterator << '\n';
@@ -6309,9 +7300,47 @@ for (auto iterator = values.begin(); iterator != values.end(); ++iterator) {
 
 算法只要求完成任务所需的最低迭代器能力，因此同一算法能服务不同容器。
 
+<a id="15101-半开区间与迭代器能力"></a>
+
+#### 15.10.1 半开区间与迭代器能力
+
+**半开区间** `[first, last)` 包含起点、不包含终点。空区间满足 `first == last`；`end()` 不是最后一个元素，不能解引用。最后一个元素可以在非空双向范围中用 `--end()` 取得，但单向迭代器不支持这样做。
+
+`const_iterator` 限制通过迭代器修改元素，但迭代器自身仍可递增；`const iterator` 则是迭代器对象不能改位置，不自动让元素变成只读。`cbegin()`、`cend()` 在 C++11 中提供只读遍历入口。
+
+| 常见范围 | 迭代器能力 | 可用操作 |
+| :--- | :--- | :--- |
+| 原生数组、`vector`、`deque`、`array` | 随机访问 | `it + n`、`last - first`、`sort` |
+| `list`、有序关联容器 | 双向 | `++it`、`--it`，不能 `it + n` |
+| `forward_list`、无序关联容器 | 至少前向 | 逐步前进，不保证可后退 |
+| `istream_iterator` | 输入 | 单遍读取，不保证可重复遍历 |
+
+`std::advance(it, n)` 原地移动迭代器；`std::next(it, n)` 返回移动后的副本；`std::distance(first, last)` 计算距离。对链表等非随机访问范围，移动和计算距离通常需要逐个走过元素，不是常数时间。
+
+<a id="15102-反向、插入与流迭代器"></a>
+
+#### 15.10.2 反向、插入与流迭代器
+
+**反向迭代器**：`rbegin()` 指向最后一个元素，递增反向迭代器会向原序列前方移动。`r.base()` 指向反向迭代器所表示元素之后的位置，不是同一个元素的位置，因此不能直接把 `r.base()` 当作要删除的位置。
+
+**插入迭代器与流迭代器**（`<iterator>`）：
+
+```cpp
+std::vector<int> source{1, 2, 3};
+std::vector<int> destination;
+std::copy(source.begin(), source.end(), std::back_inserter(destination));
+std::copy(destination.begin(), destination.end(),
+          std::ostream_iterator<int>(std::cout, " "));
+```
+
+`back_inserter` 调用容器的 `push_back`；`front_inserter` 要求 `push_front`，不适用于 `vector`；`inserter(container, position)` 适用于相应位置插入接口。连续前插会反转插入元素的相对顺序。
+
+`istream_iterator<T>` 从输入流格式化读取 `T`，默认构造的迭代器表示结束。其构造或递增可能执行读取，复制迭代器不意味着能够回退输入流。
+
 <a id="1511-泛型编程概念"></a>
 
 ### 15.11 泛型编程概念
+
 泛型算法依赖的是**操作要求**，而不是某个具体类型：
 ```cpp
 std::sort(first, last);
@@ -6329,6 +7358,7 @@ std::sort(first, last);
 <a id="1512-序列容器"></a>
 
 ### 15.12 序列容器
+
 | 容器           | 特点                                       |
 | :------------- | :----------------------------------------- |
 | `vector`       | 连续存储，尾部插入快，随机访问             |
@@ -6344,9 +7374,20 @@ std::sort(first, last);
 
 适配器只公开符合其抽象语义的操作，不提供普通迭代器。
 
+**接口区别**：
+
+- `list` 在已知位置插入、删除节点通常为常数时间，但查找该位置仍可能为线性时间；`list::sort()` 通过自己的结构排序，不能调用 `std::sort`。
+- `list::splice()` 在满足分配器等前提时转移节点；`merge()` 要求两条链表已按相同规则排序，合并后源链表为空；`unique()` 只删除相邻等价元素。
+- `forward_list` 使用 `before_begin()`、`insert_after()`、`erase_after()`，C++11 中没有 `size()` 成员。
+- `stack::top()`、`queue::front()`、`priority_queue::top()` 用于查看；各自的 `pop()` 只移除、不返回元素。必须先确认非空，再查看或移除。
+- 默认 `priority_queue<int>` 的顶部是最大值。最小堆可写 `std::priority_queue<int, std::vector<int>, std::greater<int>>`。
+
+`deque` 虽然支持随机访问，但不保证所有元素位于一整块连续内存；不能因此把它当作数组传给需要连续缓冲区的接口。
+
 <a id="1513-关联容器"></a>
 
 ### 15.13 关联容器
+
 有序关联容器通常基于平衡树，按键排序：
 
 | 容器       | 键是否唯一 | 存储内容 |
@@ -6365,9 +7406,31 @@ scores["Alice"] = 95;
 
 常用操作：`insert`、`emplace`、`find`、`count`、`lower_bound`、`upper_bound`、`equal_range`、`erase`。
 
+<a id="15131-键查找、等价与修改限制"></a>
+
+#### 15.13.1 键查找、等价与修改限制
+
+**按键查找与区间**：`lower_bound(key)` 返回第一个“不小于 key”的位置，`upper_bound(key)` 返回第一个“大于 key”的位置；两者组成的半开区间包含全部等价键。对允许重复键的容器，这比假定 `find` 返回所有匹配更合适。
+
+```cpp
+std::multimap<std::string, int> scores;
+scores.insert({"Lin", 80});
+scores.insert({"Lin", 90});
+auto range = scores.equal_range("Lin");
+for (auto it = range.first; it != range.second; ++it)
+    std::cout << it->first << ' ' << it->second << '\n';
+```
+
+`map` 的元素类型是 `pair<const Key, T>`，键不能直接修改，但 `it->second` 通常可修改。`set` 也不允许通过迭代器修改键；否则会破坏排序结构。
+
+有序容器按比较器定义等价：`!comp(a, b) && !comp(b, a)`，不一定使用 `a == b`。比较器必须构成严格弱序，不能用 `<=` 代替 `<`，否则连 `comp(a, a)` 都为真。
+
+`map::insert` 不覆盖已有等价键，返回的 `pair<iterator, bool>` 中 `bool` 表示是否插入成功；`m[key] = value` 则会插入或覆盖。只想查询时使用 `find`，避免 `operator[]` 意外增加元素；`at` 在不存在时抛 `out_of_range`。`multimap` 没有 `operator[]`。
+
 <a id="1514-无序关联容器"></a>
 
 ### 15.14 无序关联容器
+
 C++11 的 `unordered_set`、`unordered_map` 等通常使用哈希表：
 - 平均常数时间查找、插入和删除
 - 不保持排序顺序
@@ -6381,9 +7444,14 @@ std::unordered_map<std::string, int> counts;
 
 自定义键要提供 `operator==` 和哈希函数对象。
 
+相等比较认为相等的两个键必须产生相同哈希值；不同键可以发生哈希冲突，由容器继续比较解决。键在容器中存活期间，不能通过外部共享状态改变其哈希或相等关系。
+
+`bucket_count()` 是桶数，`load_factor()` 约为元素数除以桶数；`reserve(n)` 可为预期元素数准备桶，`rehash(n)` 调整桶数。重哈希使迭代器失效，但不使未删除元素的引用和指针失效。平均常数复杂度不代表最坏情况也是常数，极端冲突时可退化为线性查找。
+
 <a id="1515-函数对象"></a>
 
 ### 15.15 函数对象
+
 定义了函数调用运算符的对象称为函数对象或函数符：
 ```cpp
 class GreaterThan {
@@ -6412,7 +7480,8 @@ std::logical_and<bool>{}
 <a id="1516-函数适配器"></a>
 
 ### 15.16 函数适配器
-旧标准提供 `bind1st`、`bind2nd`、`not1`、`not2` 等适配器，C++11 后更推荐 `std::bind`、lambda 和 `std::not_fn`。
+
+旧标准提供 `bind1st`、`bind2nd`、`not1`、`not2` 等适配器。C++11 可以使用 `std::bind` 和 lambda；`std::not_fn` 是 C++17 功能，不能当作 C++11 接口。
 
 ```cpp
 auto greater_than_10 = std::bind(std::greater<int>(),
@@ -6426,6 +7495,23 @@ lambda 通常更容易阅读；`std::bind` 适合重排参数或适配已有可�
 <a id="1517-stl-算法"></a>
 
 ### 15.17 STL 算法
+
+查一个算法时，应同时确认头文件、输入区间要求、输出空间和返回值。算法接收迭代器，不会因为知道目标来自 `vector` 就自动调用 `resize()`。
+
+| 需求 | 常用算法 | 前提或返回值 |
+| :--- | :--- | :--- |
+| 查值/查条件 | `find` / `find_if` | 返回匹配迭代器，失败为传入的 `last` |
+| 统计数量 | `count` / `count_if` | 返回数量，不是迭代器 |
+| 所有/至少一个/全部不满足 | `all_of` / `any_of` / `none_of` | 空范围分别为 true、false、true |
+| 转换元素 | `transform` | 输出区间足够，返回输出末端 |
+| 原地排序 | `sort` / `stable_sort` | 随机访问；后者保持等价元素相对顺序 |
+| 找第 n 个排序位置 | `nth_element` | 不保证两侧各自排好序 |
+| 有序查询 | `lower_bound` / `binary_search` | 常见用法先按相同比较规则排序 |
+| 合并有序范围 | `merge` | 两输入均有序，输出空间足够 |
+| 求和/累积 | `accumulate` | `<numeric>`，初值决定累积类型 |
+
+`lower_bound` 的严格前提是范围按该次查找谓词分区；已按同一规则排序是容易满足和检查这一前提的常见方式。
+
 算法位于 `<algorithm>`、`<numeric>` 等头文件，可按是否修改序列分类：
 
 **非修改序列操作**：
@@ -6456,6 +7542,7 @@ accumulate, inner_product, partial_sum, adjacent_difference, iota
 <a id="1518-算法注意事项"></a>
 
 ### 15.18 算法注意事项
+
 `remove` 不会改变容器大小，只把保留元素移到前面并返回新逻辑结尾：
 ```cpp
 values.erase(std::remove(values.begin(), values.end(), target),
@@ -6463,6 +7550,46 @@ values.erase(std::remove(values.begin(), values.end(), target),
 ```
 
 这称为 erase-remove 惯用法。
+
+<a id="15181-排序、去重与累积示例"></a>
+
+#### 15.18.1 排序、去重与累积示例
+
+`remove` 返回位置之后的元素仍存在，但内容不能当作“被删掉元素的列表”使用。`unique` 同样只移动元素并返回逻辑结尾，而且只合并相邻重复；对全局去重，通常先排序，再执行 `erase(unique(...), end())`。
+
+```cpp
+// 完整示例：排序、去重、转换和累积，C++11
+#include <algorithm>
+#include <cassert>
+#include <functional>
+#include <iostream>
+#include <iterator>
+#include <numeric>
+#include <vector>
+
+int main()
+{
+    std::vector<int> values{3, 1, 3, 2, 1};
+    std::sort(values.begin(), values.end());
+    values.erase(std::unique(values.begin(), values.end()), values.end());
+    assert((values == std::vector<int>{1, 2, 3}));
+
+    std::vector<int> squares;
+    std::transform(values.begin(), values.end(), std::back_inserter(squares),
+                   [](int x) { return x * x; });
+    int total = std::accumulate(squares.begin(), squares.end(), 0);
+    assert(total == 14);
+    std::copy(squares.begin(), squares.end(),
+              std::ostream_iterator<int>(std::cout, " "));
+    std::cout << "sum=" << total << '\n';
+}
+```
+
+输出为 `1 4 9 sum=14`。`std::accumulate` 若处理 `double`，应使用 `0.0` 作为浮点累积初值；写成 `0` 会使中间累积类型为 `int`，可能逐步丢失小数。
+
+<a id="15182-输出空间与算法前提"></a>
+
+#### 15.18.2 输出空间与算法前提
 
 算法写入目标区间时，目标必须有足够空间：
 ```cpp
@@ -6478,11 +7605,22 @@ std::copy(source.begin(), source.end(),
 
 优先使用容器成员函数的情况：
 - `list::sort`、`list::remove` 能利用链表结构
-- 关联容器的 `find` 是对数复杂度，通用 `std::find` 是线性复杂度
+- 有序关联容器的成员 `find` 是对数复杂度，通用 `std::find` 是线性复杂度；无序容器的成员查找通常为平均常数复杂度
+
+**其他常见前提**：
+
+- C++11 的三迭代器 `equal(first1, last1, first2)` 要求第二范围足够长；跨容器比较前先比较大小。C++11 中不能直接用 `vector == list` 比较不同容器类型，可用算法比较元素。
+- 双输入的 `transform` 以第一个范围的长度为准，调用者保证第二范围和输出空间足够。
+- `copy` 不能任意处理重叠范围；向右移动重叠数据通常使用 `copy_backward`，并确保目标范围有效。
+- 集合算法 `set_union`、`set_intersection` 等接受有序范围，不要求实际容器必须是 `set`；重复元素按各算法的多重集合规则处理。
+- `for_each` 的可调用对象可以修改通过非常量迭代器访问的元素，不要因其传统分类而误认为元素一定只读。
+- `pop_heap` 把堆顶移至范围最后一个位置，不改变容器大小；需要移除时再调用 `pop_back`。
+- 原书的 `random_shuffle` 在后续标准中被删除；C++11 已提供 `shuffle`，配合 `<random>` 中的随机数引擎使用。
 
 <a id="1519-vectorvalarray-与-array"></a>
 
 ### 15.19 `vector`、`valarray` 与 `array`
+
 | 类型          | 长度 | 主要用途               |
 | :------------ | :--- | :--------------------- |
 | 原生数组      | 固定 | 与底层接口兼容，功能少 |
@@ -6495,6 +7633,7 @@ std::copy(source.begin(), source.end(),
 <a id="1520-initializer_list"></a>
 
 ### 15.20 `initializer_list`
+
 C++11 的 `std::initializer_list<T>` 表示只读的同类型初始化序列：
 ```cpp
 void print(std::initializer_list<int> values) {
@@ -6516,38 +7655,52 @@ public:
 
 列表初始化优先匹配 `initializer_list` 构造函数，并禁止缩窄转换。底层元素是 `const`，不能通过迭代器修改。
 
+`initializer_list` 类似对编译器生成的只读数组的一段视图；复制它不会深复制底层元素，也不让底层数组永久存活。不要返回由函数内 `{...}` 构造的 `initializer_list`，也不要仅把构造参数列表视图存为长期成员。要长期保存内容，应复制到 `vector` 等拥有数据的容器中。
+
+因为元素是 `const`，从初始化列表构造 `vector<unique_ptr<T>>` 通常不成立：容器需要从列表元素复制，而 `unique_ptr` 不可复制。应逐个移动插入。
+
 ---
 
 <a id="十六输入输出和文件"></a>
 
 ## 十六、输入、输出和文件
 
+本章对应原书第 17 章（PDF 第 1539—1671 页）。输入问题先查流状态与字符是否被消费，输出问题先查格式状态；文件流和字符串流复用同一套规则。
+
 <a id="161-c-流概述"></a>
 
 ### 16.1 C++ 流概述
+
 C++ 把输入和输出表示为字符流。程序面对统一的流接口，具体设备可以是终端、文件或内存字符串。
 
-主要类层次：
+主要接口关系（以 `char` 版本为例）：
 ```text
-ios_base
-└── basic_ios
-    ├── basic_istream  -> istream, ifstream, istringstream
-    ├── basic_ostream  -> ostream, ofstream, ostringstream
-    └── basic_iostream -> iostream, fstream, stringstream
+ios_base → basic_ios<char>
+              ↑ 虚继承          ↑ 虚继承
+           istream              ostream
+              ↑                    ↑
+              └──── iostream ──────┘
+
+ifstream / istringstream 派生自 istream
+ofstream / ostringstream 派生自 ostream
+fstream  / stringstream  派生自 iostream
 ```
+
+`iostream` 同时继承输入和输出接口，共享 `basic_ios<char>` 部分；并不是与 `istream`、`ostream` 并列、直接从 `basic_ios` 派生的第三条独立分支。实际字符缓冲由 `streambuf` 系列管理，流对象负责格式化、状态及与缓冲区交互。
 
 标准流对象：
 
 | 对象   | 用途         | 常见缓冲行为                      |
 | :----- | :----------- | :-------------------------------- |
 | `cin`  | 标准输入     | 与 `cout` 绑定，读取前刷新 `cout` |
-| `cout` | 标准输出     | 终端上通常行缓冲                  |
-| `cerr` | 标准错误     | 通常不缓冲                        |
+| `cout` | 标准输出     | 换行是否立即可见受设备和同步设置影响 |
+| `cerr` | 标准错误     | 默认设置 `unitbuf`，输出操作后刷新 |
 | `clog` | 日志错误输出 | 通常缓冲                          |
 
 <a id="162-流与缓冲区"></a>
 
 ### 16.2 流与缓冲区
+
 程序通常先把输出写入内存缓冲区，再批量交给设备，从而减少昂贵的设备操作。刷新缓冲区的常见时机：
 - 缓冲区已满
 - 输出换行且流为行缓冲
@@ -6562,9 +7715,16 @@ std::cout << "done" << std::endl; // 写入换行并刷新
 
 如果只需要换行，使用 `'\n'` 通常比 `std::endl` 更高效。
 
+`std::ends` 插入一个空字符，不等同于 `endl`，也不承诺刷新。`unitbuf` 持续要求输出操作后刷新，`nounitbuf` 取消该标志。
+
+`cin.tie()` 默认关联 `cout`，读取前刷新提示信息。`cin.tie(nullptr)` 解除关联后，交互提示若无换行或刷新，可能尚未显示就已经开始等待输入。
+
+在任何 I/O 前调用 `std::ios::sync_with_stdio(false)` 可以解除 C++ 标准流与 C 标准 I/O 的同步，常用于批量输入；此后混用 `printf` 与 `cout` 不再享有原来的同步顺序保证。它与解除 `cin` 的绑定是两项不同设置。
+
 <a id="163-重定向"></a>
 
 ### 16.3 重定向
+
 操作系统可以在程序外部改变标准流的来源或目的地：
 ```bash
 program < input.txt
@@ -6578,6 +7738,7 @@ program 2> error.txt
 <a id="164-ostream-输出"></a>
 
 ### 16.4 `ostream` 输出
+
 `operator<<` 对算术类型、字符、C 字符串、指针等提供重载：
 ```cpp
 std::cout << "value = " << value << '\n';
@@ -6591,6 +7752,7 @@ std::cout << static_cast<const void*>(text_pointer);
 <a id="165-其他-ostream-方法"></a>
 
 ### 16.5 其他 `ostream` 方法
+
 ```cpp
 std::cout.put('A');
 std::cout.write(buffer, count);
@@ -6604,6 +7766,7 @@ std::cout.write(buffer, count);
 <a id="166-输出格式状态"></a>
 
 ### 16.6 输出格式状态
+
 流对象保存格式状态，设置后通常持续影响后续输出：
 
 | 设置            | 作用                             |
@@ -6621,9 +7784,42 @@ std::cout.fill('.');
 std::cout << value;
 ```
 
+<a id="1661-宽度、精度与格式标志"></a>
+
+#### 16.6.1 宽度、精度与格式标志
+
+**宽度是最小宽度，不是截断长度**。值的实际表示超过宽度时完整输出，不会裁掉后半部分。常见的数字、字符串格式化插入用完宽度后会把它重置为 0，因此表格每一列都要重新设置 `setw`；不要笼统认为任意输出操作都会消费宽度，非格式化的 `put`、`write` 不按这套字段格式化。
+
+**精度的含义**：
+
+| 浮点模式 | `precision(n)` / `setprecision(n)` 的含义 |
+| :--- | :--- |
+| 默认浮点格式 | 通常为有效数字位数 |
+| `fixed` | 小数点后位数 |
+| `scientific` | 小数点后位数 |
+
+```cpp
+std::cout << std::defaultfloat << std::setprecision(3) << 12.3456 << '\n';
+std::cout << std::fixed << std::setprecision(3) << 12.3456 << '\n';
+std::cout << std::scientific << std::setprecision(3) << 12.3456 << '\n';
+```
+
+默认 locale 下通常输出 `12.3`、`12.346`、`1.235e+01`。格式化改变的是显示，不改变变量中存储的浮点值。
+
+**位标志设置**：`setf(flags)` 将指定标志置位，并不自动清掉同组互斥选项。设置进制、对齐或浮点模式时可以使用带掩码的版本：
+
+```cpp
+std::cout.setf(std::ios::hex, std::ios::basefield);
+std::cout.setf(std::ios::fixed, std::ios::floatfield);
+std::cout.setf(std::ios::left, std::ios::adjustfield);
+```
+
+`flags()`、`precision()`、`fill()` 分别保存不同状态，临时格式化后应恢复被修改的对应项。若函数中途可能抛异常，手写在末尾的恢复语句可能被跳过，可将恢复操作放在局部守卫对象的析构函数中。
+
 <a id="167-输出操纵符"></a>
 
 ### 16.7 输出操纵符
+
 `<iomanip>` 提供更易读的操纵符：
 ```cpp
 std::cout << std::setw(10)
@@ -6661,6 +7857,7 @@ stream.precision(old_precision);
 <a id="168-cin--的读取规则"></a>
 
 ### 16.8 `cin >>` 的读取规则
+
 格式化输入运算符会：
 1. 通常跳过前导空白
 2. 按目标类型解析尽可能多的字符
@@ -6679,6 +7876,7 @@ while (std::cin >> value) {
 <a id="169-流状态"></a>
 
 ### 16.9 流状态
+
 流使用以下状态位：
 
 | 状态      | 含义                     |
@@ -6697,7 +7895,25 @@ stream.bad();
 static_cast<bool>(stream);
 ```
 
-`fail()` 在 `failbit` 或 `badbit` 设置时为真。到达 EOF 的读取通常同时设置 `eofbit` 和 `failbit`。
+`fail()` 在 `failbit` 或 `badbit` 设置时为真；流的布尔转换相当于 `!fail()`。只设置 `eofbit` 时，布尔转换仍可为真。不能把“到达 EOF”一概等同于“本次读取失败”。
+
+<a id="1691-流状态真值表与-eof"></a>
+
+#### 16.9.1 流状态真值表与 EOF
+
+| 状态 | `good()` | `eof()` | `fail()` | 布尔转换 |
+| :--- | :---: | :---: | :---: | :---: |
+| 无错误 | true | false | false | true |
+| 仅 `eofbit` | false | true | false | true |
+| 仅 `failbit` | false | false | true | false |
+| `eofbit \| failbit` | false | true | true | false |
+| 仅 `badbit` | false | false | true | false |
+
+例如从恰好为 `"42"` 的字符串流读取 `int`，可以成功取得 42，同时发现文件尾；再次尝试读取才因无字符可读而失败。因此用 `while (input >> value)`，不要用 `while (!input.eof())`，后者检查的是上一次状态，可能多处理一次无效数据。
+
+<a id="1692-恢复失败与重试输入"></a>
+
+#### 16.9.2 恢复失败与重试输入
 
 恢复格式错误：
 ```cpp
@@ -6707,9 +7923,30 @@ std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
 `clear()` 只清除状态，不会丢弃造成失败的字符；通常还要配合 `ignore()`。
 
+`clear(state)` 用新状态替换原状态，不是只清除指定的位；`setstate(state)` 则在原状态上追加标志。`clear()` 采用默认参数 `goodbit`，用于恢复正常状态。
+
+```cpp
+// 输入片段：要求包含 <iostream> 和 <limits>
+int value;
+for (;;)
+{
+    if (std::cin >> value)
+        break;
+    if (std::cin.eof() || std::cin.bad())
+        break; // EOF 或底层错误不应作为普通格式错误无限重试
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cout << "Please enter an integer: ";
+}
+// 只有确认读取成功后，才能使用本次 value。
+```
+
+输入 `12abc` 读取整数时，可能成功取得 12，把 `abc` 留给后续操作；“提取成功”不保证整行只有一个合法整数。需要严格校验整行时使用[字符串流](#1617-内存字符串流)。
+
 <a id="1610-异常与流状态"></a>
 
 ### 16.10 异常与流状态
+
 默认情况下 I/O 失败只设置状态，不抛异常。可以指定哪些状态触发 `ios_base::failure`：
 ```cpp
 stream.exceptions(std::ios::badbit | std::ios::failbit);
@@ -6717,9 +7954,12 @@ stream.exceptions(std::ios::badbit | std::ios::failbit);
 
 文件或网络等底层错误需要统一异常处理时可以启用，但要注意 EOF 也可能设置 `failbit`。普通文本循环通常直接检查流状态更自然。
 
+调用 `exceptions(mask)` 的当下，如果现有状态已与新掩码相交，也可能立即抛出异常；不仅是之后的读取才抛。标准库文件流本身不提供通用网络连接，这里的状态机制可供其他基于流缓冲的接口使用。
+
 <a id="1611-非格式化输入方法"></a>
 
 ### 16.11 非格式化输入方法
+
 | 方法                       | 作用                             |
 | :------------------------- | :------------------------------- |
 | `get()`                    | 读取一个字符并返回 `int_type`    |
@@ -6740,9 +7980,42 @@ std::cin.getline(buffer, sizeof buffer);
 
 若行太长无法容纳，`getline` 会设置 `failbit`。`std::getline` 配合 `std::string` 通常更安全。
 
+<a id="16111-输入接口对照与字符计数"></a>
+
+#### 16.11.1 输入接口对照与字符计数
+
+**几个名称相似的函数**：
+
+| 调用 | 是否跳过空白 | 是否消费分隔符 | 是否追加 `\0` |
+| :--- | :--- | :--- | :--- |
+| `in >> word`，word 为 string | 默认跳过前导空白 | 结束单词的空白通常保留 | string 自行维护 |
+| `in.get(buf, n, delim)` | 否 | 否 | 缓冲区允许时追加 |
+| `in.getline(buf, n, delim)` | 否 | 是 | 缓冲区允许时追加 |
+| `std::getline(in, str, delim)` | 否 | 是 | string 自行维护 |
+| `in.read(buf, n)` | 否 | 不识别分隔符 | 否 |
+
+数组版 `get`、`getline` 的 `n` 包含终止符空间，最多存储 `n - 1` 个输入字符。`get` 在分隔符前一个字符都没读到时会设置失败状态，不能连续对空行调用它而不处理分隔符。数组版 `getline` 对正常空行会消费换行并得到空字符串。
+
+`gcount()` 查询最近相关非格式化输入实际提取的字符数。数组版 `getline` 提取的分隔符也计入，虽然没有存进数组；自由函数 `std::getline` 不更新这个计数。无参数 `get()` 和 `peek()` 应使用 `int_type` 或 `auto` 接收结果，先与 `traits_type::eof()` 比较，再转为 `char`，否则可能丢失 EOF 的独立表示。
+
+**按块读取**时，最后一块可能不足请求长度，却仍包含有效数据：
+
+```cpp
+char block[4096];
+while (input.read(block, sizeof block) || input.gcount() > 0)
+{
+    output.write(block, input.gcount());
+    if (!output) break;
+}
+// 循环结束后还应检查 input.bad() 和 output 的状态。
+```
+
+只写 `while (input.read(...))` 会漏掉不足整块的尾部。`peek` 不消费字符；`putback` 和 `unget` 能否成功受缓冲区能力限制，不能用作无限回退工具。
+
 <a id="1612-文本文件-io"></a>
 
 ### 16.12 文本文件 I/O
+
 ```cpp
 #include <fstream>
 
@@ -6763,9 +8036,14 @@ while (input >> value) {
 
 文件流析构时自动关闭文件，也可显式调用 `close()`。流对象应负责文件生命周期，不要让底层句柄泄漏。
 
+`is_open()` 只回答是否关联了文件，不回答上一次读取或写入是否成功。打开成功后仍可能因格式错误、磁盘空间等原因失败，需要继续检查流状态。
+
+输出文件若必须确认数据写出，应显式 `flush()` 或 `close()` 并检查状态；仅依赖析构关闭没有方便的错误报告位置。默认构造失败处理中的日志也不能代替控制流，打开失败后应返回、抛异常或跳过该文件，不能继续假定文件可用。
+
 <a id="1613-文件打开模式"></a>
 
 ### 16.13 文件打开模式
+
 | 标志          | 含义                             |
 | :------------ | :------------------------------- |
 | `ios::in`     | 允许读取                         |
@@ -6783,9 +8061,29 @@ std::fstream file("data.bin",
 
 默认模式：`ifstream` 为 `in`，`ofstream` 通常为 `out | trunc`，`fstream` 为 `in | out`。不同组合对文件是否必须已存在、是否创建文件有不同影响，应显式测试打开结果。
 
+<a id="16131-文件模式组合与截断规则"></a>
+
+#### 16.13.1 文件模式组合与截断规则
+
+常见组合对文件的影响：
+
+| 有效打开模式 | 已有文件内容 | 文件不存在时 |
+| :--- | :--- | :--- |
+| `in` | 保留，只读 | 失败 |
+| `out` 或 `out \| trunc` | 清空 | 尝试创建 |
+| `out \| app` | 保留，所有写入追加到末尾 | 尝试创建 |
+| `in \| out` | 保留，从开头读写 | 失败 |
+| `in \| out \| trunc` | 清空，可读写 | 尝试创建 |
+| `in \| out \| ate` | 保留，打开后定位末尾 | 失败 |
+
+`ate` 只影响初始位置，不负责取消截断；例如 `ofstream(path, ios::ate)` 仍含输出模式，不能用它表示“保留旧内容并追加”。追加使用 `app`，保留并任意修改通常用 `fstream` 的 `in | out`。
+
+`binary` 控制底层文本转换，例如某些平台的换行转换，不改变 `<<` 的格式化语义。在二进制模式下执行 `file << 123` 仍输出数字的字符表示；要写对象字节表示才使用 `write`。
+
 <a id="1614-打开多个文件与命令行"></a>
 
 ### 16.14 打开多个文件与命令行
+
 同一个文件流关闭后可重新打开其他文件：
 ```cpp
 std::ifstream input;
@@ -6816,6 +8114,7 @@ int main(int argc, char* argv[]) {
 <a id="1615-二进制文件"></a>
 
 ### 16.15 二进制文件
+
 ```cpp
 output.write(reinterpret_cast<const char*>(&record), sizeof record);
 input.read(reinterpret_cast<char*>(&record), sizeof record);
@@ -6834,6 +8133,7 @@ input.read(reinterpret_cast<char*>(&record), sizeof record);
 <a id="1616-文件随机访问"></a>
 
 ### 16.16 文件随机访问
+
 输入位置与输出位置分别由 get、put 指针表示：
 ```cpp
 stream.tellg();
@@ -6856,9 +8156,22 @@ file.read(reinterpret_cast<char*>(&record), sizeof record);
 
 随机访问通常配合固定长度二进制记录。文本模式中的位置转换可能受平台换行规则影响。
 
+`tellg()`、`tellp()` 返回位置类型，失败位置通常可与 `std::streampos(-1)` 比较；不要直接当成普通 `int`。从 EOF 状态重新定位时，先明确处理读取结果，再清除失败状态并执行 `seekg`。
+
+```cpp
+input.clear();
+input.seekg(0, std::ios::beg);
+if (!input) { /* 定位失败 */ }
+```
+
+对同时输入输出的文件流，不应假定 get、put 是彼此独立的两个文件游标。读写方向切换时应按流规则进行刷新或定位，常用做法是在明确位置执行 `seekg` / `seekp`。固定记录的偏移量为 `记录编号 × 记录字节数`，还需检查乘法溢出、编号范围和实际读满的字节数。
+
+文本流不适合用“第 n 个字符就偏移 n 字节”的方式任意定位。更稳妥的是保存先前 `tellg()` 得到的位置，再用位置重载恢复。
+
 <a id="1617-内存字符串流"></a>
 
 ### 16.17 内存字符串流
+
 `<sstream>` 提供以内存字符串为缓冲区的流：
 ```cpp
 std::ostringstream output;
@@ -6879,15 +8192,57 @@ while (input >> value) {
 - 解析一整行结构化文本
 - 在不访问文件的情况下复用流式接口
 
+<a id="16171-严格解析整行与复用字符串流"></a>
+
+#### 16.17.1 严格解析整行与复用字符串流
+
+**严格解析一个整数**：先读一整行，再在字符串流中解析，最后只允许剩余空白。
+
+```cpp
+// 完整示例：区分成功提取和整行合法，C++11
+#include <cassert>
+#include <iostream>
+#include <sstream>
+#include <string>
+
+bool parse_integer(const std::string& line, int& result)
+{
+    std::istringstream input(line);
+    int value;
+    if (!(input >> value))
+        return false;
+    input >> std::ws;
+    if (!input.eof())
+        return false;
+    result = value; // 验证全部通过后再更新调用者的数据
+    return true;
+}
+
+int main()
+{
+    int value = 0;
+    assert(parse_integer(" 42 ", value) && value == 42);
+    assert(!parse_integer("42abc", value));
+    assert(!parse_integer("", value));
+    assert(!parse_integer("4 2", value));
+    std::cout << value << '\n'; // 42，失败时未改动结果
+}
+```
+
+复用字符串流时有两项独立操作：`input.str(new_text)` 替换缓冲内容，`input.clear()` 清除之前留下的 EOF/失败标志。只替换字符串不会自动清掉状态；只清状态也不会替换内容。`ostringstream::str()` 返回字符串值，得到的字符串独立于之后对流的修改。
+
 ---
 
 <a id="十七c11-新标准"></a>
 
 ## 十七、C++11 新标准
 
+本章对应原书第 18 章（PDF 第 1672—1764 页）。本书的“新标准”指 C++11。重点查阅右值引用、移动语义、特殊成员函数、lambda、包装器与参数包；前面已经介绍的语法在这里侧重彼此联系。
+
 <a id="171-新类型与字符支持"></a>
 
 ### 17.1 新类型与字符支持
+
 C++11 新增：
 - `long long`、`unsigned long long`
 - `char16_t`、`char32_t`
@@ -6905,6 +8260,7 @@ function(nullptr); // 调用 char* 版本
 <a id="172-统一初始化"></a>
 
 ### 17.2 统一初始化
+
 花括号初始化可用于标量、数组、结构、容器和类：
 ```cpp
 int value{10};
@@ -6925,9 +8281,21 @@ int value{}; // 0
 
 若类有 `initializer_list` 构造函数，花括号会优先尝试它，有时与圆括号构造得到不同结果。
 
+```cpp
+std::vector<int> a(4, 2); // 4 个 2
+std::vector<int> b{4, 2}; // 两个元素：4 和 2
+int n{3};                // 可以
+// int bad{3.0};         // 浮点到整型，即使值恰为整数也属于缩窄
+```
+
+从整数到更小的整数类型时，如果来源是值可表示的常量表达式，存在允许的例外，例如 `unsigned char c{65};`。不能把禁止缩窄简化成“任何不同类型之间都不能用花括号”。
+
+空花括号初始化类对象时仍受构造函数规则影响，不保证所有成员必然为零。用户提供的构造函数若没有初始化某个内置类型成员，该成员可能仍未初始化；类内默认值或成员初始化列表才是明确做法。
+
 <a id="173-autodecltype-与后置返回类型"></a>
 
 ### 17.3 `auto`、`decltype` 与后置返回类型
+
 `auto` 根据初始化式推导类型：
 ```cpp
 auto count = values.size();
@@ -6939,6 +8307,20 @@ auto iterator = values.begin();
 const auto& reference = object;
 auto&& forwarding_reference = expression;
 ```
+
+```cpp
+int value = 10;
+const int& ref = value;
+auto a = ref;           // int，独立副本
+auto& b = ref;          // const int&，保留被引用对象的 const
+decltype(ref) c = ref;  // const int&，保留名称声明的类型
+decltype(value) d = 0;  // int
+decltype((value)) e = value; // int&，括号使其按左值表达式规则处理
+```
+
+`decltype` 对未加括号的名称或成员访问采用其声明类型；其他表达式按值类别处理：左值得到 `T&`，亡值得到 `T&&`，纯右值得到 `T`。它不执行表达式。
+
+`auto x = {1, 2, 3};` 通常推导为 `std::initializer_list<int>`，不是 `vector<int>`。单元素直接花括号形式的 `auto` 曾受缺陷修正影响；字典示例中想明确得到整数可写 `auto x = 1`，想得到列表可显式写出 `initializer_list`。
 
 `decltype(expression)` 按表达式规则推导类型：
 ```cpp
@@ -6957,6 +8339,7 @@ auto add(T first, U second) -> decltype(first + second) {
 <a id="174-智能指针与异常规范变化"></a>
 
 ### 17.4 智能指针与异常规范变化
+
 C++11 引入 `unique_ptr`、`shared_ptr`、`weak_ptr`，弃用 `auto_ptr`。优先使用 `make_unique`（C++14）和 `make_shared`，减少裸 `new` 暴露并提高异常安全。
 
 旧式动态异常规范被弃用，使用 `noexcept` 表达函数不会抛异常：
@@ -6969,6 +8352,7 @@ Widget(Widget&& other) noexcept;
 <a id="175-作用域枚举"></a>
 
 ### 17.5 作用域枚举
+
 ```cpp
 enum class Direction : unsigned char {
     north, south, east, west
@@ -6986,6 +8370,7 @@ enum class Direction : unsigned char {
 <a id="176-类内成员初始化"></a>
 
 ### 17.6 类内成员初始化
+
 非静态数据成员可以在类声明中提供默认初始值：
 ```cpp
 class Widget {
@@ -7000,6 +8385,7 @@ private:
 <a id="177-右值引用"></a>
 
 ### 17.7 右值引用
+
 左值通常具有可识别身份和持久地址，右值通常是临时结果。右值引用写作 `T&&`：
 ```cpp
 int&& reference = 10;
@@ -7014,9 +8400,26 @@ use(std::move(reference)); // 转换成可移动的右值
 
 右值引用让程序能够识别即将销毁的对象，从中转移资源而不进行昂贵复制。
 
+<a id="1771-引用绑定与值类别"></a>
+
+#### 17.7.1 引用绑定与值类别
+
+**常见绑定规则**：
+
+| 参数 | 普通可修改左值 | const 左值 | 临时右值 |
+| :--- | :---: | :---: | :---: |
+| `T&` | 可以 | 不可以 | 不可以 |
+| `const T&` | 可以 | 可以 | 可以 |
+| `T&&`，T 已确定 | 不可以 | 不可以 | 可绑定类型与限定匹配的右值 |
+
+“左值就是在等号左边”并不准确：常量对象是左值，却不能赋值；函数返回引用的调用也可以是左值。判断重点是表达式的值类别，而非文本位置。
+
+`std::move(x)` 可以把仍将继续存在的对象转换成亡值，因此右值引用并不证明对象马上销毁。调用者通过 `move` 表达“允许转移资源”，之后是否真的转移还要看最终匹配到的函数。
+
 <a id="178-移动语义"></a>
 
 ### 17.8 移动语义
+
 ```cpp
 class Buffer {
 public:
@@ -7045,9 +8448,78 @@ private:
 
 移动后源对象必须保持**有效但状态未指定**，可以安全析构、重新赋值或调用明确允许的操作。不要假定它一定为空，除非类型契约如此规定。
 
+这条常用保证针对标准库类型；自定义类型应自行规定并实现移动后契约。上述 `Buffer` 片段展示资源转移步骤，完整资源类还必须提供析构及其他需要的构造/赋值操作。
+
+<a id="1781-独占缓冲区的移动示例"></a>
+
+#### 17.8.1 独占缓冲区的移动示例
+
+下面给出完整的“可移动、不可复制”资源类。它与[第十一章的深复制类](#115-改进字符串类)区别在于：复制被明确禁止，移动只转移指针。
+
+```cpp
+// 完整示例：独占缓冲区的移动构造和移动赋值，C++11
+#include <cassert>
+#include <cstddef>
+#include <utility>
+
+class OwnedBuffer
+{
+private:
+    std::size_t length;
+    char* data;
+public:
+    explicit OwnedBuffer(std::size_t n = 0)
+        : length(n), data(n ? new char[n]() : nullptr) {}
+    ~OwnedBuffer() { delete[] data; }
+
+    OwnedBuffer(const OwnedBuffer&) = delete;
+    OwnedBuffer& operator=(const OwnedBuffer&) = delete;
+
+    OwnedBuffer(OwnedBuffer&& other) noexcept
+        : length(other.length), data(other.data)
+    {
+        other.length = 0;
+        other.data = nullptr;
+    }
+
+    OwnedBuffer& operator=(OwnedBuffer&& other) noexcept
+    {
+        if (this != &other)
+        {
+            delete[] data;
+            length = other.length;
+            data = other.data;
+            other.length = 0;
+            other.data = nullptr;
+        }
+        return *this;
+    }
+
+    std::size_t size() const { return length; }
+    char& operator[](std::size_t i) { return data[i]; }
+};
+
+int main()
+{
+    OwnedBuffer a(4);
+    a[0] = 'X';
+    OwnedBuffer b(std::move(a));
+    assert(a.size() == 0 && b.size() == 4 && b[0] == 'X');
+    OwnedBuffer c(2);
+    c = std::move(b);
+    assert(b.size() == 0 && c[0] == 'X');
+    OwnedBuffer& alias = c;
+    c = std::move(alias); // 此实现明确支持通过别名进行自移动赋值
+    assert(c.size() == 4);
+}
+```
+
+移动赋值的目标可能已有资源，所以必须先清理目标旧资源；移动构造的目标尚未存在，不需要这一步。把源指针置空使其析构可安全执行，避免两个对象都删除同一数组。默认生成的裸指针成员移动不会自动清空源指针，不能代替这里的所有权逻辑。
+
 <a id="179-stdmove"></a>
 
 ### 17.9 `std::move`
+
 `std::move` 本身不移动任何数据，只把表达式转换为右值引用，从而允许选择移动操作：
 ```cpp
 destination = std::move(source);
@@ -7057,9 +8529,14 @@ destination = std::move(source);
 
 标准容器在扩容时会移动元素；若移动构造可能抛异常而复制可用，容器可能选择复制以维持强异常保证。
 
+例如 `vector` 重新分配时，需要考虑元素移动的异常性质；并非所有容器或所有操作都存在同一种“扩容移动”。
+
+**返回局部对象时**通常直接 `return result;`。编译器可执行返回值优化，某些情况下也会自动考虑移动。写成 `return std::move(result);` 可能阻止命名返回值优化，不应机械地给所有返回语句加 `move`。C++11 的复制消除在许多情形中是允许而非强制，因此不要依靠固定的构造次数验证程序含义。
+
 <a id="1710-特殊成员函数规则"></a>
 
 ### 17.10 特殊成员函数规则
+
 声明析构、复制构造或复制赋值会影响编译器是否隐式生成移动操作。资源类应显式决定五个特殊成员：
 ```cpp
 class Resource {
@@ -7074,9 +8551,28 @@ public:
 
 若所有成员都正确管理自身资源，使用零法则，不声明任何一个。
 
+<a id="17101-特殊成员生成条件"></a>
+
+#### 17.10.1 特殊成员生成条件
+
+**隐式生成条件速查**（还要检查成员和基类是否支持对应操作）：
+
+| 用户声明的内容 | 对隐式特殊成员的主要影响 |
+| :--- | :--- |
+| 任意构造函数 | 不再隐式声明默认构造函数 |
+| 析构函数，包括类内 `= default` | 抑制隐式移动构造和移动赋值 |
+| 复制构造或复制赋值 | 抑制隐式移动操作 |
+| 移动构造或移动赋值 | 隐式复制构造与复制赋值被定义为删除 |
+| 没有上述自定义操作 | 可以隐式生成复制/移动，但仍可能因成员而删除 |
+
+“没有移动函数”不等于右值不能初始化：可用的 `const T&` 复制构造也能接收右值。但显式声明一个删除的移动重载后，它可能成为最佳匹配并使调用报错，不能假定总会退回复制。
+
+`= default` 不是“保证成功生成”。例如含 `unique_ptr` 的类默认复制会被删除；含 `const` 或引用数据成员的类默认赋值通常被删除。需要逐项看基类和成员的可操作性。
+
 <a id="1711--default-与--delete"></a>
 
 ### 17.11 `= default` 与 `= delete`
+
 ```cpp
 class Value {
 public:
@@ -7091,14 +8587,17 @@ public:
 };
 ```
 
-`= default` 要求编译器生成默认实现，能明确接口意图；`= delete` 禁止某个函数参与调用，不只适用于特殊成员：
+`= default` 要求编译器生成默认实现，能明确接口意图；`= delete` 禁止调用选中的函数，但该函数仍参与重载决议，不只适用于特殊成员：
 ```cpp
 void process(double) = delete;
 ```
 
+例如同时提供 `void process(int);` 与删除的 `void process(double)` 后，`process(3)` 合法，`process(3.5)` 选中被删除的精确匹配并报错，不会绕过它去转换成 `int`。删除声明应出现在函数的第一次声明处。
+
 <a id="1712-委托构造函数"></a>
 
 ### 17.12 委托构造函数
+
 一个构造函数可以委托给同类其他构造函数：
 ```cpp
 class Person {
@@ -7109,14 +8608,20 @@ public:
     Person() : Person("unknown", 0) {}
     explicit Person(std::string name)
         : Person(std::move(name), 0) {}
+private:
+    std::string name;
+    int age;
 };
 ```
 
 委托构造函数的初始化列表只能包含目标构造函数，不能再单独初始化其他成员。
 
+执行顺序是先完成目标构造函数，再执行委托构造函数体。委托不能形成循环。写在函数体中的 `Person("unknown", 0);` 只会构造一个临时对象，不会初始化当前对象，不能替代 `: Person("unknown", 0)`。
+
 <a id="1713-继承构造函数"></a>
 
 ### 17.13 继承构造函数
+
 ```cpp
 class Derived : public Base {
 public:
@@ -7126,9 +8631,12 @@ public:
 
 这让派生类继承基类构造函数，但不继承复制/移动构造函数。派生类新增成员仍使用其默认成员初始化；如果需要额外约束，应自定义构造函数。
 
+新增内置成员若没有默认成员初始值，可能保持未初始化；`using Base::Base` 不会替你指定它们的业务默认值。派生类自己的复制、移动和默认构造仍按各自规则处理，不能理解成把基类的所有特殊成员原样搬过来。
+
 <a id="1714-override-与-final"></a>
 
 ### 17.14 `override` 与 `final`
+
 ```cpp
 class Derived : public Base {
 public:
@@ -7148,6 +8656,7 @@ class Last final : public Derived {};
 <a id="1715-lambda-表达式"></a>
 
 ### 17.15 Lambda 表达式
+
 基本形式：
 ```cpp
 [capture](parameters) mutable
@@ -7165,9 +8674,14 @@ auto greater = [limit](int value) {
 
 Lambda 生成一个匿名函数对象。没有捕获的 lambda 可以转换为兼容的函数指针。
 
+捕获列表必须存在；无参数且不需要额外说明时，C++11 可以省略 `()`，例如 `[] { return 42; }`。使用 `mutable` 等说明时写上参数列表。返回类型复杂或不同分支需统一类型时，可以显式写 `-> double`。
+
+每个 lambda 表达式产生独立的闭包类型，即使两个表达式正文相同也不代表类型相同。通常使用 `auto` 保存具体闭包类型，需要统一保存不同可调用对象时再使用 `std::function`。
+
 <a id="1716-lambda-捕获"></a>
 
 ### 17.16 Lambda 捕获
+
 | 捕获            | 含义                         |
 | :-------------- | :--------------------------- |
 | `[]`            | 不捕获                       |
@@ -7181,16 +8695,24 @@ Lambda 生成一个匿名函数对象。没有捕获的 lambda 可以转换为�
 
 按值捕获的数据默认在调用运算符中是只读的，`mutable` 允许修改 lambda 内部副本：
 ```cpp
-auto counter = [value = 0]() mutable {
+int value = 0;
+auto counter = [value]() mutable { // C++11：捕获已经存在的局部变量
     return ++value;
 };
 ```
 
 按引用捕获要求被引用对象在 lambda 调用时仍然存在。异步任务中默认按引用捕获尤其容易产生悬空引用。
 
+上例调用两次 `counter()` 得到 1、2，但外部 `value` 仍为 0；`mutable` 修改闭包内保存的副本。写成 `[value = 0]` 是 C++14 的初始化捕获，不能混入未标版本的 C++11 示例。
+
+`[this]` 保存对象指针，不复制整个对象，也不延长对象寿命。C++11 成员函数里的 `[=]` 若使用成员，通常通过捕获 `this` 访问原对象，而非给每个成员复制一份。全局变量与静态局部变量不需要像普通自动变量那样捕获。
+
+返回 lambda 时特别注意不要返回引用局部自动变量的闭包。按值捕获一个裸指针也只复制地址，不拥有所指资源；外部对象被删除后仍可能悬空。
+
 <a id="1717-lambda-与-stl"></a>
 
 ### 17.17 Lambda 与 STL
+
 函数指针无法携带状态，手写函数对象较冗长，lambda 很适合作为短小算法参数：
 ```cpp
 std::sort(values.begin(), values.end(),
@@ -7209,18 +8731,24 @@ auto count = std::count_if(values.begin(), values.end(),
 <a id="1718-stdfunction"></a>
 
 ### 17.18 `std::function`
+
 `std::function<Signature>` 可以保存具有相同调用签名的函数、函数指针、成员函数包装、函数对象和 lambda：
 ```cpp
 std::function<double(double)> operation;
-operation = std::sqrt;
+operation = static_cast<double (*)(double)>(std::sqrt); // 明确选择重载
 operation = [](double value) { return value * value; };
 ```
 
 空的 `std::function` 调用时抛 `std::bad_function_call`。它进行类型擦除，具有额外间接调用和可能的分配开销；模板参数或 `auto` 能保留具体类型时通常更高效。
 
+原书包装器示例关注同一调用签名与不同具体类型的区别：两个不同 lambda 即使都接收 `double`、返回 `double`，作为模板参数传入时仍可能生成不同函数实例，模板内静态变量也分别存在。统一包装为 `std::function<double(double)>` 后，模板看到的是同一种包装类型。
+
+C++11 的 `std::function` 要求保存的目标可复制。其复制通常复制目标对象，不等于复制目标内部指针所指向的全部数据；使用 `std::ref` 包装已有函数对象时则仍然借用原对象，必须保证寿命。
+
 <a id="1719-stdbind"></a>
 
 ### 17.19 `std::bind`
+
 `std::bind` 绑定或重排可调用对象参数：
 ```cpp
 using namespace std::placeholders;
@@ -7236,9 +8764,14 @@ auto call = std::bind(&Widget::update, &widget, _1);
 
 现代代码中 lambda 往往更直观，但 `bind` 在需要动态组合旧可调用接口时仍有用途。
 
+普通绑定实参默认按衰减后的值保存：绑定变量后再修改原变量，不一定影响保存的副本。若函数需要引用同一个外部对象，使用 `std::ref(value)` 或 `std::cref(value)`。绑定成员函数时保存对象指针也不延长对象寿命。
+
+`_1`、`_2` 表示将来调用绑定对象时的第一个、第二个实参，并非原函数中参数的固定编号。阅读 `bind(f, _2, 100, _1)` 时，可还原为 `f(call_arg2, 100, call_arg1)`。
+
 <a id="1720-可变参数模板"></a>
 
 ### 17.20 可变参数模板
+
 模板参数包使用省略号：
 ```cpp
 template <typename... Types>
@@ -7259,6 +8792,7 @@ std::size_t count_arguments(Types&&...) {
 <a id="1721-展开参数包"></a>
 
 ### 17.21 展开参数包
+
 C++11 常用递归展开：
 ```cpp
 void print() {
@@ -7276,9 +8810,33 @@ void print(const First& first, const Rest&... rest) {
 
 参数包可以出现在初始化列表、基类列表、函数调用、模板实参等允许展开的上下文中。C++17 的折叠表达式进一步简化了展开，但不属于本书主要标准。
 
+<a id="17211-展开模式与完美转发"></a>
+
+#### 17.21.1 展开模式与完美转发
+
+**展开的是模式**：`f(args...)` 把包展开成 `f(a, b, c)`；`f(convert(args)...)` 展开成 `f(convert(a), convert(b), convert(c))`。它不是可下标访问的运行时数组，不能写 `args[0]` 来取包中第一个实参。
+
+递归版每次移除一个首参数，最终调用零参数版本。终止重载应在递归模板定义前可见；如果模板内部又以完整参数包调用自身，没有减少参数数量，就会无限递归。
+
+**补充：转发引用与完美转发**。下面的 `Args&&...` 中类型参数由实参推导，因此能接收左值和右值；进入函数后参数名都是左值表达式，需使用 `std::forward` 恢复调用者原来的值类别。
+
+```cpp
+#include <memory>
+#include <utility>
+
+template <typename T, typename... Args>
+std::unique_ptr<T> create(Args&&... args)
+{
+    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
+```
+
+这是 C++11 工厂示例，供理解参数包展开，不是标准 `make_unique` 的完整替代实现。`std::move` 无条件允许移动，`std::forward<T>` 根据推导得到的 `T` 保留左值/右值类别。普通已确定类型的 `Widget&&` 或 `const T&&` 不属于这里的转发引用。
+
 <a id="1722-并发支持"></a>
 
 ### 17.22 并发支持
+
 C++11 标准库第一次提供跨平台线程和内存模型：
 ```cpp
 #include <thread>
@@ -7299,9 +8857,18 @@ worker.join();
 
 访问共享可变数据而没有适当同步会形成数据竞争，行为未定义。锁应由 RAII 对象管理。
 
+准确地说，不同线程的冲突访问中至少一次写入，且没有相应原子或同步保障时可能形成数据竞争；多个线程只读同一不再变化的数据不因此产生竞争。
+
+`thread` 析构时若仍为 `joinable()`，会调用 `std::terminate()`，即使底层线程已经执行结束。创建线程后必须安排 `join()` 或 `detach()`；分离不解决捕获对象寿命问题。
+
+`lock_guard<mutex>` 在构造时加锁、析构时解锁，适合固定作用域；`unique_lock` 允许延迟加锁和提前解锁，常配合条件变量。条件变量等待要检查谓词，应对虚假唤醒，而不是认为一次唤醒就保证条件成立。
+
+原书在本节仅概览并发支持。实际使用还需明确对象寿命和同步协议，不能把 `volatile` 当成原子变量或互斥锁。
+
 <a id="1723-新增标准库组件"></a>
 
 ### 17.23 新增标准库组件
+
 C++11 还新增或扩展：
 - `array`、`forward_list`、无序关联容器
 - `tuple`、`type_traits`、`ratio`
@@ -7314,15 +8881,33 @@ C++11 还新增或扩展：
 - `begin`、`end` 等通用函数
 
 ```cpp
-std::tuple<int, std::string, double> record;
-auto [/* C++17 */] = record; // 结构化绑定属于后续标准
+std::tuple<int, std::string, double> record(1, "Ada", 95.5);
+int id = std::get<0>(record);             // C++11：按编译期下标访问
+std::string name;
+double score;
+std::tie(id, name, score) = record;       // C++11：解包到已有变量
+// auto [number, label, result] = record; // C++17：结构化绑定
 ```
+
+`tuple` 保存固定数量、可不同类型的值，`get<I>` 的下标是编译期参数，不是运行时数组下标。`std::tie` 创建引用组成的元组；不需要的字段可以使用 `std::ignore`。
+
+随机数库把引擎与分布分开：引擎产生伪随机序列，分布映射到所需范围。重复固定种子便于复现学习示例；不要每生成一个数就重新播种。
+
+```cpp
+#include <random>
+std::mt19937 engine(1234);
+std::uniform_int_distribution<int> die(1, 6); // 两端都包含
+int face = die(engine);
+```
+
+引擎序列有其规定，但分布的具体映射不宜假定在所有标准库实现中完全相同。`chrono` 则将时钟、时间点和时间间隔分开，用 `duration_cast` 明确单位转换，避免把秒和毫秒作为无单位数字混算。
 
 学习时要区分 C++11 与后续标准新增语法。
 
 <a id="1724-低级编程支持"></a>
 
 ### 17.24 低级编程支持
+
 C++11 增强了底层控制：
 - `alignof(T)` 查询对齐要求
 - `alignas(n)` 指定对齐
@@ -7344,6 +8929,7 @@ std::cout << alignof(Block);
 <a id="1725-boosttr1-与标准演化"></a>
 
 ### 17.25 Boost、TR1 与标准演化
+
 Boost 是一组经过同行评审的 C++ 库，许多组件曾通过 TR1 或直接进入 C++11 标准，例如智能指针、正则表达式、无序容器和函数包装器。
 
 使用 Boost 时：
